@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resumo Semanal | IA+Educação</title>
+  <meta name="description" content="O volume geral de mensagens foi alto, com muitas interações ao longo da semana, excluindo-se as notificações de segurança do WhatsApp. A participação mostrou-se distribuída entre diversos membros do grupo, com alguns participantes mais ativos no compartilhamento de links,...">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg-primary: #f3f4f6;
+  --bg-secondary: #ffffff;
+  --text-primary: #000000;
+  --text-secondary: #4b5563;
+  --accent-blue: #2563eb;
+  --accent-yellow: #fbbf24;
+  --border-color: #000000;
+  --border-light: #d1d5db;
+  --font-main: 'Space Grotesk', -apple-system, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-main);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+  background-image: radial-gradient(circle, #00000015 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.migration-banner {
+  background: var(--text-primary);
+  color: var(--bg-secondary);
+  padding: 0.75rem 1.5rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+.migration-banner a { color: var(--accent-yellow); text-decoration: underline; }
+.migration-banner .close-banner {
+  background: none;
+  border: none;
+  color: var(--bg-secondary);
+  cursor: pointer;
+  margin-left: 1rem;
+  font-size: 1.25rem;
+  vertical-align: middle;
+}
+.header {
+  position: sticky;
+  top: 0;
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--border-color);
+  z-index: 100;
+  padding: 1rem 1.5rem;
+}
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.logo-bracket { color: var(--accent-blue); }
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+.nav a { color: var(--text-secondary); text-decoration: none; transition: color 0.15s; }
+.nav a:hover { color: var(--text-primary); }
+.nav-separator { color: var(--border-light); }
+.main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  width: 100%;
+}
+/* Search */
+.search-container { margin-bottom: 2rem; }
+.search-input {
+  width: 100%;
+  padding: 1rem;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  outline: none;
+}
+.search-input:focus { box-shadow: 4px 4px 0 var(--border-color); }
+.search-input::placeholder { color: var(--text-secondary); }
+.search-stats {
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.search-results {
+  margin-top: 1.5rem;
+  display: none;
+}
+.search-results.active { display: block; }
+.search-result-item {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  display: block;
+  transition: all 0.15s;
+}
+.search-result-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+.search-result-title {
+  font-weight: 700;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent-blue);
+}
+.search-result-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+.search-result-snippet {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.search-result-snippet mark {
+  background: var(--accent-yellow);
+  color: var(--text-primary);
+  padding: 0.1em 0.2em;
+}
+.no-results {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-secondary);
+  display: none;
+}
+.no-results.active { display: block; }
+.page-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.page-title {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.page-subtitle { font-size: 1rem; color: var(--text-secondary); }
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+.posts-grid.hidden { display: none; }
+.post-card {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 1.5rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+}
+.post-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+.post-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.post-card-action {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  padding: 0.25rem 0.5rem;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.post-card-action:hover {
+  border-color: #25D366;
+  color: #25D366;
+}
+.post-card-image {
+  width: 100%;
+  height: 120px;
+  background: var(--bg-primary);
+  border: 1px dashed var(--border-light);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-secondary);
+}
+.post-card-category {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-blue);
+  background: rgba(37, 99, 235, 0.1);
+  padding: 0.25rem 0.5rem;
+}
+.post-card-date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.post-card-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+.post-card-excerpt {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  flex: 1;
+}
+.post-card-footer {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-light);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-blue);
+}
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+.back-link:hover { color: var(--text-primary); }
+.back-link::before { content: "< "; }
+.post-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.post-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+.post-category {
+  color: var(--accent-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+.post-date { color: var(--text-secondary); }
+.post-title { font-size: 2rem; font-weight: 700; line-height: 1.2; }
+.post-week {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+.content {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 2rem;
+}
+.content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-light);
+}
+.content h2:first-child { margin-top: 0; }
+.content h3 { font-size: 1.125rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.5rem; }
+.content p { margin-bottom: 1rem; }
+.content ul, .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+.content li { margin-bottom: 0.5rem; }
+.content li ul { margin-top: 0.5rem; margin-bottom: 0.5rem; }
+.content a { color: var(--accent-blue); text-decoration: none; border-bottom: 1px solid transparent; }
+.content a:hover { border-bottom-color: var(--accent-blue); }
+.content strong { font-weight: 700; }
+/* Links page */
+.links-section { margin-bottom: 3rem; }
+.links-section-title {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.links-grid.hidden { display: none; }
+.link-item {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.15s;
+}
+.link-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+.link-item.hidden { display: none; }
+.link-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+.link-domain {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-blue);
+  background: rgba(37, 99, 235, 0.1);
+  padding: 0.25rem 0.5rem;
+}
+.link-action {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  padding: 0.25rem 0.5rem;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.link-action:hover {
+  border-color: #25D366;
+  color: #25D366;
+}
+.link-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+  line-height: 1.3;
+  flex: 1;
+  text-decoration: none;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.link-title:hover {
+  color: var(--accent-blue);
+}
+.link-qr {
+  width: 80px;
+  height: 80px;
+  background: var(--bg-primary);
+  border: 1px dashed var(--border-light);
+  margin: 0 auto 0.75rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-secondary);
+}
+.link-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-light);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+.links-count {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+.footer {
+  background: var(--text-primary);
+  color: var(--bg-secondary);
+  padding: 1rem 1.5rem;
+  margin-top: auto;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+@media (max-width: 768px) {
+  .header-content { flex-direction: column; gap: 1rem; }
+  .page-title, .post-title { font-size: 1.5rem; }
+  .posts-grid { grid-template-columns: 1fr; }
+  .content { padding: 1rem; }
+  .nav { flex-wrap: wrap; justify-content: center; }
+}
+  </style>
+</head>
+<body>
+  <div class="migration-banner" id="migrationBanner">
+    Novo site! Migramos do Google Sites para cá.
+    <button class="close-banner" onclick="document.getElementById('migrationBanner').style.display='none';localStorage.setItem('bannerClosed','1');">×</button>
+  </div>
+  <script>if(localStorage.getItem('bannerClosed')==='1')document.getElementById('migrationBanner').style.display='none';</script>
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <span class="logo-bracket">[</span>IA+EDU<span class="logo-bracket">]</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Resumos</a>
+        <span class="nav-separator">//</span>
+        <a href="links.html">Links</a>
+      </nav>
+    </div>
+  </header>
+  <main class="main">
+    
+    <a href="index.html" class="back-link">Voltar aos resumos</a>
+    <header class="post-header">
+      <div class="post-meta">
+        <span class="post-category">Resumo Semanal</span>
+        <span class="post-date">22/09/2025</span>
+      </div>
+      <h1 class="post-title">Resumo Semanal</h1>
+      <p class="post-week">Semana: 16/09/2025 → 22/09/2025</p>
+    </header>
+    <article class="content">
+      <h2>Sumário Executivo da Semana</h2>
+<p>O volume geral de mensagens foi alto, com muitas interações ao longo da semana, excluindo-se as notificações de segurança do WhatsApp. A participação mostrou-se distribuída entre diversos membros do grupo, com alguns participantes mais ativos no compartilhamento de links, proposição de temas e engajamento em debates. A natureza predominante das interações foi o compartilhamento de informações (notícias, artigos, vídeos e anúncios de eventos e recursos), seguido de debates e troca de opiniões sobre os temas propostos. Temas recorrentes incluíram o uso de inteligência artificial na educação, a regulamentação do uso de tecnologias (IA e celulares) por crianças e adolescentes, e um debate prolongado sobre a proibição de celulares nas escolas. Houve presença explícita de divergências de opiniões no debate sobre a proibição de celulares e sobre a natureza das "referências falsas" geradas por IA.</p>
+<h2>Principais Temas e Conteúdos</h2>
+<p><strong>Lançamento e Implicações da Pesquisa TIC Educação 2024</strong>
+- <strong>Tipo de Conteúdo</strong>: Fatos compartilhados, opiniões pessoais.
+- <strong>Descrição Factual</strong>: Foi divulgado o lançamento da pesquisa TIC Educação 2024, que apresenta indicadores sobre conectividade escolar, adoção de tecnologias em atividades de aprendizagem e uso de celular por alunos. Um dado destacado foi que "sete em cada dez alunos do ensino médio usam IA generativa em pesquisas escolares". Um link da Porvir.org foi compartilhado, abordando "muita IA, pouca mediação" no cenário TIC 2024. Foi sugerido levar os resultados da pesquisa para rodas de conversa e formações.
+- <strong>Recorrência</strong>: Várias mensagens e compartilhamento de links relacionados no início da semana, com referências posteriores no debate sobre o uso de IA e celulares.</p>
+<p><strong>Divulgação da Educa Week 2025</strong>
+- <strong>Tipo de Conteúdo</strong>: Fatos compartilhados, opiniões pessoais.
+- <strong>Descrição Factual</strong>: Foi anunciado o acesso à credencial gratuita para a Educa Week 2025 para os membros do grupo. O evento foi descrito com detalhes como datas (8 a 10 de outubro), local (ESPM), número de speakers (+140), fóruns temáticos (7 Fóruns Nacionais, incluindo Tecnologia e Inovação na Educação) e público-alvo estratégico. Diversos membros expressaram entusiasmo e gratidão pela iniciativa e pela programação.
+- <strong>Recorrência</strong>: Pontual, com anúncios detalhados e várias reações de aprovação em sequência.</p>
+<p><strong>Fake News, Desinformação e Ética da IA na Educação</strong>
+- <strong>Tipo de Conteúdo</strong>: Perguntas ou dúvidas, opiniões pessoais, fatos compartilhados, divergências ou visões conflitantes.
+- <strong>Descrição Factual</strong>: Um membro perguntou se alguém havia feito um levantamento das principais fake news ou desserviços da imprensa sobre IA e educação, buscando manchetes similares às da Alpha School. Foi expressa a dificuldade em rastrear fake news e um membro compartilhou links sobre IA para criar imagens falsas e sobre um relatório de educação que continha mais de 15 fontes falsas geradas por IA. Uma participante descreveu o problema como o "só acredito vendo acabou" e a necessidade de "conversar muuuuito com essa garotada". Houve uma discussão sobre a origem das referências falsas, com um membro explicando que a IA poderia ter utilizado conteúdos hipotéticos/ilustrativos como se fossem reais, enquanto outro participante aguardava a confirmação se todas as referências vieram desses documentos. Reflexões sobre a "preguiça cognitiva" na verificação de fontes e o risco de automatização foram compartilhadas.
+- <strong>Recorrência</strong>: Recorrente, com perguntas, compartilhamento de links e um debate prolongado sobre a origem e impacto da desinformação gerada por IA.</p>
+<p><strong>Uso de IA por Alunos e Questões de Saúde Mental</strong>
+- <strong>Tipo de Conteúdo</strong>: Perguntas ou dúvidas, opiniões pessoais, fatos compartilhados.
+- <strong>Descrição Factual</strong>: A discussão abordou a exposição de crianças a conteúdos sensíveis ("adultização") e a possível utilização de IA por alunos como "terapia". Foi sugerido que este último tema poderia ser uma pauta para as escolas abordarem, justificando a relevância da discussão sobre saúde mental dentro do contexto educacional e de IA. A questão do Nepal como uma "referência preocupante" (em contexto de suicídio, via influenciador Felca) também foi levantada.
+- <strong>Recorrência</strong>: Pontual, mas suscitou reflexão sobre a amplitude dos temas relevantes para o grupo.</p>
+<p><strong>Regulamentação de Redes Sociais e o "ECA Digital"</strong>
+- <strong>Tipo de Conteúdo</strong>: Fatos compartilhados, opiniões pessoais, perguntas ou dúvidas.
+- <strong>Descrição Factual</strong>: Foi noticiado que o governo desistiu de enviar um projeto de regulação para redes sociais, focando apenas na regulação econômica de big techs, e que o Presidente Lula sancionaria o projeto de lei da "Adultização". Posteriormente, um link do gov.br confirmou a sanção da lei, sendo referida como a "1a Lei da América sobre o tema". Dúvidas surgiram sobre a aplicação da nova lei em relação ao uso de plataformas de IA por menores de 16 anos, e se as escolas poderiam indicar atividades com IA para essa faixa etária, dada a ausência de especificação. Membros sugeriram a necessidade de "soluções inovadoras desenhadas para o contexto educação básica" com salvaguardas e políticas públicas robustas para formação de professores.
+- <strong>Recorrência</strong>: Recorrente, com notícias e um debate sobre as implicações da nova legislação para o uso de IA por crianças e adolescentes.</p>
+<p><strong>Ferramentas de IA Específicas (NotebookLM, ChatGPT use cases, AI Studio)</strong>
+- <strong>Tipo de Conteúdo</strong>: Fatos compartilhados, opiniões pessoais, perguntas ou dúvidas, anúncios.
+- <strong>Descrição Factual</strong>: Vários links e comentários sobre o NotebookLM (Google) foram compartilhados, com membros expressando apreço pela ferramenta, seus flashcards e resumos. Um link sobre casos de uso do ChatGPT para estudantes foi compartilhado, gerando curiosidade e expressa preocupação sobre o seu impacto na capacidade reflexiva. Houve uma pergunta sobre indicação de cursos online de AI Studio. Um membro perguntou qual modelo o NotebookLM usava. Um curso GRATUITO e completo de NotebookLM foi anunciado.
+- <strong>Recorrência</strong>: Recorrente, com múltiplos links e comentários sobre o uso e potencial de ferramentas de IA na educação.</p>
+<p><strong>Debate sobre a Proibição de Celulares nas Escolas</strong>
+- <strong>Tipo de Conteúdo</strong>: Perguntas ou dúvidas, opiniões pessoais, fatos compartilhados, divergências ou visões conflitantes.
+- <strong>Descrição Factual</strong>: A discussão foi iniciada com o compartilhamento de um vídeo da Samsung sobre "Escolas Inteligentes" que defendem "mais telas" como recurso de aprendizado, em contraste com a ideia de proibir celulares. Uma revisão sistemática sobre os efeitos de proibir celulares nas escolas foi compartilhada, indicando uma melhora "significativa no aprendizado, ainda que de efeito considerado fraco", atribuída à redução de distrações. Uma participante se declarou contra a proibição, argumentando a falta de debate aprofundado, a fragilidade de docentes sem formação e a realidade de escolas públicas onde o celular é a única tecnologia para letramento digital, apontando para um "apartheid digital" e a "falta de política pública e não proibição". Outro membro argumentou que "qualquer proibição vem de uma falha estrutural", mas ponderou que a proibição se faz necessária devido à falta de preparo de famílias e escolas, e ao "fracasso generalizado da escola na formação atual dos estudantes". Houve contrapontos argumentando que proibições são essenciais para a defesa da coletividade e da cidadania, e que o professor "não pode administrar a casa do aluno, só pode administrar sua sala de aula". Foi consenso que o "celular em paralelo atrapalha a aula", mas que a "proibição simplista... traz potencialmente perdas no aprendizado". A realidade de escolas públicas com equipamentos foi debatida, com diferentes visões sobre a abrangência da inclusão digital. Um participante questionou o porquê de, em 2025, ainda se debater a proibição, sugerindo uma reavaliação das formações de professores. A proibição de celulares na Coreia do Sul e em partes da Europa foi citada como exemplo internacional.
+- <strong>Recorrência</strong>: Debate prolongado e intenso, envolvendo vários membros com diferentes perspectivas e argumentos, estendendo-se por grande parte do dia 19/09.</p>
+<p><strong>Compartilhamento de Recursos, Publicações e Eventos sobre IA na Educação</strong>
+- <strong>Tipo de Conteúdo</strong>: Fatos compartilhados, anúncios.
+- <strong>Descrição Factual</strong>: Foram compartilhados links para: um artigo sobre "learning as a major use case", um guia sobre um projeto chamado "Lovable", um podcast sobre design instrucional, uma coluna sobre IA e voz na educação, um vídeo sobre ferramentas de IA para professores, um assistente de estudos virtual criado por um membro do grupo, um treinamento de IA do Google Workspace para PMEs, e um curso online de IA chamado "Elements of AI". Também foram feitas menções e compartilhamento de links para livros sobre IA na Educação de membros do grupo e para um artigo acadêmico na revista Gláuks. Um membro perguntou sobre outros livros editados recentemente sobre o tema por membros do grupo ou por autores brasileiros.
+- <strong>Recorrência</strong>: Recorrente, com diversos links e anúncios dispersos ao longo da semana.</p>
+<h2>Links Compartilhados</h2>
+<ul>
+<li><a href="https://www.linkedin.com/posts/dr-philippa-hardman-057851120_learning-is-officially-a-major-use-case-activity-7373584780841488384-Yxfs?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAA88L3EBrYbyYGMouQQt4OzbEk91wVgIgNw">Learning is officially a major use case</a></li>
+<li>Quem compartilhou: Alisson Valença</li>
+<li>Contexto em que apareceu: Compartilhado no início da semana, sem discussão imediata.</li>
+<li>Gerou discussão: Não.</li>
+<li><a href="https://www.youtube.com/watch?v=kB8BNOANyMc">Lançamento da pesquisa TIC Educação 2024</a></li>
+<li>Quem compartilhou: +55 21 🫣-1691</li>
+<li>Contexto em que apareceu: Anúncio do lançamento do estudo sobre conectividade e tecnologia nas escolas.</li>
+<li>Gerou discussão: Sim, deu início ao tema sobre a pesquisa TIC Educação.</li>
+<li><a href="educaweek.com.br">Educa Week 2025</a></li>
+<li>Quem compartilhou: Marcos Talarico</li>
+<li>Contexto em que apareceu: Anúncio e detalhes do evento, com acesso gratuito para membros do grupo.</li>
+<li>Gerou discussão: Sim, gerou várias reações de entusiasmo e gratidão.</li>
+<li><a href="https://blog.google/outreach-initiatives/education/learn-your-way/">Learn your way - Google Blog</a></li>
+<li>Quem compartilhou: Giselle Santos</li>
+<li>Contexto em que apareceu: Compartilhado como um recurso sobre aprendizado, com o comentário "Se o notebooLM casasse com um livro didático rs nasceria isso aqui".</li>
+<li>Gerou discussão: Sim, Filipe comentou "How to advise" significa terapia? rs uhnn...</li>
+<li><a href="https://share.google/v7YMuAYGfh0u6EW64">Polaroid com famosos: nova trend usa IA do Gemini para criar imagens com artistas</a></li>
+<li>Quem compartilhou: Giselle Santos</li>
+<li>Contexto em que apareceu: Compartilhado em contexto de desinformação e imagens geradas por IA, com o comentário "Olhaa, nem sei o que dizer".</li>
+<li>Gerou discussão: Sim, gerou comentários como "Meu deus, tamo perdido" e "O 'só acredito vendo acabou' rs".</li>
+<li><a href="https://porvir.org/muita-ia-pouca-mediacao-cenario-tic-2024/">Muita IA, pouca mediação: cenário TIC 2024 - Porvir.org</a></li>
+<li>Quem compartilhou: Filipe</li>
+<li>Contexto em que apareceu: Compartilhado como complemento à discussão sobre a pesquisa TIC Educação.</li>
+<li>Gerou discussão: Sim, Tanci Simões Gomes respondeu "Isso!!!!" e "Isso aqui, meus amigos, isso aqui é a elite!!!!"</li>
+<li><a href="https://cetic.br/pt/noticia/sete-em-cada-dez-alunos-do-ensino-medio-usam-ia-generativa-em-pesquisas-escolares-revela-tic-educacao/">Sete em cada dez alunos do ensino médio usam IA generativa em pesquisas escolares, revela TIC Educação</a></li>
+<li>Quem compartilhou: Alex (UFPE)</li>
+<li>Contexto em que apareceu: Notícia direta da pesquisa TIC Educação, reforçando dados de uso de IA por alunos.</li>
+<li>Gerou discussão: Sim, Giselle Santos sugeriu levar esses dados para discussões.</li>
+<li><a href="https://lnkd.in/p/d5WKgdya">Página de Giselle Santos no LinkedIn sobre pesquisas recentes</a></li>
+<li>Quem compartilhou: Giselle Santos</li>
+<li>Contexto em que apareceu: Sugestão para levar os resultados das pesquisas para rodas de conversa e formações.</li>
+<li>Gerou discussão: Não.</li>
+<li><a href="https://oglobo.globo.com/politica/noticia/2025/09/16/governo-desiste-de-enviar-projeto-para-redes-sociais-e-mandara-ao-congresso-apenas-texto-de-regulacao-economica-que-mira-big-techs.ghtml">Governo desiste de enviar projeto para redes sociais e mandará ao Congresso apenas texto de regulação econômica que mira big techs</a></li>
+<li>Quem compartilhou: Juliana Lima</li>
+<li>Contexto em que apareceu: Notícia sobre a regulamentação de redes sociais e o projeto de lei da "Adultização".</li>
+<li>Gerou discussão: Sim, deu início ao debate sobre a regulamentação.</li>
+<li><a href="https://chatgpt.com/use-cases/students">ChatGPT use cases for students</a></li>
+<li>Quem compartilhou: Cabralis</li>
+<li>Contexto em que apareceu: Compartilhado como um recurso "interessante e preocupante ao mesmo tempo" sobre o uso de IA por estudantes.</li>
+<li>Gerou discussão: Sim, Guilherme Cintra e Sora Lacerda expressaram curiosidade e Cabralis elaborou sobre a preocupação.</li>
+<li><a href="https://cdn.openai.com/pdf/d04913be-3f6f-4d2b-b283-ff432ef4aaa5/why-language-models-hallucinate.pdf">Why language models hallucinate (OpenAI PDF)</a></li>
+<li>Quem compartilhou: Calebe M Rezende</li>
+<li>Contexto em que apareceu: Compartilhado em resposta à discussão sobre o link anterior (ChatGPT use cases), para levantar a questão da alucinação dos LLMs.</li>
+<li>Gerou discussão: Não diretamente, mas relacionado à preocupação com a IA.</li>
+<li><a href="https://arstechnica.com/ai/2025/09/education-report-calling-for-ethical-ai-use-contains-over-15-fake-sources/">Education report calling for ethical AI use contains over 15 fake sources</a></li>
+<li>Quem compartilhou: Giselle Santos</li>
+<li>Contexto em que apareceu: Compartilhado para exemplificar o problema das IAs gerarem referências falsas.</li>
+<li>Gerou discussão: Sim, gerou um debate sobre a origem dessas referências falsas e a responsabilidade da verificação.</li>
+<li><a href="https://www.linkedin.com/posts/justin-reich-6a52a318_syllabus-learning-media-and-technology-activity-7373771801929371648-XGOX?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAUUiCQBcndEaO0ad0P8f4qZcBb6pymGuN4">Syllabus: Learning, Media, and Technology (Justin Reich)</a></li>
+<li>Quem compartilhou: Guilherme Cintra</li>
+<li>Contexto em que apareceu: Compartilhamento de um curso gratuito de EdTech.</li>
+<li>Gerou discussão: Não.</li>
+<li><a href="https://www.youtube.com/live/Udc1osx8IMI?si=QM5vk7UrcyminDUH">Live do YouTube</a></li>
+<li>Quem compartilhou: Prof Julio César Passos</li>
+<li>Contexto em que apareceu: Compartilhamento de um vídeo, sem contexto explícito na mensagem, mas Filipe respondeu em particular.</li>
+<li>Gerou discussão: Não diretamente no grupo.</li>
+<li><a href="https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/noticias/2025/09/201choje-damos-um-passo-importante-em-direcao-a-soberania-digital201d-diz-lula-ao-sancionar-lei-que-protege-criancas-na-internet">Presidente Lula sanciona Lei que protege crianças na internet (gov.br)</a></li>
+<li>Quem compartilhou: Juliana Lima</li>
+<li>Contexto em que apareceu: Notícia da sanção da lei da adultização.</li>
+<li>Gerou discussão: Sim, Juliana Lima comentou "A 1a Lei da América sobre o tema 🇧🇷".</li>
+<li><a href="https://www.linkedin.com/posts/giselle-santos-innovation_eca-digital-ugcPost-7374403223186640896-p5XK?utm_source=social_share_send&amp;utm_medium=android_app&amp;rcm=ACoAAAzhyNIBOWZA2CRVwcfNshnWuwk8PtQSrOQ&amp;utm_campaign=whatsapp">Post de Giselle Santos no LinkedIn sobre ECA Digital</a></li>
+<li>Quem compartilhou: Giselle Santos</li>
+<li>Contexto em que apareceu: Compartilhado com o comentário "Hoje está um belo dia para fofocar!", introduzindo as dúvidas sobre a aplicação da ECA Digital a plataformas de IA para menores.</li>
+<li>Gerou discussão: Sim, iniciou o debate sobre a aplicabilidade da lei.</li>
+<li><a href="https://signal-builders.notion.site/LOVABLE-ULTIMATE-GUIDE-270206d449b380cd979ff02516c800a2?pvs=73">LOVABLE - ULTIMATE GUIDE (Notion)</a></li>
+<li>Quem compartilhou: +55 31 🫣-4834</li>
+<li>Contexto em que apareceu: Compartilhamento de um guia gratuito sobre projetos, com o comentário "Pode gerar muuuuito valor pra qualquer projeto que estejam envolvidos".</li>
+<li>Gerou discussão: Sim, gerou agradecimentos e elogios pela ferramenta.</li>
+<li><a href="https://www.linkedin.com/posts/adriana-maria-claudio_podcast-designinstrucional-educaaexaeto-activity-7374453808598528000-pnBE?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAUUiCQBcndEaO0ad0P8f4qZcBb6pymGuN4">Podcast Design Instrucional (Guilherme Cintra)</a></li>
+<li>Quem compartilhou: Guilherme Cintra (e Marília)</li>
+<li>Contexto em que apareceu: Compartilhamento de um podcast com a participação de Guilherme Cintra.</li>
+<li>Gerou discussão: Sim, Guilherme Cintra expressou entusiasmo e preocupação de "não falar nenhum absurdo".</li>
+<li><a href="https://youtu.be/3aVweqXs2qw?si=Imm8O8JoWEgun-sC">Samsung Escolas Inteligentes (YouTube)</a></li>
+<li>Quem compartilhou: Savio Ferraz</li>
+<li>Contexto em que apareceu: Compartilhado para iniciar a discussão sobre "mais telas" vs. proibição de celulares nas escolas, com o comentário "Não quero ofender ninguém aqui 😅 só fazendo uma comparação.".</li>
+<li>Gerou discussão: Sim, iniciou o debate prolongado sobre a proibição de celulares.</li>
+<li><a href="https://www.youtube.com/watch?v=AAVzJQXjwdk">Ferramentas de Inteligência Artificial que todo professor precisa conhecer (YouTube)</a></li>
+<li>Quem compartilhou: Vinicius Aragão</li>
+<li>Contexto em que apareceu: Lançamento de uma série de vídeos sobre IA na educação, com o comentário "Nesse episódio eu explico de forma simples o que é Inteligência Artificial, como ela surgiu e de que forma pode transformar a educação."</li>
+<li>Gerou discussão: Sim, Prof Julio César Passos comentou e curtiu.</li>
+<li><a href="https://www.linkedin.com/posts/activity-7374769867973021696-Zixb?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAUUiCQBcndEaO0ad0P8f4qZcBb6pymGuN4">Coluna de Guilherme Cintra no LinkedIn sobre IA e voz em educação</a></li>
+<li>Quem compartilhou: Guilherme Cintra</li>
+<li>Contexto em que apareceu: Compartilhamento da coluna da semana sobre diferentes casos de uso de IA e voz em educação.</li>
+<li>Gerou discussão: Não diretamente.</li>
+<li><a href="https://www.linkedin.com/pulse/adultiza%C3%A7%C3%A3o-telas-e-ia-generativa-quais-riscos-rondam-daniela-lyra-6mehe">Artigo "Adultização, Telas e IA Generativa: Quais riscos rondam..." (LinkedIn)</a></li>
+<li>Quem compartilhou: Danilyra</li>
+<li>Contexto em que apareceu: Compartilhado em meio ao debate sobre proibição de celulares e uso de IA por crianças, com o comentário "tentando honrar as nossas ricas conversas".</li>
+<li>Gerou discussão: Sim, Mariana Ochs e Filipe elogiaram o artigo.</li>
+<li><a href="https://lnkd.in/p/dx48aHVB">Artigo no blog de Prof Julio César Passos: "O assunto é polêmico, mas precisamos falar sobre isso"</a></li>
+<li>Quem compartilhou: Prof Julio César Passos</li>
+<li>Contexto em que apareceu: Compartilhado em meio ao debate sobre proibição de celulares e IA, como um artigo para discussão.</li>
+<li>Gerou discussão: Não diretamente, o autor pediu comentários.</li>
+<li><a href="https://lnkd.in/p/d8dRPwke">Post de Giselle Santos no LinkedIn sobre notícias</a></li>
+<li>Quem compartilhou: Giselle Santos</li>
+<li>Contexto em que apareceu: Compartilhado sem contexto explícito, seguido de um link de vídeo.</li>
+<li>Gerou discussão: Não.</li>
+<li><a href="https://www.youtube.com/watch?v=cj1cc2JMQbA">Vídeo do YouTube sobre notícias (link associado ao post anterior)</a></li>
+<li>Quem compartilhou: Giselle Santos</li>
+<li>Contexto em que apareceu: Vídeo relacionado ao post de LinkedIn anterior.</li>
+<li>Gerou discussão: Não.</li>
+<li><a href="https://lnkd.in/p/dbs7H72V">Post de Anderson no LinkedIn sobre assistente de estudos virtual</a></li>
+<li>Quem compartilhou: Anderson</li>
+<li>Contexto em que apareceu: Anúncio de um projeto pessoal (assistente de estudos com IA), com o comentário "Criei um assistente de estudos virtual 🤖📚!".</li>
+<li>Gerou discussão: Não.</li>
+<li><a href="https://juliopassos.com/curso-completo-de-notebooklm/">Curso GRATIS e completo de NotebookLM do Google (juliopassos.com)</a></li>
+<li>Quem compartilhou: Prof Julio César Passos</li>
+<li>Contexto em que apareceu: Anúncio de um curso gratuito para professores, com o pedido de licença aos participantes.</li>
+<li>Gerou discussão: Não diretamente sobre o curso.</li>
+<li><a href="https://www.linkedin.com/posts/alex-souza_ai-prompt-optimizer-otimize-seus-prompts-activity-7375212619596447745-W76W?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAAYqz8UByOUCLjzVSc8MzlChiHFbRkPbDV4">AI Prompt Optimizer (LinkedIn)</a></li>
+<li>Quem compartilhou: Alex Souza</li>
+<li>Contexto em que apareceu: Compartilhamento de um recurso sobre otimização de prompts de IA.</li>
+<li>Gerou discussão: Não.</li>
+<li><a href="https://cloudonair.withgoogle.com/events/treinamento-ai-cinema">Treinamento de IA do Google Workspace para pequenas e médias empresas (Cloud OnAir)</a></li>
+<li>Quem compartilhou: Savio Ferraz</li>
+<li>Contexto em que apareceu: Anúncio de um evento presencial e gratuito sobre o uso de IA nas ferramentas Google, destacando a integração do Gemini.</li>
+<li>Gerou discussão: Não.</li>
+<li><a href="https://www.elementsofai.com/?_gl=1*1fw7vl*_gcl_au*MjA1OTg1MzA3MS4xNzU4NTUwMjE2*_ga*MTQwNTQ1ODU2OC4xNzU4NTUwMjE3*_ga_JWM5KTELM5*czE3NTg1NTAyMTYkbzEkZzEkdDE3NTg1NTAyNjIkajE0JGwwJGgw&amp;_ga=2.108872962.1228598440.1758550217-1405458568.1758550217">Elements of AI (curso online)</a></li>
+<li>Quem compartilhou: Savio Ferraz</li>
+<li>Contexto em que apareceu: Compartilhamento de um curso online.</li>
+<li>Gerou discussão: Não.</li>
+<li><a href="https://a.co/d/ev6zNPA">Livro "IA na Educação" de George R. Stein (Amazon)</a></li>
+<li>Quem compartilhou: Guilherme Rodrigues Alves</li>
+<li>Contexto em que apareceu: Compartilhado em uma pergunta sobre outros livros de membros do grupo sobre IA na Educação.</li>
+<li>Gerou discussão: Sim, Rafael Parente e César França responderam.</li>
+<li><a href="https://www.revistaglauks.ufv.br/Glauks/index">Revista Gláuks, UFV - artigo 'Educação digital para IA: um currículo real, possível e necessário'</a></li>
+<li>Quem compartilhou: Helena Mendonça</li>
+<li>Contexto em que apareceu: Compartilhamento de uma publicação acadêmica da UFV.</li>
+<li>Gerou discussão: Não.</li>
+<li><a href="https://www.amazon.com/dp/B0DMJVVGKS">Livro de César França na Amazon</a></li>
+<li>Quem compartilhou: César França</li>
+<li>Contexto em que apareceu: Compartilhado em resposta à pergunta sobre livros de membros, com a versão aberta em PDF.</li>
+<li>Gerou discussão: Sim, acompanhado de uma versão aberta.</li>
+<li><a href="https://drive.google.com/file/d/1lCTeSN48YzpH8_jzvOKdH2GLxBzbLVdC/view?usp=drivesdk">Versão aberta em PDF do livro de César França</a></li>
+<li>Quem compartilhou: César França</li>
+<li>Contexto em que apareceu: Oferecido como alternativa gratuita à versão da Amazon.</li>
+<li>Gerou discussão: Sim, Prof Julio César Passos agradeceu a "obra fantástica".</li>
+<li><a href="https://www.instagram.com/p/DO61BuPEmtI/?img_index=1&amp;igsh=MTFsaWJ5em0wdGQzNQ==">Instagram - Post de Daniel Magnavita</a></li>
+<li>Quem compartilhou: Daniel Magnavita</li>
+<li>Contexto em que apareceu: Compartilhado sem contexto explícito.</li>
+<li>Gerou discussão: Não.</li>
+</ul>
+<h2>Limitações do Resumo</h2>
+<ul>
+<li>A presença de inúmeras mensagens de "código de segurança" inflou o volume total de mensagens observadas, mas não representou interações substantivas do grupo e foi excluída da análise de conteúdo.</li>
+<li>Alguns links foram compartilhados com descrições mínimas, exigindo que o leitor acesse o conteúdo para compreender o contexto completo.</li>
+<li>A conversa incluiu o compartilhamento de arquivos de mídia (como apresentações e imagens) que, por não serem URLs, não foram listados na seção de links. Um desses arquivos foi descrito como uma "pesquisa sobre o ECA digital" realizada com apoio de IA.</li>
+<li>Determinados comentários foram breves ou ambíguos, dificultando a inferência da profundidade da discussão sobre alguns subtópicos.</li>
+<li>A identidade de alguns participantes é apresentada apenas como "+55 XX XXXXX-XXXX" ou "@~ Nome", o que limita a identificação completa dos interagentes.</li>
+</ul>
+    </article>
+    
+  </main>
+  <footer class="footer">
+    Aprendizados_IA+Educação // Resumos gerados com LLM // 2026<br>
+    <span style="opacity: 0.7;">Feito por Marina e Tiago Maluta</span>
+  </footer>
+  
+</body>
+</html>

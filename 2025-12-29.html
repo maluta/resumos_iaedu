@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resumo Semanal | IA+Educação</title>
+  <meta name="description" content="A conversa da semana apresentou um volume de mensagens médio a alto, com participação distribuída entre diversos membros. A natureza predominante das interações foi multifacetada, incluindo o compartilhamento de informações (links e resumos de artigos), a troca de...">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg-primary: #f3f4f6;
+  --bg-secondary: #ffffff;
+  --text-primary: #000000;
+  --text-secondary: #4b5563;
+  --accent-blue: #2563eb;
+  --accent-yellow: #fbbf24;
+  --border-color: #000000;
+  --border-light: #d1d5db;
+  --font-main: 'Space Grotesk', -apple-system, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-main);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+  background-image: radial-gradient(circle, #00000015 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.migration-banner {
+  background: var(--text-primary);
+  color: var(--bg-secondary);
+  padding: 0.75rem 1.5rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+.migration-banner a { color: var(--accent-yellow); text-decoration: underline; }
+.migration-banner .close-banner {
+  background: none;
+  border: none;
+  color: var(--bg-secondary);
+  cursor: pointer;
+  margin-left: 1rem;
+  font-size: 1.25rem;
+  vertical-align: middle;
+}
+.header {
+  position: sticky;
+  top: 0;
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--border-color);
+  z-index: 100;
+  padding: 1rem 1.5rem;
+}
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.logo-bracket { color: var(--accent-blue); }
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+.nav a { color: var(--text-secondary); text-decoration: none; transition: color 0.15s; }
+.nav a:hover { color: var(--text-primary); }
+.nav-separator { color: var(--border-light); }
+.main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  width: 100%;
+}
+/* Search */
+.search-container { margin-bottom: 2rem; }
+.search-input {
+  width: 100%;
+  padding: 1rem;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  outline: none;
+}
+.search-input:focus { box-shadow: 4px 4px 0 var(--border-color); }
+.search-input::placeholder { color: var(--text-secondary); }
+.search-stats {
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.search-results {
+  margin-top: 1.5rem;
+  display: none;
+}
+.search-results.active { display: block; }
+.search-result-item {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  display: block;
+  transition: all 0.15s;
+}
+.search-result-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+.search-result-title {
+  font-weight: 700;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent-blue);
+}
+.search-result-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+.search-result-snippet {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.search-result-snippet mark {
+  background: var(--accent-yellow);
+  color: var(--text-primary);
+  padding: 0.1em 0.2em;
+}
+.no-results {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-secondary);
+  display: none;
+}
+.no-results.active { display: block; }
+.page-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.page-title {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.page-subtitle { font-size: 1rem; color: var(--text-secondary); }
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+.posts-grid.hidden { display: none; }
+.post-card {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 1.5rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+}
+.post-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+.post-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.post-card-action {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  padding: 0.25rem 0.5rem;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.post-card-action:hover {
+  border-color: #25D366;
+  color: #25D366;
+}
+.post-card-image {
+  width: 100%;
+  height: 120px;
+  background: var(--bg-primary);
+  border: 1px dashed var(--border-light);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-secondary);
+}
+.post-card-category {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-blue);
+  background: rgba(37, 99, 235, 0.1);
+  padding: 0.25rem 0.5rem;
+}
+.post-card-date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.post-card-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+.post-card-excerpt {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  flex: 1;
+}
+.post-card-footer {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-light);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-blue);
+}
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+.back-link:hover { color: var(--text-primary); }
+.back-link::before { content: "< "; }
+.post-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.post-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+.post-category {
+  color: var(--accent-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+.post-date { color: var(--text-secondary); }
+.post-title { font-size: 2rem; font-weight: 700; line-height: 1.2; }
+.post-week {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+.content {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 2rem;
+}
+.content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-light);
+}
+.content h2:first-child { margin-top: 0; }
+.content h3 { font-size: 1.125rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.5rem; }
+.content p { margin-bottom: 1rem; }
+.content ul, .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+.content li { margin-bottom: 0.5rem; }
+.content li ul { margin-top: 0.5rem; margin-bottom: 0.5rem; }
+.content a { color: var(--accent-blue); text-decoration: none; border-bottom: 1px solid transparent; }
+.content a:hover { border-bottom-color: var(--accent-blue); }
+.content strong { font-weight: 700; }
+/* Links page */
+.links-section { margin-bottom: 3rem; }
+.links-section-title {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.links-grid.hidden { display: none; }
+.link-item {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.15s;
+}
+.link-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+.link-item.hidden { display: none; }
+.link-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+.link-domain {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-blue);
+  background: rgba(37, 99, 235, 0.1);
+  padding: 0.25rem 0.5rem;
+}
+.link-action {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  padding: 0.25rem 0.5rem;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.link-action:hover {
+  border-color: #25D366;
+  color: #25D366;
+}
+.link-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+  line-height: 1.3;
+  flex: 1;
+  text-decoration: none;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.link-title:hover {
+  color: var(--accent-blue);
+}
+.link-qr {
+  width: 80px;
+  height: 80px;
+  background: var(--bg-primary);
+  border: 1px dashed var(--border-light);
+  margin: 0 auto 0.75rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-secondary);
+}
+.link-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-light);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+.links-count {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+.footer {
+  background: var(--text-primary);
+  color: var(--bg-secondary);
+  padding: 1rem 1.5rem;
+  margin-top: auto;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+@media (max-width: 768px) {
+  .header-content { flex-direction: column; gap: 1rem; }
+  .page-title, .post-title { font-size: 1.5rem; }
+  .posts-grid { grid-template-columns: 1fr; }
+  .content { padding: 1rem; }
+  .nav { flex-wrap: wrap; justify-content: center; }
+}
+  </style>
+</head>
+<body>
+  <div class="migration-banner" id="migrationBanner">
+    Novo site! Migramos do Google Sites para cá.
+    <button class="close-banner" onclick="document.getElementById('migrationBanner').style.display='none';localStorage.setItem('bannerClosed','1');">×</button>
+  </div>
+  <script>if(localStorage.getItem('bannerClosed')==='1')document.getElementById('migrationBanner').style.display='none';</script>
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <span class="logo-bracket">[</span>IA+EDU<span class="logo-bracket">]</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Resumos</a>
+        <span class="nav-separator">//</span>
+        <a href="links.html">Links</a>
+      </nav>
+    </div>
+  </header>
+  <main class="main">
+    
+    <a href="index.html" class="back-link">Voltar aos resumos</a>
+    <header class="post-header">
+      <div class="post-meta">
+        <span class="post-category">Resumo Semanal</span>
+        <span class="post-date">29/12/2025</span>
+      </div>
+      <h1 class="post-title">Resumo Semanal</h1>
+      <p class="post-week">Semana: 23/12/2025 → 29/12/2025</p>
+    </header>
+    <article class="content">
+      <h2>Sumário Executivo da Semana</h2>
+<p>A conversa da semana apresentou um volume de mensagens médio a alto, com participação distribuída entre diversos membros. A natureza predominante das interações foi multifacetada, incluindo o compartilhamento de informações (links e resumos de artigos), a troca de felicitações e votos para as festas de fim de ano, e um debate prolongado e emotivo sobre o falecimento e o legado de uma figura importante da educação e tecnologia. Temas recorrentes incluíram notificações de segurança do WhatsApp e mídias ocultas. Não foram observadas divergências explícitas significativas, mas houve um alinhamento claro nas expressões de pesar e reconhecimento ao professor falecido.</p>
+<h2>Principais Temas e Conteúdos:</h2>
+<ul>
+<li>
+<p><strong>Compartilhamento de Conteúdos sobre Inteligência Artificial e Educação</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, perguntas ou dúvidas, opiniões pessoais.</li>
+<li><strong>Descrição Factual</strong>: Um membro compartilhou um artigo sobre a preparação do Brasil para o lançamento da TV 3.0, mencionando seu potencial de popularização e inclusão da IA. Outro membro perguntou se alguém havia produzido textos, posts ou vídeos sobre o balanço de 2025 sobre IA na educação para pais e educadores no contexto brasileiro. Foi compartilhado um resumo do relatório da OCDE que analisa a incorporação planejada e responsável da IA em sistemas educacionais, utilizando a Itália como estudo de caso, destacando prioridades como redução da evasão escolar e apoio a estudantes vulneráveis, além de alertar sobre riscos como vieses algorítmicos e uso inadequado de dados. Outro artigo foi compartilhado, defendendo uma visão "menos ufanista ou catastrófica e mais crítica e realista sobre IA na educação". Um membro comentou que o jornal é "ótimo" e sugeriu desdobrar a discussão do artigo por níveis de ensino (ex: Ensino Médio). Foi divulgado um programa de 12 meses do Perplexity Pro gratuito para pesquisadores de instituições associadas ao CAFe, com o link para a lista de instituições. Um compilado de artigos sobre IA e educação organizado no Zotero foi compartilhado, visando auxiliar em estudos. Uma mensagem descreveu um estudo nacional que revelou que 13,1% dos adolescentes e jovens adultos nos EUA buscaram conselhos de saúde mental em chatbots de IA, reportando que 93% consideraram a ajuda útil, e levantando preocupações sobre adequação clínica e equidade.</li>
+<li><strong>Recorrência</strong>: Recorrente, com várias mensagens e links compartilhados e um breve comentário.</li>
+</ul>
+</li>
+<li>
+<p><strong>Felicitações e Votos de Boas Festas</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Opiniões pessoais, fatos compartilhados (mídias).</li>
+<li><strong>Descrição Factual</strong>: Vários membros desejaram "Feliz Natal" e "Boas Festas", com votos de "paz e luz" e um "início de 2026 cheio de saúde, alegrias e realizações". Alguns membros compartilharam mídias ocultas, presumivelmente cartões ou imagens festivas. Houve uma interação onde um membro avisou outro que a mensagem de Natal "ficou sem", e o remetente agradeceu pelo aviso. Um membro expressou o desejo de "só descansar" em "dias reais".</li>
+<li><strong>Recorrência</strong>: Recorrente durante o período festivo.</li>
+</ul>
+</li>
+<li>
+<p><strong>Anúncio de Publicação da Coleção Play Connect - BNCC Computação</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, opiniões pessoais.</li>
+<li><strong>Descrição Factual</strong>: Um membro anunciou a publicação da "coleção Play Connect - BNCC Computação", expressando "imensa alegria" pela realização de um "grande sonho" e agradecendo à Scarpa Editora. A autora destacou que o projeto visa conectar jovens ao pensamento computacional, tecnologia e inovação de forma ética e transformadora. Outro membro parabenizou a autora e desejou "dezenas de conquistas" em 2026.</li>
+<li><strong>Recorrência</strong>: Pontual.</li>
+</ul>
+</li>
+<li>
+<p><strong>Falecimento e Homenagens ao Professor José Armando Valente</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, opiniões pessoais.</li>
+<li><strong>Descrição Factual</strong>: Vários membros expressaram tristeza e pesar pelo falecimento do "Pai da Informática na Educação do Brasil", Professor José Armando Valente. Membros relataram ter utilizado o trabalho dele em dissertações de mestrado, o consideraram "professor", "amigo", "referencial teórico", "referência" e "mentor". Compartilharam memórias de encontros, palestras (incluindo uma na ETH Zurich) e a influência de suas ideias sobre pensamento computacional, IA e interfaces. Foi mencionado que ele foi professor em bancas de mestrado e doutorado, e que era "generoso, criativo e crítico", com um "legado imenso" e antecipando debates atuais na década de 1980. Foi afirmado que Valente estava com câncer e morreu nos EUA, e que a ABED faria uma nota de pesar. Um membro relatou ter trabalhado com ele na publicação da nova edição de Mindstorms. Uma nota institucional do IVEPESP foi compartilhada, detalhando seu legado acadêmico, a criação do curso de Midialogia, a introdução da linguagem LOGO no Brasil (com apoio da Itautec) e seu papel como precursor da integração entre educação, computação e políticas de desenvolvimento tecnológico. Membros o descreveram como uma figura "valente no rigor para formular ideias", um "gênio da ciência e da educação" que foi cofundador da Escola do Futuro da USP e criador do projeto Tonomundo, enfatizando sua audácia, visão e compromisso social.</li>
+<li><strong>Recorrência</strong>: Debate prolongado, com dezenas de mensagens expressando pesar e reconhecimento.</li>
+</ul>
+</li>
+<li>
+<p><strong>Notificações de Segurança e Movimentação no Grupo</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados.</li>
+<li><strong>Descrição Factual</strong>: Houve múltiplas notificações automáticas do WhatsApp sobre códigos de segurança que mudaram para vários contatos do grupo. Dois membros deixaram o grupo ("+55 15 98117-3480 saiu" e "Rodrigo Antao (安道) saiu").</li>
+<li><strong>Recorrência</strong>: Recorrente ao longo da semana.</li>
+</ul>
+</li>
+</ul>
+<h2>Links Compartilhados:</h2>
+<ul>
+<li><a href="https://www.instagram.com/p/DSlaL9Gjpgw/?igsh=NGNqODc0cTMydXp1">Instagram post</a><ul>
+<li>Quem compartilhou: Yann Spinelli</li>
+<li>Contexto em que apareceu: Apenas compartilhado, sem comentários adicionais explícitos.</li>
+<li>Indicar se o link: Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://revistapesquisa.fapesp.br/brasil-prepara-se-para-lancar-tv-3-0-antes-da-copa-do-mundo-de-2026/">Brasil prepara-se para lançar TV 3.0 antes da Copa do Mundo de 2026</a><ul>
+<li>Quem compartilhou: Luciano Sathler</li>
+<li>Contexto em que apareceu: Compartilhado com o comentário "uma nova interface que se popularizará, inclusive para a IA".</li>
+<li>Indicar se o link: Foi apenas compartilhado (não gerou discussão imediata).</li>
+</ul>
+</li>
+<li><a href="https://chaves.space/2025/12/22/uma-mensagem-pedagogica-de-natal/">Uma mensagem pedagógica de Natal</a><ul>
+<li>Quem compartilhou: +55 11 99863-5055</li>
+<li>Contexto em que apareceu: Apenas compartilhado, sem comentários adicionais explícitos.</li>
+<li>Indicar se o link: Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://www.nexojornal.com.br/ensaio/2025/12/25/inteligencia-artificial-tecnologia-educacao-desafios?utm_medium=email&amp;utm_campaign=Nexo%20%20Hoje%20-%2020251226&amp;utm_content=Nexo%20%20Hoje%20-%2020251226+CID_3f6ce69396c823d208fd746ed94eac85&amp;utm_source=Email%20CM&amp;utm_term=Leia%20no%20ensaio%20de%20Mara%20Habimorad">Inteligência artificial, tecnologia e educação: desafios</a><ul>
+<li>Quem compartilhou: Rafael Parente</li>
+<li>Contexto em que apareceu: Compartilhado como um "Bom artigo de Maira Habinorad, CEO do Inteli, defendendo uma visão menos ufanista ou catastrófica e mais crítica e realista sobre IA na educação".</li>
+<li>Indicar se o link: Gerou discussão (Rafael Coelho comentou).</li>
+</ul>
+</li>
+<li><a href="https://rnpmais.rnp.br/perplexity-pro">Perplexity Pro para pesquisadores</a><ul>
+<li>Quem compartilhou: Professor Dorly</li>
+<li>Contexto em que apareceu: Compartilhado com informações sobre como obter 12 meses de Perplexity Pro para pesquisadores de instituições associadas ao CAFe.</li>
+<li>Indicar se o link: Gerou discussão (Prof Julio César Passos agradeceu e mencionou ter feito a inscrição).</li>
+</ul>
+</li>
+<li><a href="https://ajuda.rnp.br/cafe/lista-clientes">Lista de instituições associadas ao CAFe</a><ul>
+<li>Quem compartilhou: Professor Dorly</li>
+<li>Contexto em que apareceu: Acompanhava o link do Perplexity Pro, fornecendo a lista para verificar elegibilidade.</li>
+<li>Indicar se o link: Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://www.instagram.com/reel/DGLGpDiR1Bt/?igsh=MTluc3NhZHRydWJ1dA==">Instagram reel</a><ul>
+<li>Quem compartilhou: Ângela Cristina</li>
+<li>Contexto em que apareceu: Compartilhado no contexto da homenagem ao Prof. Valente, com o comentário "Ele dizia tudo de uma forma tão simples mas direta!".</li>
+<li>Indicar se o link: Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://www.zotero.org/groups/6347485/ben_williamsons_ai_in_ed_list/item-list">Zotero compilation: Ben Williamson's AI in Ed list</a><ul>
+<li>Quem compartilhou: Henrick</li>
+<li>Contexto em que apareceu: Compartilhado como um "compilado de artigos sobre IA e educação" que pode ser útil para complementar estudos e já está organizado no Zotero.</li>
+<li>Indicar se o link: Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12595529/">National Study Reveals 13% of US Adolescents and Young Adults Seek Mental Health Advice from AI Chatbots</a><ul>
+<li>Quem compartilhou: Andre Gusman de Oliveira</li>
+<li>Contexto em que apareceu: Compartilhado com um resumo detalhado sobre o estudo de adolescentes e jovens adultos que buscam conselhos de saúde mental em chatbots de IA.</li>
+<li>Indicar se o link: Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://www.linkedin.com/posts/andregusmanoficial_quando-tudo-parece-f%C3%A1ci-quem-ensina-a-parar-activity-7411398977285406720-Vx5k?utm_source=share&amp;utm_medium=member_ios&amp;rcm=ACoAAACD8wUBLT5PMr5IiRjocw07iJjuoi5szTI">LinkedIn post by Andre Gusman</a><ul>
+<li>Quem compartilhou: Andre Gusman de Oliveira</li>
+<li>Contexto em que apareceu: Apenas compartilhado, sem comentários adicionais explícitos.</li>
+<li>Indicar se o link: Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://porvir.org/jose-valente-referencia-construcionismo-tecnologia-educacional/">José Valente: referência do construcionismo e tecnologia educacional</a><ul>
+<li>Quem compartilhou: Luciano Meira</li>
+<li>Contexto em que apareceu: Compartilhado no contexto das homenagens ao Prof. José Armando Valente.</li>
+<li>Indicar se o link: Foi apenas compartilhado.</li>
+</ul>
+</li>
+</ul>
+<h2>Limitações do Resumo:</h2>
+<ul>
+<li>O grande número de mensagens automáticas de "Seu código de segurança mudou" contribui para o volume geral, mas não para o conteúdo temático da discussão.</li>
+<li>Muitas mensagens consistem em "<Mídia oculta>", impedindo a descrição de seu conteúdo factual.</li>
+<li>Alguns links foram compartilhados sem contexto explícito adicional além do próprio link ou de saudações genéricas.</li>
+<li>A mensagem de Osvaldo Junior mencionou um "link" e a possibilidade de participar de algo, mas o link não foi fornecido na forma de URL explícita, apenas como "<Mídia oculta>", impossibilitando seu registro.</li>
+<li>Mensagens de saída de membros do grupo são apenas registros de eventos administrativos do grupo, sem conteúdo temático.</li>
+</ul>
+    </article>
+    
+  </main>
+  <footer class="footer">
+    Aprendizados_IA+Educação // Resumos gerados com LLM // 2026<br>
+    <span style="opacity: 0.7;">Feito por Marina e Tiago Maluta</span>
+  </footer>
+  
+</body>
+</html>

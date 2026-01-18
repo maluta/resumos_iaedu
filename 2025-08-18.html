@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resumo Semanal | IA+Educação</title>
+  <meta name="description" content="O volume geral de mensagens foi alto, com participação distribuída entre os membros. A natureza predominante das interações foi o compartilhamento de informações e links, seguido por perguntas e debates sobre os temas. Houve a ocorrência de múltiplos tópicos paralelos, com...">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg-primary: #f3f4f6;
+  --bg-secondary: #ffffff;
+  --text-primary: #000000;
+  --text-secondary: #4b5563;
+  --accent-blue: #2563eb;
+  --accent-yellow: #fbbf24;
+  --border-color: #000000;
+  --border-light: #d1d5db;
+  --font-main: 'Space Grotesk', -apple-system, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-main);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+  background-image: radial-gradient(circle, #00000015 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.migration-banner {
+  background: var(--text-primary);
+  color: var(--bg-secondary);
+  padding: 0.75rem 1.5rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+.migration-banner a { color: var(--accent-yellow); text-decoration: underline; }
+.migration-banner .close-banner {
+  background: none;
+  border: none;
+  color: var(--bg-secondary);
+  cursor: pointer;
+  margin-left: 1rem;
+  font-size: 1.25rem;
+  vertical-align: middle;
+}
+.header {
+  position: sticky;
+  top: 0;
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--border-color);
+  z-index: 100;
+  padding: 1rem 1.5rem;
+}
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.logo-bracket { color: var(--accent-blue); }
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+.nav a { color: var(--text-secondary); text-decoration: none; transition: color 0.15s; }
+.nav a:hover { color: var(--text-primary); }
+.nav-separator { color: var(--border-light); }
+.main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  width: 100%;
+}
+/* Search */
+.search-container { margin-bottom: 2rem; }
+.search-input {
+  width: 100%;
+  padding: 1rem;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  outline: none;
+}
+.search-input:focus { box-shadow: 4px 4px 0 var(--border-color); }
+.search-input::placeholder { color: var(--text-secondary); }
+.search-stats {
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.search-results {
+  margin-top: 1.5rem;
+  display: none;
+}
+.search-results.active { display: block; }
+.search-result-item {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  display: block;
+  transition: all 0.15s;
+}
+.search-result-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+.search-result-title {
+  font-weight: 700;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent-blue);
+}
+.search-result-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+.search-result-snippet {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.search-result-snippet mark {
+  background: var(--accent-yellow);
+  color: var(--text-primary);
+  padding: 0.1em 0.2em;
+}
+.no-results {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-secondary);
+  display: none;
+}
+.no-results.active { display: block; }
+.page-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.page-title {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.page-subtitle { font-size: 1rem; color: var(--text-secondary); }
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+.posts-grid.hidden { display: none; }
+.post-card {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 1.5rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+}
+.post-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+.post-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.post-card-action {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  padding: 0.25rem 0.5rem;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.post-card-action:hover {
+  border-color: #25D366;
+  color: #25D366;
+}
+.post-card-image {
+  width: 100%;
+  height: 120px;
+  background: var(--bg-primary);
+  border: 1px dashed var(--border-light);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-secondary);
+}
+.post-card-category {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-blue);
+  background: rgba(37, 99, 235, 0.1);
+  padding: 0.25rem 0.5rem;
+}
+.post-card-date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.post-card-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+.post-card-excerpt {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  flex: 1;
+}
+.post-card-footer {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-light);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-blue);
+}
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+.back-link:hover { color: var(--text-primary); }
+.back-link::before { content: "< "; }
+.post-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.post-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+.post-category {
+  color: var(--accent-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+.post-date { color: var(--text-secondary); }
+.post-title { font-size: 2rem; font-weight: 700; line-height: 1.2; }
+.post-week {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+.content {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 2rem;
+}
+.content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-light);
+}
+.content h2:first-child { margin-top: 0; }
+.content h3 { font-size: 1.125rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.5rem; }
+.content p { margin-bottom: 1rem; }
+.content ul, .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+.content li { margin-bottom: 0.5rem; }
+.content li ul { margin-top: 0.5rem; margin-bottom: 0.5rem; }
+.content a { color: var(--accent-blue); text-decoration: none; border-bottom: 1px solid transparent; }
+.content a:hover { border-bottom-color: var(--accent-blue); }
+.content strong { font-weight: 700; }
+/* Links page */
+.links-section { margin-bottom: 3rem; }
+.links-section-title {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.links-grid.hidden { display: none; }
+.link-item {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.15s;
+}
+.link-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+.link-item.hidden { display: none; }
+.link-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+.link-domain {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-blue);
+  background: rgba(37, 99, 235, 0.1);
+  padding: 0.25rem 0.5rem;
+}
+.link-action {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  padding: 0.25rem 0.5rem;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.link-action:hover {
+  border-color: #25D366;
+  color: #25D366;
+}
+.link-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+  line-height: 1.3;
+  flex: 1;
+  text-decoration: none;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.link-title:hover {
+  color: var(--accent-blue);
+}
+.link-qr {
+  width: 80px;
+  height: 80px;
+  background: var(--bg-primary);
+  border: 1px dashed var(--border-light);
+  margin: 0 auto 0.75rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-secondary);
+}
+.link-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-light);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+.links-count {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+.footer {
+  background: var(--text-primary);
+  color: var(--bg-secondary);
+  padding: 1rem 1.5rem;
+  margin-top: auto;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+@media (max-width: 768px) {
+  .header-content { flex-direction: column; gap: 1rem; }
+  .page-title, .post-title { font-size: 1.5rem; }
+  .posts-grid { grid-template-columns: 1fr; }
+  .content { padding: 1rem; }
+  .nav { flex-wrap: wrap; justify-content: center; }
+}
+  </style>
+</head>
+<body>
+  <div class="migration-banner" id="migrationBanner">
+    Novo site! Migramos do Google Sites para cá.
+    <button class="close-banner" onclick="document.getElementById('migrationBanner').style.display='none';localStorage.setItem('bannerClosed','1');">×</button>
+  </div>
+  <script>if(localStorage.getItem('bannerClosed')==='1')document.getElementById('migrationBanner').style.display='none';</script>
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <span class="logo-bracket">[</span>IA+EDU<span class="logo-bracket">]</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Resumos</a>
+        <span class="nav-separator">//</span>
+        <a href="links.html">Links</a>
+      </nav>
+    </div>
+  </header>
+  <main class="main">
+    
+    <a href="index.html" class="back-link">Voltar aos resumos</a>
+    <header class="post-header">
+      <div class="post-meta">
+        <span class="post-category">Resumo Semanal</span>
+        <span class="post-date">18/08/2025</span>
+      </div>
+      <h1 class="post-title">Resumo Semanal</h1>
+      <p class="post-week">Semana: 12/08/2025 → 18/08/2025</p>
+    </header>
+    <article class="content">
+      <h2>Sumário Executivo da Semana:</h2>
+<p>O volume geral de mensagens foi alto, com participação distribuída entre os membros. A natureza predominante das interações foi o compartilhamento de informações e links, seguido por perguntas e debates sobre os temas. Houve a ocorrência de múltiplos tópicos paralelos, com destaque para discussões sobre IA na educação, proteção infantil online e o desenvolvimento de infraestrutura de IA no Brasil. Observou-se a presença explícita de divergências em alguns debates, mas sem um alinhamento geral claro em todos os tópicos.</p>
+<hr />
+<h2>Principais Temas e Conteúdos:</h2>
+<p><strong>1. Educa Week 2025 e Expansão Nacional</strong>
+*   <strong>Tipo de Conteúdo</strong>: Fatos compartilhados
+*   <strong>Descrição Factual</strong>: Anúncio da realização da Educa Week 2025 em São Paulo, com foco em desafios da educação pública e privada e debates sobre Inteligência Artificial. Anúncio de expansão com edições regionais a partir de 2026 e formação de Conselhos Consultivos Estaduais em áreas estratégicas. Abertura para interessados em representar estados ou indicar nomes.
+*   <strong>Recorrência</strong>: 1 menção (inicial).</p>
+<p><strong>2. IA na Pesquisa e Educação (Seminário UFPE)</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de links e mídia
+*   <strong>Descrição Factual</strong>: Compartilhamento de link para um seminário do Centro de Informática da UFPE sobre "IA na pesquisa e educação". Discussão sobre perguntas do Prof. Filipe Calegario acerca do uso de IA na pesquisa acadêmica.
+*   <strong>Recorrência</strong>: Várias mensagens e links compartilhados.</p>
+<p><strong>3. Ferramentas e Oportunidades para IA e Educação</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de links
+*   <strong>Descrição Factual</strong>: Compartilhamento de link sobre uma "tools competition" como oportunidade para organizações trabalhando com IA e educação.
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>4. Psicose após Uso Excessivo de ChatGPT</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link
+*   <strong>Descrição Factual</strong>: Compartilhamento de link de matéria sobre internações psiquiátricas após interações excessivas com chatbots.
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>5. Eventos e Participações em RIW (Rio Innovation Week)</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de links, mídias e comentários
+*   <strong>Descrição Factual</strong>: Participações em eventos como RIW foram mencionadas, com destaque para a presença de empresas de tecnologia ("BETs") patrocinando e discutindo IA. Houve comentários sobre a organização do evento e a presença de marcas, levantando questionamentos sobre o futuro que está sendo construído e a influência do dinheiro.
+*   <strong>Recorrência</strong>: Várias mensagens e comentários.</p>
+<p><strong>6. Proteção Infantil e "Adultização" na Era Digital</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de links, artigos e debate
+*   <strong>Descrição Factual</strong>: Discussão aprofundada sobre o vídeo do Felca e o tema da "adultização" infantil, a transformação de crianças em produtos digitais, a exposição na internet, o papel dos algoritmos e as implicações para a saúde mental e a infância. Comparativo entre modelos regulatórios brasileiros e europeus. Sugestões de frentes para proteção infantil, incluindo configurações de segurança, auditorias, tipificação de crimes, educação digital e responsabilização.
+*   <strong>Recorrência</strong>: Debate prolongado com compartilhamento de diversos artigos e opiniões.</p>
+<p><strong>7. IA, Etarismo, Racismo e Gênero</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link e descrição de evento
+*   <strong>Descrição Factual</strong>: Divulgação de um evento online sobre vieses de gênero, raça e etarismo em modelos generativos de IA, articulando ciência, colonialismo e exclusão.
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>8. Infraestrutura de IA e Supercomputadores</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de links
+*   <strong>Descrição Factual</strong>: Compartilhamento de links sobre a infraestrutura de IA, incluindo um supercomputador em desenvolvimento no Brasil (PIBA) com arquitetura RISC-V, e planos para instalação de supercomputadores da Nvidia no Rio de Janeiro. Discussão sobre o papel da infraestrutura para a soberania em IA.
+*   <strong>Recorrência</strong>: Várias menções.</p>
+<p><strong>9. IA e Desigualdades (Seminário Fundação Itaú)</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de links e divulgação de evento
+*   <strong>Descrição Factual</strong>: Divulgação do "2º Seminário Internacional de Inteligência Artificial em Educação e Cultura: Estratégias para combater desigualdades", promovido pela Fundação Itaú, com transmissão online e painéis.
+*   <strong>Recorrência</strong>: Várias menções.</p>
+<p><strong>10. IA em Companhias e Brinquedos Infantis</strong>
+*   <strong>Tipo de Conteúdo</strong>: Opiniões pessoais e debate
+*   <strong>Descrição Factual</strong>: Discussão sobre o perigo de IAs "companions" e brinquedos com IA, com sugestões de medidas de proteção infantil.
+*   <strong>Recorrência</strong>: Várias mensagens.</p>
+<p><strong>11. Críticas ao Posicionamento sobre IA (Goleman, Haidt)</strong>
+*   <strong>Tipo de Conteúdo</strong>: Opiniões pessoais e debate
+*   <strong>Descrição Factual</strong>: Críticas à palestra de Daniel Goleman sobre empatia e IA, considerada fraca e com vilanização da IA. Discussão sobre a visão de Goleman e Jonathan Haidt sobre o impacto das redes sociais e a potencialidade da IA em amplificar a empatia humana.
+*   <strong>Recorrência</strong>: Debate prolongado.</p>
+<p><strong>12. Uso Pedagógico de Celular e Conscientização Familiar</strong>
+*   <strong>Tipo de Conteúdo</strong>: Perguntas e Opiniões pessoais
+*   <strong>Descrição Factual</strong>: Questionamento sobre a falta de debate acerca do uso pedagógico do celular, conscientização familiar e o que realmente é IA, com a percepção de que as discussões permanecem rasas e superficiais.
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>13. IA na Colômbia e Comprometimento do Aprendizado</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link e Fatos compartilhados
+*   <strong>Descrição Factual</strong>: Notícia sobre como o avanço da IA da Meta, integrada a aplicativos como Facebook e WhatsApp na Colômbia, está comprometendo o aprendizado de alunos, que passam a usá-la para fazer lições de casa.
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>14. Navegadores de IA e Automação</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link e debate
+*   <strong>Descrição Factual</strong>: Discussão sobre o lançamento de um navegador de IA (Comet da Perplexity) que automatiza tarefas e interage sozinho na internet, gerando espanto e preocupação. Debates sobre a necessidade do Google vender o Chrome por questões antitruste e a escala de ofertas envolvendo grandes empresas de tecnologia.
+*   <strong>Recorrência</strong>: Várias mensagens e debate prolongado.</p>
+<p><strong>15. IA Generativa e "Bala de Prata" na Educação</strong>
+*   <strong>Tipo de Conteúdo</strong>: Opiniões pessoais e debate
+*   <strong>Descrição Factual</strong>: Incomodo com a percepção de que a IA Generativa está sendo apresentada como uma "bala de prata" para inovação educacional, sem considerar realidades educacionais específicas. Discussão sobre a precipitação, superficialidade e a influência do investimento por trás da disseminação da IA. Ênfase na importância de resolver problemas básicos da educação antes de focar em novas tecnologias.
+*   <strong>Recorrência</strong>: Debate prolongado.</p>
+<p><strong>16. "Códigos de Sofia" e Framework C.H.A.V.E para IA na Educação</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de mídias, opiniões e planos de ação
+*   <strong>Descrição Factual</strong>: Apresentação e discussão sobre o framework C.H.A.V.E (Capacitação, Humanização, Acesso, Validação Ética, Evolução Sistêmica) como abordagem para implementar "Códigos de Sofia" e IA na educação. Plano de um curso gratuito com encontros síncronos para explorar o material e a metodologia, com foco em curadoria, acessibilidade e aplicação prática.
+*   <strong>Recorrência</strong>: Várias mensagens e planos de ação.</p>
+<p><strong>17. Segurança e Privacidade em Ferramentas de IA</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de links e debate
+*   <strong>Descrição Factual</strong>: Alerta sobre nova técnica de roubo de dados em LLMs ("Data Exfiltracion"). Discussão sobre a função de "Aplicativos Conectados" no ChatGPT, que dá acesso a documentos e serviços, gerando preocupações com privacidade. Relato de experiência com o Copilot da Microsoft e a integração entre diferentes ferramentas.
+*   <strong>Recorrência</strong>: Várias mensagens e debate prolongado.</p>
+<p><strong>18. IA na Educação na China</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de links e mídias
+*   <strong>Descrição Factual</strong>: Compartilhamento de informações e vídeos sobre o ensino de IA na China, incluindo currículos e práticas educacionais. Discussão sobre a comparação com a realidade brasileira e a importância de adaptar soluções.
+*   <strong>Recorrência</strong>: Várias menções.</p>
+<p><strong>19. Benchmarking de LLMs para Cenários Educacionais</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link e debate
+*   <strong>Descrição Factual</strong>: Compartilhamento de um dataset abrangente (EduBench) para avaliação de LLMs em cenários educacionais. Discussão sobre a importância e a dificuldade de criar benchmarks específicos para o contexto brasileiro, considerando particularidades regionais e culturais.
+*   <strong>Recorrência</strong>: Várias mensagens e debate.</p>
+<p><strong>20. Lançamento de Livro "Do Algoritmo P ao Algoritmo Íntimo"</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link e convite
+*   <strong>Descrição Factual</strong>: Convite para o lançamento de um livro sobre o tema do grupo, com apresentação de membros da comunidade e participação especial.
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>21. Hackathon USP | Alana - IA na Educação Inclusiva</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link e divulgação de evento
+*   <strong>Descrição Factual</strong>: Divulgação de um hackathon focado no uso de Inteligência Artificial para tornar a educação mais inclusiva, aberto a diversos públicos e com encontros presenciais na USP.
+*   <strong>Recorrência</strong>: Várias menções.</p>
+<p><strong>22. IA e a Cultura do Respeito para Meninas</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link e contribuição para debate
+*   <strong>Descrição Factual</strong>: Contribuição com um artigo sobre a importância da educação de meninos para a cultura do respeito, ligando a falta de respeito com meninas ao início da objetificação e violência contra a mulher, e a relação com a "adultização".
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>23. Rio AI City e Infraestrutura de IA</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de links, notícias e debate
+*   <strong>Descrição Factual</strong>: Notícias sobre a iniciativa do Rio de Janeiro de se tornar uma "AI City" com investimento em infraestrutura de IA, em parceria com empresas como Oracle e Nvidia. Discussão sobre a construção de uma IA soberana, o papel de centros de pesquisa, a articulação com iniciativas nacionais e internacionais, e os desafios de comunicação para engajar a sociedade.
+*   <strong>Recorrência</strong>: Várias mensagens e debate.</p>
+<p><strong>24. IA na Avaliação Formativa e Zoneamento Regulatório</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de links e debate
+*   <strong>Descrição Factual</strong>: Discussão sobre IA e Avaliação Formativa, com o questionamento se é "Inteligência Pedagógica ou Automatização Vazia". Preocupações sobre a confusão entre avaliações seletivas e formativas, zonas cinzentas na legislação e o potencial de burocratização da LGPD impedir a inovação.
+*   <strong>Recorrência</strong>: Várias mensagens e debate.</p>
+<p><strong>25. IA no Ensino Superior Brasileiro e Uso Desregulado</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link
+*   <strong>Descrição Factual</strong>: Notícia sobre pesquisa indicando o uso desregulado de IA no ensino superior brasileiro.
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>26. Uso de IA em Escolas na China</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link
+*   <strong>Descrição Factual</strong>: Compartilhamento de link detalhando o ensino de IA na China.
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>27. IA e Currículo/Frameworks Educacionais</strong>
+*   <strong>Tipo de Conteúdo</strong>: Debate e compartilhamento de opiniões
+*   <strong>Descrição Factual</strong>: Debate sobre a importância de acompanhar modelos de outros países na criação de currículos de IA, mas com foco na adaptação à realidade brasileira. Discussão sobre a dificuldade de implementação de políticas públicas e a necessidade de considerar as particularidades locais. Ênfase na importância da BNCC de Computação, guias do MEC e estratégias brasileiras para integrar ética e impactos das tecnologias algorítmicas. Preocupação com a chegada dessas discussões ao chão de sala de aula e a necessidade de formação de professores.
+*   <strong>Recorrência</strong>: Debate prolongado.</p>
+<p><strong>28. IA Treinada com Saberes Ancestrais/Não-Hegemônicos</strong>
+*   <strong>Tipo de Conteúdo</strong>: Perguntas e compartilhamento de exemplos
+*   <strong>Descrição Factual</strong>: Busca por exemplos de IAs treinadas com saberes ancestrais ou não-hegemônicos. Compartilhamento de um GPT de língua Tupi e discussões sobre modelos treinados em português com potencial para representar outras cosmovisões.
+*   <strong>Recorrência</strong>: Várias mensagens.</p>
+<p><strong>29. Posicionamento sobre PL 2628 e Proteção de Crianças Digital</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de links e Fatos compartilhados
+*   <strong>Descrição Factual</strong>: Discussão sobre o posicionamento coletivo do grupo em relação ao PL 2628 e a proteção de crianças no ambiente digital. Informação de que o Instituto Alana e a Conanda apoiam o projeto.
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>30. Semanal de Avaliações e IA</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link
+*   <strong>Descrição Factual</strong>: Compartilhamento de episódio de podcast sobre avaliações e IA, com foco em inteligência pedagógica versus automatização.
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>31. Uso do ChatGPT e a Queda no Verão</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de links e debate
+*   <strong>Descrição Factual</strong>: Discussão sobre dados que indicam uma queda no uso do ChatGPT durante as férias escolares de verão, levantando hipóteses sobre o predomínio do uso acadêmico e a confiabilidade da fonte de dados. Análise de que a queda é mais acentuada em modelos gratuitos.
+*   <strong>Recorrência</strong>: Debate prolongado.</p>
+<p><strong>32. IA na Arte, Cultura e Educação (Seminário Itaú)</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link e divulgação de evento
+*   <strong>Descrição Factual</strong>: Divulgação do "2º Seminário Internacional de Inteligência Artificial em Educação e Cultura: Estratégias para Combater Desigualdades" da Fundação Itaú, com transmissão online e presencial, abordando desafios, tendências e cidadania a partir do uso da IA.
+*   <strong>Recorrência</strong>: Várias menções.</p>
+<p><strong>33. Novas Funções e Riscos de LLMs</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link e debate
+*   <strong>Descrição Factual</strong>: Discussão sobre a nova função de aplicativos conectados no ChatGPT, que permite acesso a documentos e serviços, gerando preocupações com privacidade. Alerta sobre novas técnicas de roubo de dados em LLMs.
+*   <strong>Recorrência</strong>: Várias mensagens.</p>
+<p><strong>34. Uso de IA na Comunicação e Acessibilidade</strong>
+*   <strong>Tipo de Conteúdo</strong>: Perguntas
+*   <strong>Descrição Factual</strong>: Busca por ferramentas de IA para acessibilidade no campo da comunicação.
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>35. Regulamentação de IA e a Próxima Era de Vírus/Ataques</strong>
+*   <strong>Tipo de Conteúdo</strong>: Opiniões e preocupações
+*   <strong>Descrição Factual</strong>: Preocupação com a próxima era de vírus e ataques focados em IA, com a descoberta de novas técnicas de infiltração e roubo de dados.
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>36. IA e Educação na América Latina</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link
+*   <strong>Descrição Factual</strong>: Compartilhamento de notícia sobre a IA da Meta atrapalhando o aprendizado no interior da Colômbia.
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>37. IA e Acessibilidade em Ferramentas</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link
+*   <strong>Descrição Factual</strong>: Compartilhamento de link sobre o Claude, que agora oferece um modo de aprendizagem para todos.
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>38. IA e a Educação Brasileira - Em Busca de Benchmark</strong>
+*   <strong>Tipo de Conteúdo</strong>: Perguntas e debate
+*   <strong>Descrição Factual</strong>: Busca por benchmarks de IA adaptados ao contexto brasileiro, considerando particularidades regionais e culturais. Discussão sobre a dificuldade de criar tais ferramentas e a existência de iniciativas como a Inner AI.
+*   <strong>Recorrência</strong>: Várias mensagens.</p>
+<p><strong>39. Desafios da Inovação em Ciência no Brasil</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link e vídeo
+*   <strong>Descrição Factual</strong>: Compartilhamento de um caso incrível de sucesso em inovação científica e discussão sobre os desafios de inovar no Brasil em áreas de fronteira como Biotecnologia e IA.
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>40. IA no Governo e Infraestrutura Tecnológica</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de links
+*   <strong>Descrição Factual</strong>: Compartilhamento de notícias sobre a instalação de supercomputadores para IA no Rio de Janeiro e a estratégia do Rio de Janeiro para se tornar uma "AI City" da América Latina, com investimento em infraestrutura e parcerias.
+*   <strong>Recorrência</strong>: Várias menções.</p>
+<p><strong>41. Educação Midiática e IA</strong>
+*   <strong>Tipo de Conteúdo</strong>: Debate e compartilhamento de material
+*   <strong>Descrição Factual</strong>: Discussão sobre a importância de integrar educação midiática e IA. Compartilhamento do portal #PromptEduBr com materiais práticos e curadoria sobre o uso de IA com metodologias contemporâneas. Discussão sobre a necessidade de simplificar a linguagem e aproximar a IA da prática pedagógica.
+*   <strong>Recorrência</strong>: Várias mensagens.</p>
+<p><strong>42. IA na Educação – Riscos e Oportunidades</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link e anúncio de evento
+*   <strong>Descrição Factual</strong>: Convite para o 9º Congresso Internacional de Jornalismo de Educação, que abordará riscos e oportunidades da IA na educação, com participação de membros do grupo.
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>43. Ensino de Tecnologia com Propósito</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link e mídia
+*   <strong>Descrição Factual</strong>: Divulgação de uma sessão sobre "Ensino de Tecnologia com Propósito".
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>44. IA para Transformação Social nas Margens e no Centro</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link
+*   <strong>Descrição Factual</strong>: Compartilhamento de um post sobre "Inteligência Artificial para Transformação Social: nas Margens e no Centro".
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>45. IA e Educação Inclusiva (Hackathon USP-Alana)</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link
+*   <strong>Descrição Factual</strong>: Divulgação de um Hackathon focado em IA na Educação Inclusiva, promovido pela USP e Alana.
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>46. IA e o Ensino de Matemática/Língua Tupi</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de links e mídia
+*   <strong>Descrição Factual</strong>: Discussão sobre o progresso no ensino da matemática com IA e a criação de um GPT de língua Tupi. Compartilhamento de links relacionados a esses temas.
+*   <strong>Recorrência</strong>: Várias menções.</p>
+<p><strong>47. Pesquisa em IA na Educação</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link
+*   <strong>Descrição Factual</strong>: Compartilhamento de link para um artigo sobre pesquisa em IA na educação.
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>48. Regulação e Implementação da IA na Educação</strong>
+*   <strong>Tipo de Conteúdo</strong>: Debate
+*   <strong>Descrição Factual</strong>: Discussão sobre a importância da implementação de políticas públicas de IA na educação, a adaptação a realidades locais e a dificuldade de comparar com outros países. Preocupação com a burocratização e o impacto na inovação.
+*   <strong>Recorrência</strong>: Várias mensagens.</p>
+<p><strong>49. IA e Ensino Superior Brasileiro</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link
+*   <strong>Descrição Factual</strong>: Compartilhamento de link sobre pesquisa indicando que o uso de IA no ensino superior brasileiro ainda é desregulado.
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>50. IA em Cursos de Educação e o "Fantástico"</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de mídia e debate
+*   <strong>Descrição Factual</strong>: Discussão e espanto com a aparição de membros do grupo no programa "Fantástico" em reportagem sobre eventos de inovação, gerando reações divertidas e confusão sobre a participação.
+*   <strong>Recorrência</strong>: Várias mensagens.</p>
+<p><strong>51. BNCC de Computação e Educação Midiática</strong>
+*   <strong>Tipo de Conteúdo</strong>: Opiniões e debate
+*   <strong>Descrição Factual</strong>: Discussão sobre a cobertura da BNCC de Computação e guias do MEC em relação à IA. Debate sobre a dificuldade de integrar essas discussões no currículo e a importância da formação docente para o uso eficaz dessas ferramentas. Preocupação com a chegada das discussões ao chão de sala de aula e a realidade dos professores.
+*   <strong>Recorrência</strong>: Várias mensagens.</p>
+<p><strong>52. IA e Ciências Humanas vs. Exatas</strong>
+*   <strong>Tipo de Conteúdo</strong>: Opiniões e debate
+*   <strong>Descrição Factual</strong>: Discussão sobre a percepção de que professores de humanas se adaptam mais facilmente a conceitos como "leitura crítica de código" e IA do que professores de exatas.
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<p><strong>53. IA e o Evento da Fundação Itaú</strong>
+*   <strong>Tipo de Conteúdo</strong>: Compartilhamento de link
+*   <strong>Descrição Factual</strong>: Divulgação do "2º Seminário Internacional de Inteligência Artificial em Educação e Cultura: Estratégias para Combater Desigualdades" da Fundação Itaú.
+*   <strong>Recorrência</strong>: 1 menção.</p>
+<hr />
+<h2>Links Compartilhados (SEÇÃO CRÍTICA):</h2>
+<ul>
+<li><a href="https://www.linkedin.com/video/event/urn:li:ugcPost:7360987518407708673">Seminário do Centro de Informática da UFPE. ”IA na pesquisa e educação “</a> - Compartilhado por +55 38 9210-4343 - Contexto: Notícia sobre evento. Gerou discussão.</li>
+<li><a href="https://www.linkedin.com/posts/activity-7361007315430309888-TxqC?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAUUiCQBcndEaO0ad0P8f4qZcBb6pymGuN4">Pras organizacoes trabalhando com IA e educacao, ótima oportunidade: tools competition</a> - Compartilhado por Guilherme Cintra - Contexto: Oportunidade para empresas de IA e educação. Apenas compartilhado.</li>
+<li><a href="https://www.msn.com/pt-br/saude/medicina/psicose-ap%C3%B3s-uso-excessivo-do-chatgpt-cada-vez-mais-pessoas-est%C3%A3o-sendo-internadas-em-hospitais-psiqui%C3%A1tricos-ap%C3%B3s-interagirem-com-chatbots/ar-AA1KiWRF?cvid=51b17f089b8f40acbd0613032b1f2a77&amp;ocid=hpmsn">psicose após uso excessivo do chatgpt-cada vez mais pessoas estão sendo internadas em hospitais psiquiátricos após interagirem com chatbots</a> - Compartilhado por Juliana Lima - Contexto: Notícia sobre saúde mental e IA. Apenas compartilhado.</li>
+<li><a href="https://www.instagram.com/reel/DNI16IkO9I_/?igsh=MWpwZ29nMWp1dmJlcg==">Instagram Reel sobre a RIW</a> - Compartilhado por Giselle Santos - Contexto: Divulgação do evento RIW. Apenas compartilhado.</li>
+<li><a href="https://www.linkedin.com/posts/activity-7361007315430309888-TxqC?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAUUiCQBcndEaO0ad0P8f4qZcBb6pymGuN4">Artigo de Silvio e Luciano Meira</a> - Compartilhado por Marcelo Sabbatini - Contexto: Compartilhamento de artigo. Apenas compartilhado. (Nota: Este link parece ser o mesmo que o do item 2 da lista de Guilherme Cintra, mas a descrição aqui é diferente)</li>
+<li><a href="https://www.iea.usp.br/eventos/venenosas-etarismo-genero">Palestra sobre IA, Etarismo, Racismo e Gênero na IEA-USP</a> - Compartilhado por Savio Ferraz - Contexto: Divulgação de evento. Apenas compartilhado.</li>
+<li><a href="https://www.linkedin.com/posts/ferval_technology-artificialintelligence-supercomputers-activity-7360648714870292480-NxHT?utm_source=share&amp;utm_medium=member_ios&amp;rcm=ACoAAAAnf3YB4ETLlk84RvGgvl6Rv4AH1lHnfCI">Post sobre infraestrutura de IA e supercomputadores</a> - Compartilhado por FERNANDO VALENZUELA - Contexto: Discussão sobre infraestrutura de IA. Apenas compartilhado.</li>
+<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfaLLd0KmaFPzZRMUiB4NBhFKUrXLjgT1p1yZFn9V_vUS9SIw/viewform?usp=header">Formulário de inscrição para reunião</a> - Compartilhado por Andreza - Contexto: Convite para reunião. Apenas compartilhado.</li>
+<li><a href="https://www.linkedin.com/posts/andr%C3%A9-ara%C3%BAjo-1713825b_transforme-dados-em-decis%C3%B5es-inteligentes-activity-7361013575047438336-_mcn?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAHOebQBljVzzr1FntR6HREN9L30qzQ1BcI">Post sobre transformar dados em decisões inteligentes</a> - Compartilhado por Ig Ibert Bittencourt - Contexto: IA e tomada de decisão. Apenas compartilhado.</li>
+<li><a href="https://www.linkedin.com/posts/nicolasrobinsonandrade_brasil-%C3%A9-top-3-no-uso-do-chatgpt-diz-openai-activity-7361122319517331456-DJN9?utm_source=social_share_send&amp;utm_medium=android_app&amp;rcm=ACoAAAzhyNIBOWZA2CRVwcfNshnWuwk8PtQSrOQ&amp;utm_campaign=whatsapp">Post sobre o Brasil ser top 3 no uso do ChatGPT</a> - Compartilhado por Giselle Santos - Contexto: Uso de ChatGPT no Brasil. Apenas compartilhado.</li>
+<li><a href="https://www.jornal.usp.br/radio-usp/adultizacao-e-o-debate-sobre-qual-lei-para-proteger-criancas-na-era-dos-algoritmos/">Artigo de Alexandre Schneider sobre adultização e proteção infantil</a> - Compartilhado por Rafael Parente - Contexto: Discussão sobre proteção infantil online. Gerou discussão. (Nota: O link fornecido na mensagem é para um artigo de Alexandra Schneider, mas o texto colado é de Jornal da USP).</li>
+<li><a href="https://www.jornal.usp.br/atualidades/a-arquitetura-algoritmica-que-transforma-vulnerabilidade-infantil-em-commodity-digital-nao-surgiu-no-vazio-legal/">Artigo sobre o impacto da arquitetura algoritmica e regulamentação</a> - Compartilhado por Rafael Parente - Contexto: Discussão sobre proteção infantil online. Gerou discussão.</li>
+<li><a href="https://convergenciadigital.com.br/governo/exclusivo-supercomputador-do-pbia-tera-5-mil-gpus-arquitetura-risc-v-e-inauguracao-prevista-para-2026/">Supercomputador do PBIA</a> - Compartilhado por THOMAS ROSE - Contexto: Infraestrutura de IA no Brasil. Gerou discussão.</li>
+<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfaLLd0KmaFPzZRMUiB4NBhFKUrXLjgT1p1yZFn9V_vUS9SIw/viewform?usp=header">Convite para reunião</a> - Compartilhado por Andreza - Contexto: Convite para reunião. Apenas compartilhado. (Duplicata)</li>
+<li><a href="https://www.linkedin.com/posts/andr%C3%A9-ara%C3%BAjo-1713825b_transforme-dados-em-decis%C3%B5es-inteligentes-activity-7361013575047438336-_mcn?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAHOebQBljVzzr1FntR6HREN9L30qzQ1BcI">Post sobre o uso de IA para tomada de decisões</a> - Compartilhado por Ig Ibert Bittencourt - Contexto: IA e tomada de decisão. Apenas compartilhado. (Duplicata)</li>
+<li><a href="https://www.linkedin.com/posts/nicolasrobinsonandrade_brasil-%C3%A9-top-3-no-uso-do-chatgpt-diz-openai-activity-7361122319517331456-DJN9?utm_source=social_share_send&amp;utm_medium=android_app&amp;rcm=ACoAAAzhyNIBOWZA2CRVwcfNshnWuwk8PtQSrOQ&amp;utm_campaign=whatsapp">Post sobre o Brasil ser top 3 no uso do ChatGPT</a> - Compartilhado por Giselle Santos - Contexto: Uso de ChatGPT no Brasil. Apenas compartilhado. (Duplicata)</li>
+<li><a href="https://www.linkedin.com/posts/activity-7361007315430309888-TxqC?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAUUiCQBcndEaO0ad0P8f4qZcBb6pymGuN4">Artigo de Silvio e Luciano Meira</a> - Compartilhado por Marcelo Sabbatini - Contexto: Compartilhamento de artigo. Apenas compartilhado. (Duplicata)</li>
+<li><a href="https://www.jornal.usp.br/atualidades/a-arquitetura-algoritmica-que-transforma-vulnerabilidade-infantil-em-commodity-digital-nao-surgiu-no-vazio-legal/">Artigo sobre a arquitetura algoritmica e regulamentação</a> - Compartilhado por Rafael Parente - Contexto: Discussão sobre proteção infantil online. Gerou discussão. (Duplicata)</li>
+<li><a href="https://www.linkedin.com/posts/activity-7361007315430309888-TxqC?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAUUiCQBcndEaO0ad0P8f4qZcBb6pymGuN4">Post sobre artigo de Silvio e Luciano Meira</a> - Compartilhado por Marcelo Sabbatini - Contexto: Compartilhamento de artigo. Apenas compartilhado. (Duplicata)</li>
+<li><a href="https://www.iea.usp.br/eventos/venenosas-etarismo-genero">Palestra sobre IA, Etarismo, Racismo e Gênero na IEA-USP</a> - Compartilhado por Savio Ferraz - Contexto: Divulgação de evento. Apenas compartilhado. (Duplicata)</li>
+<li><a href="https://www.linkedin.com/posts/ferval_technology-artificialintelligence-supercomputers-activity-7360648714870292480-NxHT?utm_source=share&amp;utm_medium=member_ios&amp;rcm=ACoAAAAnf3YB4ETLlk84RvGgvl6Rv4AH1lHnfCI">Post sobre infraestrutura de IA e supercomputadores</a> - Compartilhado por FERNANDO VALENZUELA - Contexto: Discussão sobre infraestrutura de IA. Apenas compartilhado. (Duplicata)</li>
+<li><a href="https://www.linkedin.com/posts/andr%C3%A9-ara%C3%BAjo-1713825b_transforme-dados-em-decis%C3%B5es-inteligentes-activity-7361013575047438336-_mcn?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAHOebQBljVzzr1FntR6HREN9L30qzQ1BcI">Post sobre IA e tomada de decisões</a> - Compartilhado por Ig Ibert Bittencourt - Contexto: IA e tomada de decisão. Apenas compartilhado. (Duplicata)</li>
+<li>[Post sobre IA e educação](https://www.linkedin.com/posts/giselle-santos-innovation_inf%C3%A2ncia-em-caixa-document%C3%A1rio-completo-activity-7360769578672545793-isFP?</li>
+</ul>
+    </article>
+    
+  </main>
+  <footer class="footer">
+    Aprendizados_IA+Educação // Resumos gerados com LLM // 2026<br>
+    <span style="opacity: 0.7;">Feito por Marina e Tiago Maluta</span>
+  </footer>
+  
+</body>
+</html>

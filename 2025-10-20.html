@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resumo Semanal | IA+Educação</title>
+  <meta name="description" content="A conversa da semana apresentou um volume de mensagens alto e participação distribuída entre diversos membros. A natureza predominante das interações incluiu o compartilhamento de informações sobre eventos, publicações e ferramentas relacionadas à educação e inteligência...">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg-primary: #f3f4f6;
+  --bg-secondary: #ffffff;
+  --text-primary: #000000;
+  --text-secondary: #4b5563;
+  --accent-blue: #2563eb;
+  --accent-yellow: #fbbf24;
+  --border-color: #000000;
+  --border-light: #d1d5db;
+  --font-main: 'Space Grotesk', -apple-system, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-main);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+  background-image: radial-gradient(circle, #00000015 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.migration-banner {
+  background: var(--text-primary);
+  color: var(--bg-secondary);
+  padding: 0.75rem 1.5rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+.migration-banner a { color: var(--accent-yellow); text-decoration: underline; }
+.migration-banner .close-banner {
+  background: none;
+  border: none;
+  color: var(--bg-secondary);
+  cursor: pointer;
+  margin-left: 1rem;
+  font-size: 1.25rem;
+  vertical-align: middle;
+}
+.header {
+  position: sticky;
+  top: 0;
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--border-color);
+  z-index: 100;
+  padding: 1rem 1.5rem;
+}
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.logo-bracket { color: var(--accent-blue); }
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+.nav a { color: var(--text-secondary); text-decoration: none; transition: color 0.15s; }
+.nav a:hover { color: var(--text-primary); }
+.nav-separator { color: var(--border-light); }
+.main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  width: 100%;
+}
+/* Search */
+.search-container { margin-bottom: 2rem; }
+.search-input {
+  width: 100%;
+  padding: 1rem;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  outline: none;
+}
+.search-input:focus { box-shadow: 4px 4px 0 var(--border-color); }
+.search-input::placeholder { color: var(--text-secondary); }
+.search-stats {
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.search-results {
+  margin-top: 1.5rem;
+  display: none;
+}
+.search-results.active { display: block; }
+.search-result-item {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  display: block;
+  transition: all 0.15s;
+}
+.search-result-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+.search-result-title {
+  font-weight: 700;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent-blue);
+}
+.search-result-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+.search-result-snippet {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.search-result-snippet mark {
+  background: var(--accent-yellow);
+  color: var(--text-primary);
+  padding: 0.1em 0.2em;
+}
+.no-results {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-secondary);
+  display: none;
+}
+.no-results.active { display: block; }
+.page-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.page-title {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.page-subtitle { font-size: 1rem; color: var(--text-secondary); }
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+.posts-grid.hidden { display: none; }
+.post-card {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 1.5rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+}
+.post-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+.post-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.post-card-action {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  padding: 0.25rem 0.5rem;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.post-card-action:hover {
+  border-color: #25D366;
+  color: #25D366;
+}
+.post-card-image {
+  width: 100%;
+  height: 120px;
+  background: var(--bg-primary);
+  border: 1px dashed var(--border-light);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-secondary);
+}
+.post-card-category {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-blue);
+  background: rgba(37, 99, 235, 0.1);
+  padding: 0.25rem 0.5rem;
+}
+.post-card-date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.post-card-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+.post-card-excerpt {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  flex: 1;
+}
+.post-card-footer {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-light);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-blue);
+}
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+.back-link:hover { color: var(--text-primary); }
+.back-link::before { content: "< "; }
+.post-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.post-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+.post-category {
+  color: var(--accent-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+.post-date { color: var(--text-secondary); }
+.post-title { font-size: 2rem; font-weight: 700; line-height: 1.2; }
+.post-week {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+.content {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 2rem;
+}
+.content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-light);
+}
+.content h2:first-child { margin-top: 0; }
+.content h3 { font-size: 1.125rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.5rem; }
+.content p { margin-bottom: 1rem; }
+.content ul, .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+.content li { margin-bottom: 0.5rem; }
+.content li ul { margin-top: 0.5rem; margin-bottom: 0.5rem; }
+.content a { color: var(--accent-blue); text-decoration: none; border-bottom: 1px solid transparent; }
+.content a:hover { border-bottom-color: var(--accent-blue); }
+.content strong { font-weight: 700; }
+/* Links page */
+.links-section { margin-bottom: 3rem; }
+.links-section-title {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.links-grid.hidden { display: none; }
+.link-item {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.15s;
+}
+.link-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+.link-item.hidden { display: none; }
+.link-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+.link-domain {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-blue);
+  background: rgba(37, 99, 235, 0.1);
+  padding: 0.25rem 0.5rem;
+}
+.link-action {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  padding: 0.25rem 0.5rem;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.link-action:hover {
+  border-color: #25D366;
+  color: #25D366;
+}
+.link-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+  line-height: 1.3;
+  flex: 1;
+  text-decoration: none;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.link-title:hover {
+  color: var(--accent-blue);
+}
+.link-qr {
+  width: 80px;
+  height: 80px;
+  background: var(--bg-primary);
+  border: 1px dashed var(--border-light);
+  margin: 0 auto 0.75rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-secondary);
+}
+.link-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-light);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+.links-count {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+.footer {
+  background: var(--text-primary);
+  color: var(--bg-secondary);
+  padding: 1rem 1.5rem;
+  margin-top: auto;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+@media (max-width: 768px) {
+  .header-content { flex-direction: column; gap: 1rem; }
+  .page-title, .post-title { font-size: 1.5rem; }
+  .posts-grid { grid-template-columns: 1fr; }
+  .content { padding: 1rem; }
+  .nav { flex-wrap: wrap; justify-content: center; }
+}
+  </style>
+</head>
+<body>
+  <div class="migration-banner" id="migrationBanner">
+    Novo site! Migramos do Google Sites para cá.
+    <button class="close-banner" onclick="document.getElementById('migrationBanner').style.display='none';localStorage.setItem('bannerClosed','1');">×</button>
+  </div>
+  <script>if(localStorage.getItem('bannerClosed')==='1')document.getElementById('migrationBanner').style.display='none';</script>
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <span class="logo-bracket">[</span>IA+EDU<span class="logo-bracket">]</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Resumos</a>
+        <span class="nav-separator">//</span>
+        <a href="links.html">Links</a>
+      </nav>
+    </div>
+  </header>
+  <main class="main">
+    
+    <a href="index.html" class="back-link">Voltar aos resumos</a>
+    <header class="post-header">
+      <div class="post-meta">
+        <span class="post-category">Resumo Semanal</span>
+        <span class="post-date">20/10/2025</span>
+      </div>
+      <h1 class="post-title">Resumo Semanal</h1>
+      <p class="post-week">Semana: 14/10/2025 → 20/10/2025</p>
+    </header>
+    <article class="content">
+      <h2>Sumário Executivo da Semana:</h2>
+<p>A conversa da semana apresentou um volume de mensagens alto e participação distribuída entre diversos membros. A natureza predominante das interações incluiu o compartilhamento de informações sobre eventos, publicações e ferramentas relacionadas à educação e inteligência artificial, além de perguntas, opiniões pessoais e debates. Múltiplos tópicos foram abordados em paralelo, destacando-se a promoção de eventos (Rec'n'Play, lançamentos de livros), discussões sobre publicações acadêmicas e guias, e temas de ética e vieses em IA. Houve presença explícita de divergências de opinião em relação às normas de uso de IA na pesquisa e à experiência de um membro com um sistema de reconhecimento facial de IA do governo. Também ocorreram celebrações e atualizações pessoais.</p>
+<h2>Principais Temas e Conteúdos:</h2>
+<ul>
+<li>
+<p><strong>Promoção de Eventos e Conferências</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, Perguntas ou dúvidas</li>
+<li><strong>Descrição Factual</strong>: Membros compartilharam informações sobre diversos eventos próximos, como o "Rec'n'Play" em Pernambuco, com atividades gratuitas e trilha de IA na Educação; o evento "IAConf" em Montevidéu, organizado pelo Ceibal; a "Conferência Brasileira de Aprendizagem Criativa" em Brasília, que incluirá IA como tema; o "Summit Explore" em São Paulo; o evento "Eduquenow" em BH; o evento "Teach the Future" na Casa Firjan; a "IFE Conference 2026" com painel sobre IA Multiagente; a "3ª Semana Brasileira de Educação Midiática" com foco em cidadania digital; e um evento da "Rede Cuidar" da Educa. Alguns participantes perguntaram sobre transmissões online ou confirmaram presença.</li>
+<li><strong>Recorrência</strong>: Recorrente (várias mensagens e menções ao longo da semana).</li>
+</ul>
+</li>
+<li>
+<p><strong>Lançamentos e Discussões de Publicações sobre IA na Educação</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, Opiniões pessoais, Perguntas ou dúvidas</li>
+<li><strong>Descrição Factual</strong>: Luciano Meira compartilhou a segunda parte de seu artigo "ANOTAÇÕES para IA NA EDUCAÇÃO". Francisco compartilhou seu "Guia gratuito 'Inteligência Artificial para Impacto Social'", recebendo agradecimentos e intenções de compartilhamento. Janine mencionou o livro "Mindstorms" de Papert e uma página no portal Aprendizagem Criativa. Rafael Parente lançou seu livro "O Professor Ampliado", gerando diversas mensagens de felicitação, comentários sobre a importância do tema, e perguntas sobre o link de download e eventos de lançamento em SP, Rio e Porto Alegre.</li>
+<li><strong>Recorrência</strong>: Recorrente (discussão prolongada sobre o livro de Rafael Parente e outras publicações).</li>
+</ul>
+</li>
+<li>
+<p><strong>Ética, Vieses e Regulamentação da IA</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, Opiniões pessoais, Divergências ou visões conflitantes, Perguntas ou dúvidas</li>
+<li><strong>Descrição Factual</strong>: Rafael Sampaio compartilhou um "textinho crítico às normas de uso de IA na pesquisa publicado pela UFC", gerando comentários de apoio à crítica contra proibição e punição. Mariana Ochs questionou sobre uma "reação muito negativa ao avanço do slop de IAGen depois que a Sora abriu para o público" e "questionamento forte sobre a ‘inevitabilidade’ da IA na educação", recebendo algumas confirmações da bolha e de podcasts otimistas com IA. Um artigo do NYT intitulado "A.I. Will Destroy Critical Thinking in K-12" foi compartilhado, discutindo a inibição do pensamento crítico. Um membro, Doug Alvoroçado, relatou problemas com o sistema de reconhecimento facial da "Carteira Nacional de Docente", que identificou seu cabelo como "chapéu ou véu", levantando a discussão sobre vieses raciais em IAs e a confiabilidade de sistemas automatizados. Outros membros confirmaram problemas semelhantes com o sistema, com e sem cabelo como dreads, solidificando que há um problema na plataforma. Publicações sobre a jornada regulatória da IA no Brasil e análise do PL de IA também foram compartilhadas. Rafael Parente postou um texto sobre a "desigualdade cognitiva" e o "professor ampliado".</li>
+<li><strong>Recorrência</strong>: Recorrente (múltiplas discussões sobre ética, vieses e regulamentação).</li>
+</ul>
+</li>
+<li>
+<p><strong>Ferramentas e Recursos de IA para Educação</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, Opiniões pessoais, Perguntas ou dúvidas</li>
+<li><strong>Descrição Factual</strong>: Giselle Santos comentou sobre melhorias no "NotebookLM", mas ressaltou problemas de vieses. Professor Dorly apresentou o programa "Make Academic Alliance", que oferece contas premium gratuitas para professores e estudantes. Houve perguntas sobre ferramentas de IA para criação de ebooks gratuitos, com sugestões de "Canva", "Gamma" e "Manus". Giselle Santos perguntou se alguém comprou o "Rayban da Meta", e Tiago Maluta compartilhou suas reflexões sobre o uso do óculos em educação.</li>
+<li><strong>Recorrência</strong>: Pontual.</li>
+</ul>
+</li>
+<li>
+<p><strong>Rede de Contatos e Colaboração no Grupo</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Perguntas ou dúvidas, Opiniões pessoais, Fatos compartilhados</li>
+<li><strong>Descrição Factual</strong>: Rafael Parente sugeriu criar uma planilha com nomes e LinkedIn dos membros do grupo. Marília sugeriu uma planilha colaborativa como inspiração. Tanci Simões Gomes e Calebe M Rezende se manifestaram sobre a ideia, com Marconi se oferecendo para ajudar na implementação técnica, levantando questões sobre privacidade e segurança dos dados.</li>
+<li><strong>Recorrência</strong>: Pontual, com discussão prolongada.</li>
+</ul>
+</li>
+<li>
+<p><strong>Mensagens Pessoais e Celebrações</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, Opiniões pessoais</li>
+<li><strong>Descrição Factual</strong>: Várias fotos de encontros e eventos foram compartilhadas. Guilherme Cintra recebeu diversas mensagens de parabéns pelo seu aniversário. Luciano Duro anunciou sua saída do grupo para evitar burnout. Houve algumas mensagens sobre o "Dia dos Professores". Tanci Simões Gomes fez algumas intervenções relembrando o foco do grupo, sendo referida como "a inspetora".</li>
+<li><strong>Recorrência</strong>: Recorrente (atualizações e interações sociais).</li>
+</ul>
+</li>
+</ul>
+<h2>Links Compartilhados:</h2>
+<ul>
+<li><a href="http://recnplay.pe">Rec'n'Play</a> - Compartilhado por Luciano Meira, no contexto da promoção do evento. Gerou discussão.</li>
+<li><a href="https://biblioteca.tds.company/ebook-anotacoes-para-inteligencia-artificial-na-educacao">Ebook: ANOTAÇÕES para IA NA EDUCAÇÃO</a> - Compartilhado por Luciano Meira, no contexto da publicação de um artigo.</li>
+<li><a href="https://www.youtube.com/playlist?list=PLSXO-7teGEyiR8VRgXqQh2EfuEwHhLJAe">Playlist do Evento IAConf</a> - Compartilhado por Helena Mendonça, no contexto do evento IAConf em Montevidéu.</li>
+<li><a href="https://documentos.ceibal.edu.uy/portal/2025/09/Agenda_EduIA-2025.pdf">Agenda do Evento IAConf</a> - Compartilhado por Helena Mendonça, no contexto do evento IAConf.</li>
+<li><a href="https://www.linkedin.com/posts/activity-7383831070892433408-nw4N?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAUUiCQBcndEaO0ad0P8f4qZcBb6pymGuN4">LinkedIn Post: Edtech Tools Competition</a> - Compartilhado por Guilherme Cintra, no contexto de uma competição de ferramentas para edtech.</li>
+<li><a href="https://www.youtube.com/watch?v=EGL8WChcc-k">YouTube: Transmissão PL 2338/2023 (Correção)</a> - Compartilhado por Ingrid Soares, no contexto da transmissão de uma discussão sobre o PL 2338/2023.</li>
+<li><a href="https://franciscomelloc.com/">Guia gratuito “Inteligência Artificial para Impacto Social”</a> - Compartilhado por STANFORD Francisco, no contexto de seu guia. Gerou discussão.</li>
+<li><a href="https://aprendizagemcriativa.org/mindstorms">Aprendizagem Criativa: Mindstorms</a> - Compartilhado por Janine, no contexto do livro Mindstorms. Houve uma menção de que o "link quebrado" por Christiane Moisés.</li>
+<li><a href="https://aprendizagemcriativa.org/cbac-2025">Conferência Brasileira de Aprendizagem Criativa 2025 (CBAC)</a> - Compartilhado por Janine, no contexto do evento CBAC.</li>
+<li><a href="https://www.instagram.com/reel/DPzYQU6jqQT/?igsh=MXdpdTAzN2Vrd3A3dQ==">Instagram Reel: Diogo</a> - Compartilhado por Diogo, com convite para assistir e comentar. Gerou discussão.</li>
+<li><a href="https://braziljournal.com/um-app-para-passar-menos-tempo-nos-apps/">Brazil Journal: Um app para passar menos tempo nos apps</a> - Compartilhado por Leo Gmeiner.</li>
+<li><a href="https://open.spotify.com/episode/4UHd0jEdrwC5xjRB3dxqkg?si=sG0KTRxZRX-wwEvcmmbkAQ">Spotify Podcast: HardFork (Duplicata 1)</a> - Compartilhado por Guilherme Cintra.</li>
+<li><a href="https://forms.office.com/r/qexNVzFjxb?origin=lprLink">Questionário: Necessidades formativas de docentes da Educação Básica</a> - Compartilhado por Deborah Christina Costa, no contexto de uma pesquisa.</li>
+<li><a href="https://forms.office.com/r/RJA7Wxfkx4">Questionário: Necessidades docentes para práticas inclusivas</a> - Compartilhado por Deborah Christina Costa, no contexto de uma pesquisa.</li>
+<li><a href="https://spotify.link/bsbDvDQbuXb">Spotify Link: Podcast</a> - Compartilhado por +55 83 🫣-0772.</li>
+<li><a href="https://www.instagram.com/reel/DPnsTmcjvV_/?igsh=MXUyNW91aTBoMW03Ng==">Instagram Reel: FERNANDO VALENZUELA</a> - Compartilhado por FERNANDO VALENZUELA.</li>
+<li><a href="https://www.researchgate.net/publication/396325916_Livro_O_Professor_Ampliado_-_Book_The_Amplified_Teacher">Livro "O Professor Ampliado"</a> - Compartilhado por Rafael Parente, no contexto de seu livro. Gerou discussão.</li>
+<li><a href="https://www.instagram.com/reel/DP1Tf3fAG0m/?igsh=MTRzZmcwbWxxOTFjMg==">Instagram Reel: Homenagem ao Dia do Professor</a> - Compartilhado por Bruno Santo, no contexto de uma homenagem.</li>
+<li><a href="http://SummitExplore.com.br">Summit Explore</a> - Compartilhado por Rafael Parente, no contexto de um evento em SP.</li>
+<li><a href="https://open.spotify.com/episode/4UHd0jEdrwC5xjRB3dxqkg?si=J3Z0ardZR4yKCs-tdAaj2Q">Spotify Podcast: HardFork (Duplicata 2)</a> - Compartilhado por Rafael Sampaio. Gerou discussão.</li>
+<li><a href="https://blog.google/technology/google-labs/video-overviews-nano-banana/">Google Labs Blog: Video Overviews Nano Banana</a> - Compartilhado por Giselle Santos, no contexto de melhorias do NotebookLM.</li>
+<li><a href="https://www.linkedin.com/feed/update/urn:li:share:7384571880084590592/">LinkedIn Post: Crítica às normas de uso de IA na pesquisa pela UFC</a> - Compartilhado por Rafael Sampaio, no contexto de sua crítica. Gerou discussão.</li>
+<li><a href="https://omidyar.com/update/humanity-ai/">Omidyar Network: Humanity &amp; AI</a> - Compartilhado por Guilherme Cintra, no contexto de uma iniciativa de 500 milhões de dólares.</li>
+<li><a href="https://www.gov.br/secom/3asbem-inscricao">Inscrição: 3ª Semana Brasileira de Educação Midiática</a> - Compartilhado por Rafael Parente, no contexto de um evento.</li>
+<li><a href="https://www.gov.br/secom/3asbem/">Saiba Mais: 3ª Semana Brasileira de Educação Midiática</a> - Compartilhado por Rafael Parente, no contexto de um evento.</li>
+<li><a href="https://www.infomoney.com.br/carreira/ia-fara-transformacao-total-no-que-significa-trabalhar-afirma-expert-na-tecnologia/">InfoMoney: IA fará transformação total no que significa trabalhar</a> - Compartilhado por Andre Gusman de Oliveira.</li>
+<li><a href="https://www.nytimes.com/2025/05/14/opinion/trump-ai-elementary.html">NYT Opinion: A.I. Will Destroy Critical Thinking in K-12</a> - Compartilhado por Otávio (Encontro anual), no contexto de um artigo.</li>
+<li><a href="https://www.make.com/en/academic-alliance">Make Academic Alliance</a> - Compartilhado por Professor Dorly, no contexto do programa.</li>
+<li><a href="https://www.instagram.com/p/DP6GuyBj-B4/?igsh=MW56cWcycW1renJ1YQ==">Instagram Post: Coluna sobre proibição de IA</a> - Compartilhado por Rafael Sampaio, no contexto de uma coluna sobre o tema.</li>
+<li><a href="https://www.linkedin.com/pulse/o-d%C3%A9bito-cognitivo-da-ia-por-que-facilidade-digital-n%C3%A3o-hugo-nakatani-sztff">LinkedIn Pulse: O débito cognitivo da IA</a> - Compartilhado por Luiz Eduardo Leao.</li>
+<li><a href="https://news.stanford.edu/stories/2025/09/expert-guide-tips-ai-schools-classroom">Stanford Report: What parents need to know about AI in the classroom</a> - Compartilhado por Otávio (Encontro anual).</li>
+<li><a href="https://convergenciadigital.com.br/governo/serpro-lanca-chatgpt-dos-orgaos-publicos-e-prepara-agentes-de-inteligencia-artificial/">Convergência Digital: Serpro lança ChatGPT dos órgãos públicos</a> - Compartilhado por Luciano Sathler.</li>
+<li><a href="https://youtu.be/jrK3PsD3APk?si=k7JrWSMпp2lfnkL1">YouTube: Christiane Moisés</a> - Compartilhado por Christiane Moisés.</li>
+<li><a href="https://www.instagram.com/p/DP6hD28CKtu/?igsh=NWd1OGNrZHIzdGNw">Instagram Post: Savio Ferraz</a> - Compartilhado por Savio Ferraz.</li>
+<li><a href="https://www.linkedin.com/posts/ronaldolemos_100-iniciativas-e-solu%C3%A7%C3%B5es-de-intelig%C3%AAncia-activity-7385336178130026496-rjEG?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAUUiCQBcndEaO0ad0P8f4qZcBb6pymGuN4">LinkedIn Post: Análise sobre o PL de IA</a> - Compartilhado por Guilherme Cintra, no contexto de uma análise do PL de IA.</li>
+<li><a href="https://itsrio.org/pt/comunicados/jornada-regulatoria-da-ia-no-brasil/">ITS Rio: Jornada Regulatória da IA no Brasil</a> - Compartilhado por Celina M. A. Bottino, no contexto de uma publicação do ITS Rio.</li>
+<li><a href="https://app.milanote.com/1V17ur1okDcU3E/linha-do-tempo-da-ia?p=fRS7AusiUeR">Milanote: Linha do tempo da IA</a> - Compartilhado por Celina M. A. Bottino, no contexto de uma visualização.</li>
+<li><a href="https://tinyurl.com/ddrodrigues">Oxford UP Artigo: Diogo</a> - Compartilhado por Diogo, no contexto de um artigo da Oxford UP.</li>
+<li><a href="https://www.linkedin.com/pulse/e-algumas-reflex%C3%B5es-sobre-aplica%C3%A7%C3%B5es-em-educa%C3%A7%C3%A3o-sim-tem-tiago-maluta-o21gf">LinkedIn Article: Rayban Meta em educação</a> - Compartilhado por Tiago Maluta, no contexto de suas reflexões.</li>
+<li><a href="https://www.linkedin.com/events/7384566944793935872/">LinkedIn Event: Learning with AI for a New Age of Education</a> - Compartilhado por +55 21 🫣-0243.</li>
+<li><a href="https://share.google/eUzAcaUhLtWZpThsl">Google Share: MJSP lança nova faixa etária</a> - Compartilhado por Juliana Lima, no contexto de novas regras de classificação indicativa.</li>
+<li><a href="https://www.fiemg.com.br/eduquenow/?utm_term=eduquenow&amp;utm_campaign=%5BINT%5D+Eduquenow+Pesquisa&amp;utm_source=adwords&amp;utm_medium=ppc&amp;hsa_acc=4440822240&amp;hsa_cam=23040045784&amp;hsa_grp=188103472793&amp;hsa_ad=777995162823&amp;hsa_src=g&amp;hsa_tgt=kwd-2442344207945&amp;hsa_kw=eduquenow&amp;hsa_mt=b&amp;hsa_net=adwords&amp;hsa_ver=3&amp;gad_source=1&amp;gad_campaignid=23097262307&amp;gbraid=0AAAAADjYzLeZ8QE__S9n5uiXyqDMcJilu&amp;gclid=CjwKCAjwu9fHBhAWEiwAzGRC_zI3xLPuX36siYbeEmcBLhcwsnLkfD8U1y4YIRoeyvR6adJT8gX1kBoCVaAQAvD_BwE">FIEMG: Eduquenow</a> - Compartilhado por Lucas Machado, no contexto do evento Eduquenow em BH.</li>
+<li><a href="https://www.linkedin.com/in/rafaelparente">LinkedIn Profile: Rafael Parente</a> - Compartilhado por Rafael Parente, no contexto de sua sugestão de criar uma lista de contatos.</li>
+<li><a href="https://docs.google.com/spreadsheets/d/1a4u8OieIvJWiaXtilkUDh2B1KaLxAvjsEXIC2_S1dj8/edit?pli=1#gid=470927540">Google Sheets: Planilha Colaborativa (Inspiração)</a> - Compartilhado por Marília, no contexto de uma sugestão para a lista de contatos.</li>
+<li><a href="https://app.zoom.us/wc/87165343357/join?fromPWA=1&amp;_x_zm_rtaid=IJjcxIMAQ8usbgmM-PHkvg.1760997731390.fe011d15023a3a44d6032deaf94275d2&amp;_x_zm_rhtaid=816">Zoom: Evento Rede Cuidar</a> - Compartilhado por Osvaldo Junior, no contexto de um evento da Rede Cuidar.</li>
+</ul>
+<h2>Limitações do Resumo:</h2>
+<ul>
+<li>A natureza exata e o conteúdo de diversas mensagens marcadas como "<Mídia oculta>" não puderam ser analisados.</li>
+<li>As mensagens de "Seu código de segurança com [nome] mudou" foram desconsideradas por serem notificações do sistema e não conteúdo da discussão.</li>
+<li>O contexto completo de algumas referências internas ao grupo (ex: "inspetora") não está explícito apenas nas mensagens fornecidas.</li>
+<li>A profundidade e abrangência das discussões sobre os links compartilhados podem ser limitadas, pois o resumo não inclui a análise do conteúdo dos próprios links.</li>
+<li>A interpretação das mensagens curtas, como "Muito bem representados!", é limitada pela ausência do conteúdo de mídia ao qual se referem.</li>
+</ul>
+    </article>
+    
+  </main>
+  <footer class="footer">
+    Aprendizados_IA+Educação // Resumos gerados com LLM // 2026<br>
+    <span style="opacity: 0.7;">Feito por Marina e Tiago Maluta</span>
+  </footer>
+  
+</body>
+</html>

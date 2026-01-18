@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resumo Semanal | IA+Educação</title>
+  <meta name="description" content="A conversa da semana apresentou um volume alto de mensagens, concentrando-se principalmente nos dias 25, 26 e 27 de novembro. O grau de participação foi distribuído entre diversos membros do grupo. A natureza predominante das interações incluiu o compartilhamento de...">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg-primary: #f3f4f6;
+  --bg-secondary: #ffffff;
+  --text-primary: #000000;
+  --text-secondary: #4b5563;
+  --accent-blue: #2563eb;
+  --accent-yellow: #fbbf24;
+  --border-color: #000000;
+  --border-light: #d1d5db;
+  --font-main: 'Space Grotesk', -apple-system, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-main);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+  background-image: radial-gradient(circle, #00000015 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.migration-banner {
+  background: var(--text-primary);
+  color: var(--bg-secondary);
+  padding: 0.75rem 1.5rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+.migration-banner a { color: var(--accent-yellow); text-decoration: underline; }
+.migration-banner .close-banner {
+  background: none;
+  border: none;
+  color: var(--bg-secondary);
+  cursor: pointer;
+  margin-left: 1rem;
+  font-size: 1.25rem;
+  vertical-align: middle;
+}
+.header {
+  position: sticky;
+  top: 0;
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--border-color);
+  z-index: 100;
+  padding: 1rem 1.5rem;
+}
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.logo-bracket { color: var(--accent-blue); }
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+.nav a { color: var(--text-secondary); text-decoration: none; transition: color 0.15s; }
+.nav a:hover { color: var(--text-primary); }
+.nav-separator { color: var(--border-light); }
+.main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  width: 100%;
+}
+/* Search */
+.search-container { margin-bottom: 2rem; }
+.search-input {
+  width: 100%;
+  padding: 1rem;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  outline: none;
+}
+.search-input:focus { box-shadow: 4px 4px 0 var(--border-color); }
+.search-input::placeholder { color: var(--text-secondary); }
+.search-stats {
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.search-results {
+  margin-top: 1.5rem;
+  display: none;
+}
+.search-results.active { display: block; }
+.search-result-item {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  display: block;
+  transition: all 0.15s;
+}
+.search-result-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+.search-result-title {
+  font-weight: 700;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent-blue);
+}
+.search-result-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+.search-result-snippet {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.search-result-snippet mark {
+  background: var(--accent-yellow);
+  color: var(--text-primary);
+  padding: 0.1em 0.2em;
+}
+.no-results {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-secondary);
+  display: none;
+}
+.no-results.active { display: block; }
+.page-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.page-title {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.page-subtitle { font-size: 1rem; color: var(--text-secondary); }
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+.posts-grid.hidden { display: none; }
+.post-card {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 1.5rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+}
+.post-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+.post-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.post-card-action {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  padding: 0.25rem 0.5rem;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.post-card-action:hover {
+  border-color: #25D366;
+  color: #25D366;
+}
+.post-card-image {
+  width: 100%;
+  height: 120px;
+  background: var(--bg-primary);
+  border: 1px dashed var(--border-light);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-secondary);
+}
+.post-card-category {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-blue);
+  background: rgba(37, 99, 235, 0.1);
+  padding: 0.25rem 0.5rem;
+}
+.post-card-date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.post-card-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+.post-card-excerpt {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  flex: 1;
+}
+.post-card-footer {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-light);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-blue);
+}
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+.back-link:hover { color: var(--text-primary); }
+.back-link::before { content: "< "; }
+.post-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.post-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+.post-category {
+  color: var(--accent-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+.post-date { color: var(--text-secondary); }
+.post-title { font-size: 2rem; font-weight: 700; line-height: 1.2; }
+.post-week {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+.content {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 2rem;
+}
+.content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-light);
+}
+.content h2:first-child { margin-top: 0; }
+.content h3 { font-size: 1.125rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.5rem; }
+.content p { margin-bottom: 1rem; }
+.content ul, .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+.content li { margin-bottom: 0.5rem; }
+.content li ul { margin-top: 0.5rem; margin-bottom: 0.5rem; }
+.content a { color: var(--accent-blue); text-decoration: none; border-bottom: 1px solid transparent; }
+.content a:hover { border-bottom-color: var(--accent-blue); }
+.content strong { font-weight: 700; }
+/* Links page */
+.links-section { margin-bottom: 3rem; }
+.links-section-title {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.links-grid.hidden { display: none; }
+.link-item {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.15s;
+}
+.link-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+.link-item.hidden { display: none; }
+.link-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+.link-domain {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-blue);
+  background: rgba(37, 99, 235, 0.1);
+  padding: 0.25rem 0.5rem;
+}
+.link-action {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  padding: 0.25rem 0.5rem;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.link-action:hover {
+  border-color: #25D366;
+  color: #25D366;
+}
+.link-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+  line-height: 1.3;
+  flex: 1;
+  text-decoration: none;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.link-title:hover {
+  color: var(--accent-blue);
+}
+.link-qr {
+  width: 80px;
+  height: 80px;
+  background: var(--bg-primary);
+  border: 1px dashed var(--border-light);
+  margin: 0 auto 0.75rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-secondary);
+}
+.link-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-light);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+.links-count {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+.footer {
+  background: var(--text-primary);
+  color: var(--bg-secondary);
+  padding: 1rem 1.5rem;
+  margin-top: auto;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+@media (max-width: 768px) {
+  .header-content { flex-direction: column; gap: 1rem; }
+  .page-title, .post-title { font-size: 1.5rem; }
+  .posts-grid { grid-template-columns: 1fr; }
+  .content { padding: 1rem; }
+  .nav { flex-wrap: wrap; justify-content: center; }
+}
+  </style>
+</head>
+<body>
+  <div class="migration-banner" id="migrationBanner">
+    Novo site! Migramos do Google Sites para cá.
+    <button class="close-banner" onclick="document.getElementById('migrationBanner').style.display='none';localStorage.setItem('bannerClosed','1');">×</button>
+  </div>
+  <script>if(localStorage.getItem('bannerClosed')==='1')document.getElementById('migrationBanner').style.display='none';</script>
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <span class="logo-bracket">[</span>IA+EDU<span class="logo-bracket">]</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Resumos</a>
+        <span class="nav-separator">//</span>
+        <a href="links.html">Links</a>
+      </nav>
+    </div>
+  </header>
+  <main class="main">
+    
+    <a href="index.html" class="back-link">Voltar aos resumos</a>
+    <header class="post-header">
+      <div class="post-meta">
+        <span class="post-category">Resumo Semanal</span>
+        <span class="post-date">01/12/2025</span>
+      </div>
+      <h1 class="post-title">Resumo Semanal</h1>
+      <p class="post-week">Semana: 25/11/2025 → 01/12/2025</p>
+    </header>
+    <article class="content">
+      <h2>Sumário Executivo da Semana:</h2>
+<p>A conversa da semana apresentou um volume alto de mensagens, concentrando-se principalmente nos dias 25, 26 e 27 de novembro. O grau de participação foi distribuído entre diversos membros do grupo. A natureza predominante das interações incluiu o compartilhamento de informações (notícias, estudos, links de eventos, ferramentas), perguntas e dúvidas, e debates. Houve a presença de múltiplos tópicos paralelos, com alguns evoluindo para discussões mais prolongadas. Foram observadas divergências explícitas em temas como a ética no uso de imagens de crianças por IA e os reais impactos da IA no mercado de trabalho.</p>
+<h2>Principais Temas e Conteúdos:</h2>
+<ul>
+<li>
+<p><strong>Lançamento e Discussão do Estudo NIC.br sobre IA na Educação</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, Opiniões pessoais, Perguntas ou dúvidas</li>
+<li><strong>Descrição Factual</strong>: O estudo "Inteligência Artificial na Educação: usos, oportunidades e riscos no cenário brasileiro", publicado pelo NIC.br, foi compartilhado. Um membro expressou perplexidade com a dificuldade de participantes de um evento em encontrar o link do estudo. Outro membro compartilhou a notícia da Agência Brasil sobre o estudo, destacando a urgência da formação de professores e trechos do prólogo que enfatizam valores, proteção de dados, autonomia tecnológica e escolhas éticas. A pesquisa revelou uso indiscriminado de IA por alunos (70%) e professores (58%) do ensino médio. O link do estudo foi posteriormente repostado com sua descrição e público-alvo.</li>
+<li><strong>Recorrência</strong>: Recorrente (várias mensagens e compartilhamentos).</li>
+</ul>
+</li>
+<li>
+<p><strong>Baixa Participação em Eventos e Formações Gratuitas</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Opiniões pessoais, Fatos compartilhados</li>
+<li><strong>Descrição Factual</strong>: Membros expressaram tristeza e preocupação com a baixa participação em eventos online e formações gratuitas sobre IA e educação, mencionando um evento com apenas 100 participantes. As causas apontadas incluíram a dificuldade de profissionais se liberarem do trabalho, a alta oferta de eventos, o cansaço dos educadores em meses como novembro e a cultura de inscrições por impulso para ofertas gratuitas, resultando em altas taxas de "quebra" (não comparecimento). Um relato mencionou que apenas 30% dos ingressos gratuitos para professores foram utilizados em um evento. A discussão foi direcionada também a gestores que vendem "soluções educacionais" mas não acompanham os estudos e eventos relevantes. Uma pessoa levantou a questão da gestão de tempo e a falsa crença de que atividades online e gratuitas não demandam tempo real ou mental.</li>
+<li><strong>Recorrência</strong>: Recorrente (debate prolongado).</li>
+</ul>
+</li>
+<li>
+<p><strong>Ética no Uso de IA e Imagens de Crianças</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, Opiniões pessoais, Perguntas ou dúvidas, Divergências ou visões conflitantes</li>
+<li><strong>Descrição Factual</strong>: A discussão iniciou com o compartilhamento de um link de Instagram mostrando o uso de um aplicativo de IA para modificar imagens de crianças. Um membro questionou os riscos éticos e de privacidade, principalmente o uso das imagens em aplicativos de terceiros, os efeitos em crianças não brancas e o problema de ceder imagens para IAs. Outro membro argumentou que o problema não reside apenas na IA, mas no processamento digital de imagens em geral e na publicação em redes sociais, defendendo que alguns provedores de IA (via API) podem garantir a não utilização para treinamento. Houve divergência sobre a suficiência da autorização dos pais, com um membro citando o Estatuto da Criança e do Adolescente (ECA) sobre a preservação da imagem e a dúvida sobre sistemas que não cobram retenção de imagem. Um link da Agência Brasil sobre o uso indevido de fotos de crianças brasileiras por IA em 2024 foi compartilhado. Um membro defendeu que o debate não deve ser "raso", focando apenas em IA e ignorando os riscos de plataformas como a Meta. Houve esclarecimento de que a discussão não pretendia proibir IAs, mas levantar questões éticas sobre marcadores de identidade e o uso de tecnologia sobre corpos que não podem se defender.</li>
+<li><strong>Recorrência</strong>: Debate prolongado e intenso.</li>
+</ul>
+</li>
+<li>
+<p><strong>Prêmio Jovem Cientista: IA e Saberes Tradicionais</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, Opiniões pessoais, Perguntas ou dúvidas, Divergências ou visões conflitantes</li>
+<li><strong>Descrição Factual</strong>: Foi compartilhada a notícia do vencedor do Prêmio Jovem Cientista, um projeto de Ensino Médio que desenvolveu um sistema de previsão de chuvas combinando conhecimento tradicional de "Profetas de Chuva" com IA. Membros elogiaram o projeto, considerando-o um exemplo brilhante de interseção entre visões tradicionais e algorítmicas. Houve uma observação sobre a terminologia, sugerindo "convencional" para os pluviômetros superados e "tradicional" para o saber dos profetas. A discussão avançou para a "tecnodiversidade" e a reflexão sobre se esse caso seria uma exceção, questionando os limites da capacidade dos modelos de IA em suportar diferentes cosmovisões além da estruturação de dados. Um membro argumentou que os modelos de IA, baseados em computabilidade de Turing e processamento probabilístico, representam o mundo de maneira fundamentalmente diferente dos saberes tradicionais. Outro membro buscou compreender se treinamentos semelhantes poderiam ser aplicados em outras situações. Foi ressaltado que a conclusão desse debate tem conexões com a educação, evidenciando que nem tudo pode ser codificado, e que um mundo totalmente mediado por IA pode ser limitado e empobrecido, levando à atrofia cognitiva e perda de diversidade de conhecimentos.</li>
+<li><strong>Recorrência</strong>: Debate prolongado.</li>
+</ul>
+</li>
+<li>
+<p><strong>Impacto da IA no Mercado de Trabalho e Formação de Aprendizes</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, Opiniões pessoais, Perguntas ou dúvidas, Divergências ou visões conflitantes</li>
+<li><strong>Descrição Factual</strong>: Um artigo da The Economist foi compartilhado, levantando a questão de como profissionais juniores poderão se desenvolver em um cenário onde agentes de IA realizam tarefas básicas. Membros expressaram preocupação sobre a ausência de espaço para aprendizes e a dificuldade de se tornarem experts, sugerindo que IAs estão tomando o lugar de estagiários e juniores por questões de lucro. Foi debatido que o nível de entrada para profissionais está subindo, exigindo novas formas de desenvolver profissionalmente, ensinar e aprender, e que a IA, se usada apenas como "copiloto", pode transformar o usuário em um "apertador de parafuso". Houve questionamento sobre a capacidade do sistema educacional brasileiro de preparar alunos para esses novos patamares sem políticas públicas efetivas. Um membro trouxe cautela à discussão, mencionando estudos que indicam falha em projetos de IA e ganhos marginais, questionando o impacto real no Brasil. Em resposta, foi citado um estudo do MIT indicando que 11.7% do valor salarial nos EUA está em tarefas que a IA pode executar, com foco na necessidade de habilidades humanas como criatividade e julgamento ético. Um artigo preliminar da UPenn sugeriu que IA pode, na verdade, aprimorar habilidades de escrita. Um membro sugeriu a criação de um "índice de excess unemployment" para determinar o impacto real da IA.</li>
+<li><strong>Recorrência</strong>: Debate prolongado e recorrente.</li>
+</ul>
+</li>
+<li>
+<p><strong>Saúde Mental de Professores e Alunos</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, Opiniões pessoais, Divergências ou visões conflitantes</li>
+<li><strong>Descrição Factual</strong>: Foi anunciado o lançamento de uma Comissão de Saúde Mental nas Escolas do RJ, com a listagem de membros e dados alarmantes sobre afastamento de professores por transtornos mentais (mais de 150 mil na rede pública em 2023) e transtornos mentais em adolescentes (1 em cada 6). A iniciativa contrapõe o avanço da tecnologia e IA com o aumento do adoecimento. A ausência de representantes do serviço público na comissão foi questionada por alguns membros, gerando debate sobre representatividade. Foi compartilhada uma notícia sobre 3,3 mil afastamentos de docentes por transtornos mentais em Campinas em 2025. Um membro argumentou que o docente médio brasileiro está precarizado e que a formação docente precisa ser acompanhada da melhoria das condições de trabalho, ressaltando o alto número de exonerações em concursos públicos e evasão em licenciaturas. Uma mensagem de um membro foi apagada por ter sido considerada estigmatizante e desumanizadora em relação a mulheres em situação de vulnerabilidade, gerando um pedido de desculpas do autor e um apelo por respeito nas conversas.</li>
+<li><strong>Recorrência</strong>: Recorrente.</li>
+</ul>
+</li>
+<li>
+<p><strong>Novas Abordagens e Ferramentas de IA para Educação</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, Perguntas ou dúvidas</li>
+<li><strong>Descrição Factual</strong>: Membros compartilharam experiências e recursos relacionados à IA na educação. Um professor relatou ter usado o Google AI Studio Build para criar um aplicativo que resolveu problemas cotidianos de sua escola sem conhecimento prévio de programação. Foi sugerido mapear iniciativas semelhantes no grupo. Foi divulgado um episódio de uma série sobre o Khanmigo, a IA educacional da Khan Academy, detalhando suas funcionalidades para professores. Um framework para transparência de soluções que usam IA na educação foi compartilhado. Foi divulgado o Projeto IAgora Brasil (UnB), que oferece capacitação de professores, letramento digital e pesquisa científica em IA na educação, com um livro de entrevistas. Um livro sobre IA na iniciação científica foi compartilhado. Foi noticiado que IA se tornou disciplina obrigatória para alunos no Piauí. Membros compartilharam anotações sobre Infraestrutura Pública Digital na Índia e exemplos de soluções de IA na educação (ekstep.org), destacando a relação com soberania nacional. Ferramentas para criação de apresentações (Gamma.app, Kimi.com, NotebookLM) também foram mencionadas.</li>
+<li><strong>Recorrência</strong>: Recorrente (compartilhamento de recursos e discussão sobre ferramentas).</li>
+</ul>
+</li>
+<li>
+<p><strong>Limitações e Riscos da IA</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, Opiniões pessoais, Divergências ou visões conflitantes</li>
+<li><strong>Descrição Factual</strong>: Discussões sobre a incapacidade de IAs como GPT/Gemini de "salvar o planeta" sem supervisão humana, e a diferença entre agentes de IA e IA agêntica. Foi compartilhado um caso de vazamento de dados do Signal. Uma entrevista com um especialista em segurança de IA previu a primeira Superinteligência artificial em 2027. Foi compartilhado um artigo sobre como a escrita à mão gera padrões de conectividade cerebral mais amplos do que digitar, e a relação com a perda de concentração e compreensão em leitores digitais. O uso do Sora da OpenAI para gerar vídeos de "school shootings" foi classificado como "mais do mesmo" sobre os riscos. Foi apontado que alucinações da IA ocorrem mesmo com o modo de busca ativado, e a presença de fontes duvidosas em pesquisas geradas por IA. O Google recomendou sandboxes para IA antes de deployments importantes, mas a falta de dinheiro de P&amp;D no Brasil foi mencionada. Dados sobre taxas de alucinação de modelos de IA foram compartilhados. A Austrália aprovou uma lei que proíbe menores de 16 anos de criar contas em redes sociais, com a justificativa de proteger jovens dos riscos amplificados pela IA.</li>
+<li><strong>Recorrência</strong>: Recorrente.</li>
+</ul>
+</li>
+</ul>
+<h2>Links Compartilhados:</h2>
+<ul>
+<li><a href="https://nic.br/publicacao/inteligencia-artificial-na-educacao-usos-oportunidades-e-riscos-no-cenario-brasileiro/">Inteligência Artificial na Educação: usos, oportunidades e riscos no cenário brasileiro</a><ul>
+<li>Quem compartilhou: Mariana Ochs</li>
+<li>Contexto: Lançamento do estudo pelo NIC.br.</li>
+<li>Gerou discussão.</li>
+</ul>
+</li>
+<li><a href="https://www.instagram.com/p/DResXLTjmbW/?igsh=a2VuZjh4bHAwcjVt">Instagram post de Doug Alvoroçado</a><ul>
+<li>Quem compartilhou: Doug Alvoroçado</li>
+<li>Contexto: Pedia explicação sobre uma imagem de crianças manipulada por IA.</li>
+<li>Gerou discussão.</li>
+</ul>
+</li>
+<li><a href="https://octaedro.com/libro/derechos-digitales-de-la-infancia/">Derechos Digitales de la Infancia</a><ul>
+<li>Quem compartilhou: Marcelo Sabbatini</li>
+<li>Contexto: Livro sobre direitos digitais na infância na perspectiva iberoamericana.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://www.tst.jus.br/-/stf-confirma-que-recreio-e-intervalo-entre-aulas-integram-jornada-de-trabalho-de-professores">STF confirma que recreio e intervalo entre aulas integram jornada de trabalho de professores</a><ul>
+<li>Quem compartilhou: Luciano Meira</li>
+<li>Contexto: Notícia sobre direitos trabalhistas de professores.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://share.google/jasNE9B3xEcvPUexU">Fotos de crianças brasileiras são usadas por IA de forma indevida | Agência Brasil</a><ul>
+<li>Quem compartilhou: Giselle Santos</li>
+<li>Contexto: Artigo sobre o uso indevido de imagens de crianças por IA.</li>
+<li>Gerou discussão.</li>
+</ul>
+</li>
+<li><a href="https://www.youtube.com/live/_zZ-syrqLtU?si=Afs7_DST3ovPz1az">INOVA IA ao vivo no YouTube</a><ul>
+<li>Quem compartilhou: +55 21 🫣-2658</li>
+<li>Contexto: Transmissão ao vivo de um evento.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://www.even3.com.br/coded-bias-world-tour-rio-de-janeiro-exibicao-debate-com-dr-joy-buolamwini-659723/">Coded Bias World Tour Rio de Janeiro - Exibição e Debate com Dr. Joy Buolamwini</a><ul>
+<li>Quem compartilhou: VB</li>
+<li>Contexto: Divulgação de um evento sobre o documentário Coded Bias.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://tinyurl.com/coded-bias-rio">Inscrições: Coded Bias Rio</a><ul>
+<li>Quem compartilhou: VB</li>
+<li>Contexto: Link de inscrição para o evento Coded Bias.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://agenciabrasil.ebc.com.br/educacao/noticia/2025-11/uso-de-ia-entre-alunos-e-professores-exige-politicas-de-seguranca">Uso de IA entre alunos e professores exige políticas de segurança</a><ul>
+<li>Quem compartilhou: Rafael Parente, Juliana Lima</li>
+<li>Contexto: Notícia sobre o estudo do Cetic.br/NIC.br.</li>
+<li>Gerou discussão (duplicata do link do NIC.br).</li>
+</ul>
+</li>
+<li><a href="https://lnkd.in/dXQidxzn">Download gratuito do estudo "Inteligência Artificial na Educação: Usos, Oportunidades e Riscos no Cenário Brasileiro"</a><ul>
+<li>Quem compartilhou: +55 21 🫣-2426</li>
+<li>Contexto: Compartilhamento do mesmo estudo do NIC.br.</li>
+<li>Foi apenas compartilhado (duplicata).</li>
+</ul>
+</li>
+<li><a href="https://www.youtube.com/watch?v=KQ9teNjfCL4">Recursos de Inteligência Artificial que todo professor precisa conhecer - Episódio 4: Khanmigo</a><ul>
+<li>Quem compartilhou: Vinicius Aragão</li>
+<li>Contexto: Vídeo explicando o uso do Khanmigo para professores.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://cdt.org/insights/opening-the-book-a-rubric-to-support-effective-transparency-for-edtech-products-that-incorporate-ai/">Opening the Book: A Rubric to Support Effective Transparency for EdTech Products that Incorporate AI</a><ul>
+<li>Quem compartilhou: Guilherme Cintra</li>
+<li>Contexto: Framework para transparência de soluções de IA em educação.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://www.bemparana.com.br/noticias/parana/utfpr-tera-13-novos-cursos-nas-areas-de-ia-e-ciencia-de-dados-para-a-utfpr/">UTFPR terá 13 novos cursos nas áreas de IA e Ciência de Dados</a><ul>
+<li>Quem compartilhou: +55 41 🫣-4682</li>
+<li>Contexto: Notícia sobre novos cursos em IA e Ciência de Dados.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://youtu.be/d95J8yzvjbQ?si=N_ixU8ApUQgbq98_">Documentário sobre Demis Hassabis, usando AI do Atari ao Alpha Fold</a><ul>
+<li>Quem compartilhou: Marconi</li>
+<li>Contexto: Compartilhamento de documentário.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://open.substack.com/pub/mintedu/p/ia-nao-destroi-diplomas-destroi-curriculos?r=di9s4&amp;utm_medium=ios">IA não destrói diplomas, destrói currículos</a><ul>
+<li>Quem compartilhou: +55 11 🫣-0444</li>
+<li>Contexto: Artigo sobre o impacto da IA no currículo.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://www.instagram.com/reel/DQt_5snjrwK/?igsh=aGE1cjFza3oyNG8y">Instagram reel de Daniel Magnavita</a><ul>
+<li>Quem compartilhou: Daniel Magnavita</li>
+<li>Contexto: Post que gerou discussão sobre agentes de IA.</li>
+<li>Gerou discussão.</li>
+</ul>
+</li>
+<li><a href="https://share.google/ve2PFxzgn8LBJ7MYC">Hegseth blames ousted officials for leaks in latest Signal chat scandal | Signal group chat leak | The Guardian</a><ul>
+<li>Quem compartilhou: Giselle Santos</li>
+<li>Contexto: Notícia sobre vazamento de chat do Signal.</li>
+<li>Gerou discussão.</li>
+</ul>
+</li>
+<li><a href="https://youtu.be/UclrVWafRAI?si=PDneRfVCCmtwWayN">Entrevista com o Especialista em Segurança de IA Dr. Yampolskiy afirmando que em 2027 podemos ter a primeira Superinteligência artificial</a><ul>
+<li>Quem compartilhou: Savio Ferraz</li>
+<li>Contexto: Vídeo sobre o futuro da IA.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://www.linkedin.com/pulse/o-caderno-n%C3%A3o-morreu-por-que-nosso-c%C3%A9rebro-ainda-do-parente-phd-dqhxf/?trackingId=VUiNnAcERGaIMcI3IpweBw%3D%3D">O caderno não morreu – por que nosso cérebro ainda precisa do papel</a><ul>
+<li>Quem compartilhou: Rafael Parente</li>
+<li>Contexto: Artigo sobre os benefícios neurocientíficos da escrita à mão.</li>
+<li>Gerou discussão.</li>
+</ul>
+</li>
+<li><a href="https://www.linkedin.com/posts/ig-ibert-bittencourt-984197a_especializa%C3%A7%C3%A3o-em-ia-para-pol%C3%ADticas-p%C3%BAblicas-activity-7399840284978831361-fMyj?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAHOebQBljVzzr1FntR6HREN9L30qzQ1Bc1">Especialização em IA para Políticas Públicas</a><ul>
+<li>Quem compartilhou: Ig Ibert Bittencourt</li>
+<li>Contexto: Post no LinkedIn sobre especialização.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://impact.economist.com/new-globalisation/the-ai-glass-floor">The AI glass floor</a><ul>
+<li>Quem compartilhou: Rawlinson Terrabuio</li>
+<li>Contexto: Artigo da The Economist sobre o impacto da IA no mercado de trabalho.</li>
+<li>Gerou discussão.</li>
+</ul>
+</li>
+<li><a href="https://ebook-iagenerativa.lovable.app">E-book: Efeitos reais da IA Generativa no nosso dia a dia</a><ul>
+<li>Quem compartilhou: Alex Souza</li>
+<li>Contexto: Divulgação de e-book.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://iceberg.mit.edu/report.pdf">Report - Iceberg: Identifying Tasks and Occupations for AI</a><ul>
+<li>Quem compartilhou: Rafael Parente</li>
+<li>Contexto: Estudo do MIT sobre o impacto da IA no mercado de trabalho.</li>
+<li>Gerou discussão.</li>
+</ul>
+</li>
+<li><a href="https://arxiv.org/abs/2502.02880">Coach not crutch: AI assistance can enhance rather than hinder skill development</a><ul>
+<li>Quem compartilhou: Seiji Isotani</li>
+<li>Contexto: Artigo (pré-print) sobre o impacto positivo da IA no desenvolvimento de habilidades.</li>
+<li>Gerou discussão.</li>
+</ul>
+</li>
+<li><a href="https://share.google/S2mObPlBjWdKi5Pbw">'Queria meu cérebro de volta': Campinas registra 3,3 mil afastamentos de docentes por transtornos mentais em 2025 | G1</a><ul>
+<li>Quem compartilhou: Savio Ferraz</li>
+<li>Contexto: Notícia sobre saúde mental de professores.</li>
+<li>Gerou discussão.</li>
+</ul>
+</li>
+<li><a href="https://www.linkedin.com/posts/unicefinnocenti_launch-of-unicefs-updated-guidance-on-activity-7399461171633750016-jlY1">Launch of UNICEF's updated guidance on AI and children</a><ul>
+<li>Quem compartilhou: Rodrigo N</li>
+<li>Contexto: Post do LinkedIn sobre guia atualizado do UNICEF.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://www.safeaiforchildren.org/ai-risks-to-children-full-guide/">AI Risks to Children: Full Guide</a><ul>
+<li>Quem compartilhou: Mariana Ochs</li>
+<li>Contexto: Guia sobre riscos da IA para crianças.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://www.iea.usp.br/eventos/pre-lancamento-podcast-observatorio-brasileiro-ia">Pré-lançamento do Podcast do Observatório Brasileiro de Inteligência Artificial (IEA/USP)</a><ul>
+<li>Quem compartilhou: Ricardo Praciano</li>
+<li>Contexto: Divulgação de evento.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://www.linkedin.com/posts/natalia-kucirkova_ai-and-agency-oecd-paper-ugcPost-7398644388915986432-RhS2">AI and agency - OECD paper</a><ul>
+<li>Quem compartilhou: Rodrigo N</li>
+<li>Contexto: Post do LinkedIn sobre documento da OCDE.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://youtu.be/fczLMe5DOPI?si=WE_YEestDwCfvBGe">Vídeo: Demis Hassabis, o fundador da DeepMind</a><ul>
+<li>Quem compartilhou: Marcos Talarico</li>
+<li>Contexto: Vídeo sobre a história da IA e DeepMind.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://futurism.com/artificial-intelligence/openai-sora-teens-videos-school-shootings">OpenAI's Sora generates videos of teens "school shootings"</a><ul>
+<li>Quem compartilhou: Luciano Meira</li>
+<li>Contexto: Notícia sobre o uso indevido do Sora.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://futurism.com/future-society/south-korea-ai-textbook">South Korea to introduce AI textbooks for elementary to high school students in 2025</a><ul>
+<li>Quem compartilhou: Tyagi</li>
+<li>Contexto: Notícia sobre a adoção de livros didáticos de IA na Coreia do Sul.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://www1.folha.uol.com.br/educacao/2025/11/como-a-inteligencia-artificial-virou-disciplina-obrigatoria-para-alunos-no-piaui.shtml">Como a inteligência artificial virou disciplina obrigatória para alunos no Piauí</a><ul>
+<li>Quem compartilhou: Rafael Parente</li>
+<li>Contexto: Notícia sobre a implementação de IA como disciplina escolar.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://drive.google.com/file/d/1c-6ILp3q9zBK8TmIeITxvSXJe3egMItg/view?ts=692d866d">Livro: Inteligência Artificial na Iniciação Científica: Dos desafios às oportunidades na Educação Básica</a><ul>
+<li>Quem compartilhou: Katia Stocco Smole</li>
+<li>Contexto: Livro resultado de pesquisa e curso de formação de professores pela UnB.</li>
+<li>Gerou discussão.</li>
+</ul>
+</li>
+<li><a href="http://www.iagorabrasil.com.br">Site do Projeto IAgora Brasil</a><ul>
+<li>Quem compartilhou: Katia Stocco Smole</li>
+<li>Contexto: Site oficial do projeto IAgora Brasil.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://www.instagram.com/p/DRpf0Nzk6AB/?igsh=MWN3em43MWZ5YnZ0YQ==">Instagram post de Martha Gabriel sobre dados de IA</a><ul>
+<li>Quem compartilhou: Natalia</li>
+<li>Contexto: Referência a um post no Instagram sobre dados de IA.</li>
+<li>Gerou discussão.</li>
+</ul>
+</li>
+<li><a href="https://www.visualcapitalist.com/sp/ter02-ranked-ai-hallucination-rates-by-model/">Ranked AI Hallucination Rates by Model</a><ul>
+<li>Quem compartilhou: Lucas Vilalta</li>
+<li>Contexto: Gráfico sobre taxas de alucinação de modelos de IA.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://www.instagram.com/reel/DRuZtr8DWhl/?igsh=MWhxNTJ2YjFkaWRtNQ==">Instagram reel de Ricardo Praciano</a><ul>
+<li>Quem compartilhou: Ricardo Praciano</li>
+<li>Contexto: Compartilhamento de reel.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://docs.google.com/document/d/1VI6m1GtFMKz34eztAEyyQfV4IGMBeDrM3g7D_RK4fd0/edit?tab=t.0">Anotações sobre Infraestrutura Pública Digital na Índia</a><ul>
+<li>Quem compartilhou: Guilherme Cintra</li>
+<li>Contexto: Documento de anotações de viagem sobre políticas públicas de IA na Índia.</li>
+<li>Gerou discussão.</li>
+</ul>
+</li>
+<li><a href="https://all.ekstep.org/">Plataforma de IA e educação da Índia</a><ul>
+<li>Quem compartilhou: Guilherme Cintra</li>
+<li>Contexto: Exemplo de solução de IA e educação em desenvolvimento na Índia.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+<li><a href="https://www.instagram.com/reel/DRrgmWIkcM8/?igsh=ZDVyZngxN2ZuOHRv">Austrália aprova lei rígida para proteger jovens nas redes sociais</a><ul>
+<li>Quem compartilhou: Savio Ferraz</li>
+<li>Contexto: Notícia sobre legislação australiana.</li>
+<li>Foi apenas compartilhado.</li>
+</ul>
+</li>
+</ul>
+<h2>Limitações do Resumo:</h2>
+<ul>
+<li>A presença de "mídias ocultas" (imagens e vídeos sem descrição explícita) impede a análise de seu conteúdo e impacto na discussão.</li>
+<li>Mensagens curtas ou interjeições podem carecer de contexto completo para uma descrição aprofundada.</li>
+<li>A dinâmica de um grupo de WhatsApp, com múltiplos tópicos paralelos, pode resultar em algumas discussões não sendo totalmente desenvolvidas.</li>
+<li>Mensagens apagadas por usuários não puderam ser recuperadas e analisadas para o resumo.</li>
+<li>O resumo não incorpora informações de conversas privadas entre membros, mesmo que mencionadas no grupo.</li>
+<li>A identificação de alguns participantes por número de telefone ou apelido pode dificultar a associação a identidades completas ou a interações anteriores fora do escopo desta conversa específica.</li>
+</ul>
+    </article>
+    
+  </main>
+  <footer class="footer">
+    Aprendizados_IA+Educação // Resumos gerados com LLM // 2026<br>
+    <span style="opacity: 0.7;">Feito por Marina e Tiago Maluta</span>
+  </footer>
+  
+</body>
+</html>
