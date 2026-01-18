@@ -34,23 +34,14 @@ body {
   background-size: 20px 20px;
 }
 .migration-banner {
-  background: var(--text-primary);
-  color: var(--bg-secondary);
+  background: #F9DC03;
+  color: #000000;
   padding: 0.75rem 1.5rem;
   text-align: center;
   font-family: var(--font-mono);
   font-size: 0.875rem;
 }
-.migration-banner a { color: var(--accent-yellow); text-decoration: underline; }
-.migration-banner .close-banner {
-  background: none;
-  border: none;
-  color: var(--bg-secondary);
-  cursor: pointer;
-  margin-left: 1rem;
-  font-size: 1.25rem;
-  vertical-align: middle;
-}
+.migration-banner a { color: #000000; font-weight: 700; text-decoration: underline; }
 .header {
   position: sticky;
   top: 0;
@@ -185,10 +176,25 @@ body {
   transition: all 0.15s ease;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 .post-card:hover {
   transform: translateY(-2px);
   box-shadow: 4px 4px 0 var(--border-color);
+}
+.badge-new {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ef4444;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
 }
 .post-card-header {
   display: flex;
@@ -251,12 +257,24 @@ body {
   flex: 1;
 }
 .post-card-footer {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border-light);
+  margin-top: 0;
+  padding-top: 0;
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--accent-blue);
+}
+.post-card-stats {
+  display: flex;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.75rem;
+}
+.post-card-divider {
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: 0.75rem 0;
 }
 .back-link {
   display: inline-block;
@@ -316,108 +334,58 @@ body {
 .content a { color: var(--accent-blue); text-decoration: none; border-bottom: 1px solid transparent; }
 .content a:hover { border-bottom-color: var(--accent-blue); }
 .content strong { font-weight: 700; }
-/* Links page */
-.links-section { margin-bottom: 3rem; }
-.links-section-title {
-  font-family: var(--font-mono);
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--border-color);
-}
-.links-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
-}
-.links-grid.hidden { display: none; }
-.link-item {
+/* Links page - Hacker News style */
+.links-list {
   background: var(--bg-secondary);
   border: 2px solid var(--border-color);
-  padding: 1rem;
+  padding: 0;
+}
+.link-item {
   display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  color: var(--text-primary);
-  transition: all 0.15s;
+  align-items: baseline;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--border-light);
+  gap: 0.5rem;
 }
-.link-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 4px 4px 0 var(--border-color);
-}
+.link-item:last-child { border-bottom: none; }
 .link-item.hidden { display: none; }
-.link-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.75rem;
-}
-.link-domain {
+.link-item:hover { background: rgba(0,0,0,0.02); }
+.link-rank {
   font-family: var(--font-mono);
-  font-size: 0.625rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--accent-blue);
-  background: rgba(37, 99, 235, 0.1);
-  padding: 0.25rem 0.5rem;
-}
-.link-action {
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  padding: 0.25rem 0.5rem;
-  background: transparent;
-  border: 1px solid var(--border-light);
+  font-size: 0.875rem;
   color: var(--text-secondary);
-  cursor: pointer;
-  transition: all 0.15s;
+  min-width: 2.5rem;
+  text-align: right;
 }
-.link-action:hover {
-  border-color: #25D366;
-  color: #25D366;
-}
+.link-content { flex: 1; min-width: 0; }
 .link-title {
-  font-weight: 700;
   font-size: 0.95rem;
-  margin-bottom: 0.75rem;
   color: var(--text-primary);
-  line-height: 1.3;
-  flex: 1;
   text-decoration: none;
   word-break: break-word;
-  overflow-wrap: break-word;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
-.link-title:hover {
-  color: var(--accent-blue);
-}
-.link-qr {
-  width: 80px;
-  height: 80px;
-  background: var(--bg-primary);
-  border: 1px dashed var(--border-light);
-  margin: 0 auto 0.75rem auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.link-title:hover { text-decoration: underline; }
+.link-title:visited { color: #828282; }
+.link-meta {
   font-family: var(--font-mono);
-  font-size: 0.625rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.125rem;
+}
+.link-meta a {
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+.link-meta a:hover { text-decoration: underline; }
+.link-domain {
   color: var(--text-secondary);
 }
-.link-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--border-light);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
+.link-share {
   color: var(--text-secondary);
+  cursor: pointer;
+  margin-left: 0.5rem;
 }
+.link-share:hover { color: #25D366; }
 .links-count {
   font-family: var(--font-mono);
   font-size: 0.875rem;
@@ -441,13 +409,12 @@ body {
   .nav { flex-wrap: wrap; justify-content: center; }
 }
   </style>
+  <script defer data-domain="maluta.github.io" src="https://plausible.io/js/plausible.js"></script>
 </head>
 <body>
-  <div class="migration-banner" id="migrationBanner">
-    Novo site! Migramos do Google Sites para cá.
-    <button class="close-banner" onclick="document.getElementById('migrationBanner').style.display='none';localStorage.setItem('bannerClosed','1');">×</button>
+  <div class="migration-banner">
+    <a href="https://sites.google.com/view/aprendizados-ia-educacao/home" target="_blank">Para o histórico anterior a Agosto de 2025, clique aqui</a>
   </div>
-  <script>if(localStorage.getItem('bannerClosed')==='1')document.getElementById('migrationBanner').style.display='none';</script>
   <header class="header">
     <div class="header-content">
       <a href="index.html" class="logo">
@@ -570,8 +537,28 @@ body {
   </main>
   <footer class="footer">
     Aprendizados_IA+Educação // Resumos gerados com LLM // 2026<br>
-    <span style="opacity: 0.7;">Feito por Marina e Tiago Maluta</span>
+    <span style="opacity: 0.7;">Feito por Marina e Tiago Maluta</span><br>
+    <a href="https://wa.me/5511982151851?text=Oi%2C%20encontrei%20um%20problema%20no%20site" style="opacity: 0.7; color: inherit;">Encontrou um problema? Avise-nos</a>
   </footer>
   
+<script>
+(function() {
+  const weekEl = document.querySelector('.post-week');
+  if (!weekEl) return;
+  const text = weekEl.textContent;
+  const endMatch = text.match(/→\s*(\d{2})\/(\d{2})\/(\d{4})/);
+  if (endMatch) {
+    const endDate = new Date(`${endMatch[3]}-${endMatch[2]}-${endMatch[1]}`);
+    const diffDays = Math.floor((new Date() - endDate) / (1000*60*60*24));
+    if (diffDays >= 0) {
+      const span = document.createElement('span');
+      span.style.color = '#9ca3af';
+      span.textContent = ` (~ ${diffDays} dias atrás)`;
+      weekEl.appendChild(span);
+    }
+  }
+})();
+</script>
+
 </body>
 </html>

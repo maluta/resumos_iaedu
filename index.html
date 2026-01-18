@@ -34,23 +34,14 @@ body {
   background-size: 20px 20px;
 }
 .migration-banner {
-  background: var(--text-primary);
-  color: var(--bg-secondary);
+  background: #F9DC03;
+  color: #000000;
   padding: 0.75rem 1.5rem;
   text-align: center;
   font-family: var(--font-mono);
   font-size: 0.875rem;
 }
-.migration-banner a { color: var(--accent-yellow); text-decoration: underline; }
-.migration-banner .close-banner {
-  background: none;
-  border: none;
-  color: var(--bg-secondary);
-  cursor: pointer;
-  margin-left: 1rem;
-  font-size: 1.25rem;
-  vertical-align: middle;
-}
+.migration-banner a { color: #000000; font-weight: 700; text-decoration: underline; }
 .header {
   position: sticky;
   top: 0;
@@ -185,10 +176,25 @@ body {
   transition: all 0.15s ease;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 .post-card:hover {
   transform: translateY(-2px);
   box-shadow: 4px 4px 0 var(--border-color);
+}
+.badge-new {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ef4444;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
 }
 .post-card-header {
   display: flex;
@@ -251,12 +257,24 @@ body {
   flex: 1;
 }
 .post-card-footer {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border-light);
+  margin-top: 0;
+  padding-top: 0;
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--accent-blue);
+}
+.post-card-stats {
+  display: flex;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.75rem;
+}
+.post-card-divider {
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: 0.75rem 0;
 }
 .back-link {
   display: inline-block;
@@ -316,108 +334,58 @@ body {
 .content a { color: var(--accent-blue); text-decoration: none; border-bottom: 1px solid transparent; }
 .content a:hover { border-bottom-color: var(--accent-blue); }
 .content strong { font-weight: 700; }
-/* Links page */
-.links-section { margin-bottom: 3rem; }
-.links-section-title {
-  font-family: var(--font-mono);
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--border-color);
-}
-.links-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
-}
-.links-grid.hidden { display: none; }
-.link-item {
+/* Links page - Hacker News style */
+.links-list {
   background: var(--bg-secondary);
   border: 2px solid var(--border-color);
-  padding: 1rem;
+  padding: 0;
+}
+.link-item {
   display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  color: var(--text-primary);
-  transition: all 0.15s;
+  align-items: baseline;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--border-light);
+  gap: 0.5rem;
 }
-.link-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 4px 4px 0 var(--border-color);
-}
+.link-item:last-child { border-bottom: none; }
 .link-item.hidden { display: none; }
-.link-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.75rem;
-}
-.link-domain {
+.link-item:hover { background: rgba(0,0,0,0.02); }
+.link-rank {
   font-family: var(--font-mono);
-  font-size: 0.625rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--accent-blue);
-  background: rgba(37, 99, 235, 0.1);
-  padding: 0.25rem 0.5rem;
-}
-.link-action {
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  padding: 0.25rem 0.5rem;
-  background: transparent;
-  border: 1px solid var(--border-light);
+  font-size: 0.875rem;
   color: var(--text-secondary);
-  cursor: pointer;
-  transition: all 0.15s;
+  min-width: 2.5rem;
+  text-align: right;
 }
-.link-action:hover {
-  border-color: #25D366;
-  color: #25D366;
-}
+.link-content { flex: 1; min-width: 0; }
 .link-title {
-  font-weight: 700;
   font-size: 0.95rem;
-  margin-bottom: 0.75rem;
   color: var(--text-primary);
-  line-height: 1.3;
-  flex: 1;
   text-decoration: none;
   word-break: break-word;
-  overflow-wrap: break-word;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
-.link-title:hover {
-  color: var(--accent-blue);
-}
-.link-qr {
-  width: 80px;
-  height: 80px;
-  background: var(--bg-primary);
-  border: 1px dashed var(--border-light);
-  margin: 0 auto 0.75rem auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.link-title:hover { text-decoration: underline; }
+.link-title:visited { color: #828282; }
+.link-meta {
   font-family: var(--font-mono);
-  font-size: 0.625rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.125rem;
+}
+.link-meta a {
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+.link-meta a:hover { text-decoration: underline; }
+.link-domain {
   color: var(--text-secondary);
 }
-.link-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--border-light);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
+.link-share {
   color: var(--text-secondary);
+  cursor: pointer;
+  margin-left: 0.5rem;
 }
+.link-share:hover { color: #25D366; }
 .links-count {
   font-family: var(--font-mono);
   font-size: 0.875rem;
@@ -441,13 +409,12 @@ body {
   .nav { flex-wrap: wrap; justify-content: center; }
 }
   </style>
+  <script defer data-domain="maluta.github.io" src="https://plausible.io/js/plausible.js"></script>
 </head>
 <body>
-  <div class="migration-banner" id="migrationBanner">
-    Novo site! Migramos do Google Sites para cá.
-    <button class="close-banner" onclick="document.getElementById('migrationBanner').style.display='none';localStorage.setItem('bannerClosed','1');">×</button>
+  <div class="migration-banner">
+    <a href="https://sites.google.com/view/aprendizados-ia-educacao/home" target="_blank">Para o histórico anterior a Agosto de 2025, clique aqui</a>
   </div>
-  <script>if(localStorage.getItem('bannerClosed')==='1')document.getElementById('migrationBanner').style.display='none';</script>
   <header class="header">
     <div class="header-content">
       <a href="index.html" class="logo">
@@ -475,301 +442,439 @@ body {
     <div id="postsGrid" class="posts-grid">
       
         <div class="post-card">
+          <span class="badge-new">NEW</span>
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2026-01-12.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2026-01-12.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2026-01-12.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">A conversa da semana apresentou um volume médio a alto de mensagens, com participação distribuída entre diversos membros, incluindo alguns mais ativos no compartilhamento de links e opiniões. A natureza predominante das interações foi o compartilhamento de informações (links...</p>
+            <div class="post-card-stats">
+              <span>💬 148 msgs</span>
+              <span>👥 44</span>
+              <span>🔗 22</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2026-01-12">06/01/2026 → 12/01/2026</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2026-01-05.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2026-01-05.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2026-01-05.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">A conversa da semana apresentou um volume médio a alto de mensagens, com um grau de participação distribuída entre vários membros. A natureza predominante das interações incluiu o compartilhamento de informações (notícias, artigos, relatórios), o envio de mensagens de...</p>
+            <div class="post-card-stats">
+              <span>💬 107 msgs</span>
+              <span>👥 35</span>
+              <span>🔗 19</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2026-01-05">30/12/2025 → 05/01/2026</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-12-29.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-12-29.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2025-12-29.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">A conversa da semana apresentou um volume de mensagens médio a alto, com participação distribuída entre diversos membros. A natureza predominante das interações foi multifacetada, incluindo o compartilhamento de informações (links e resumos de artigos), a troca de...</p>
+            <div class="post-card-stats">
+              <span>💬 89 msgs</span>
+              <span>👥 42</span>
+              <span>🔗 11</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2025-12-29">23/12/2025 → 29/12/2025</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-12-22.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-12-22.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2025-12-22.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">*   **Volume geral de mensagens:** Médio a alto, com um volume considerável de mensagens e links compartilhados, especialmente concentrado entre os dias 16 e 18 de dezembro. *   **Grau de participação:** Distribuído entre vários membros, com destaque para a participação...</p>
+            <div class="post-card-stats">
+              <span>💬 217 msgs</span>
+              <span>👥 60</span>
+              <span>🔗 48</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2025-12-22">16/12/2025 → 22/12/2025</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-12-15.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-12-15.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2025-12-15.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">A conversa da semana apresentou um volume médio a alto de mensagens, com participação distribuída entre diversos membros, embora alguns tenham sido mais ativos no compartilhamento de conteúdos e na iniciação de debates. A natureza predominante das interações foi o...</p>
+            <div class="post-card-stats">
+              <span>💬 149 msgs</span>
+              <span>👥 53</span>
+              <span>🔗 29</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2025-12-15">09/12/2025 → 15/12/2025</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-12-08.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-12-08.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2025-12-08.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">A conversa da semana apresentou um volume de mensagens médio para alto, com participação distribuída entre diversos membros, que iniciaram tópicos, responderam a perguntas e compartilharam recursos. A natureza predominante das interações foi o compartilhamento de informações...</p>
+            <div class="post-card-stats">
+              <span>💬 210 msgs</span>
+              <span>👥 69</span>
+              <span>🔗 60</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2025-12-08">02/12/2025 → 08/12/2025</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-12-01.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-12-01.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2025-12-01.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">A conversa da semana apresentou um volume alto de mensagens, concentrando-se principalmente nos dias 25, 26 e 27 de novembro. O grau de participação foi distribuído entre diversos membros do grupo. A natureza predominante das interações incluiu o compartilhamento de...</p>
+            <div class="post-card-stats">
+              <span>💬 334 msgs</span>
+              <span>👥 67</span>
+              <span>🔗 44</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2025-12-01">25/11/2025 → 01/12/2025</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-11-24.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-11-24.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2025-11-24.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">A conversa da semana apresentou um volume alto de mensagens, com participação distribuída entre diversos membros do grupo. A natureza predominante das interações incluiu o compartilhamento de informações sobre eventos e publicações, avisos sobre programações, opiniões e...</p>
+            <div class="post-card-stats">
+              <span>💬 252 msgs</span>
+              <span>👥 76</span>
+              <span>🔗 43</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2025-11-24">18/11/2025 → 24/11/2025</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-11-17.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-11-17.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2025-11-17.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">A conversa da semana apresentou um volume de mensagens alto, com participação distribuída entre diversos membros do grupo. As interações predominantes foram o compartilhamento de informações (eventos, relatórios, artigos, newsletters e vagas), seguido por debates e discussões...</p>
+            <div class="post-card-stats">
+              <span>💬 178 msgs</span>
+              <span>👥 51</span>
+              <span>🔗 42</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2025-11-17">11/11/2025 → 17/11/2025</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-11-10.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-11-10.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2025-11-10.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">A conversa da semana apresentou um volume geral de mensagens médio a alto, com picos de atividade em torno de compartilhamentos de eventos e artigos. O grau de participação foi distribuído entre diversos membros, com alguns indivíduos postando múltiplos conteúdos e...</p>
+            <div class="post-card-stats">
+              <span>💬 206 msgs</span>
+              <span>👥 62</span>
+              <span>🔗 31</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2025-11-10">04/11/2025 → 10/11/2025</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-11-03.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-11-03.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2025-11-03.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">A conversa da semana apresentou um volume de mensagens médio para alto, com participação distribuída entre diversos membros que compartilharam informações, fizeram perguntas e engajaram em debates. Houve a coexistência de múltiplos tópicos paralelos, focados principalmente em...</p>
+            <div class="post-card-stats">
+              <span>💬 300 msgs</span>
+              <span>👥 58</span>
+              <span>🔗 38</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2025-11-03">28/10/2025 → 03/11/2025</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-10-27.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-10-27.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2025-10-27.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">A conversa da semana apresentou um volume médio a alto de mensagens, com participação distribuída entre diversos membros do grupo. A natureza predominante das interações foi o compartilhamento de informações, incluindo artigos, podcasts, vídeos e eventos relacionados à...</p>
+            <div class="post-card-stats">
+              <span>💬 299 msgs</span>
+              <span>👥 74</span>
+              <span>🔗 54</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2025-10-27">21/10/2025 → 27/10/2025</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-10-20.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-10-20.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2025-10-20.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">A conversa da semana apresentou um volume de mensagens alto e participação distribuída entre diversos membros. A natureza predominante das interações incluiu o compartilhamento de informações sobre eventos, publicações e ferramentas relacionadas à educação e inteligência...</p>
+            <div class="post-card-stats">
+              <span>💬 367 msgs</span>
+              <span>👥 94</span>
+              <span>🔗 46</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2025-10-20">14/10/2025 → 20/10/2025</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-10-13.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-10-13.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2025-10-13.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">O volume de mensagens foi médio a alto. A participação foi distribuída entre diversos membros do grupo. A natureza predominante das interações incluiu o compartilhamento de notícias, artigos e eventos relacionados à Inteligência Artificial (IA) e educação, debates sobre os...</p>
+            <div class="post-card-stats">
+              <span>💬 295 msgs</span>
+              <span>👥 74</span>
+              <span>🔗 54</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2025-10-13">07/10/2025 → 13/10/2025</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-10-06.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-10-06.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2025-10-06.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">A conversa da semana apresentou um volume de mensagens médio a alto, com picos de atividade no dia 30/09 e 03/10. O grau de participação foi distribuído entre diversos membros, que contribuíram com compartilhamento de informações, perguntas, anúncios e engajamento em...</p>
+            <div class="post-card-stats">
+              <span>💬 330 msgs</span>
+              <span>👥 70</span>
+              <span>🔗 54</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2025-10-06">30/09/2025 → 06/10/2025</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-09-29.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-09-29.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2025-09-29.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">A conversa da semana apresentou um volume de mensagens alto a médio, com picos de atividade, especialmente no início da semana (23 a 25/09) e no final (29/09). O grau de participação foi distribuído entre diversos membros, com interações predominantes de compartilhamento de...</p>
+            <div class="post-card-stats">
+              <span>💬 191 msgs</span>
+              <span>👥 58</span>
+              <span>🔗 38</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2025-09-29">23/09/2025 → 29/09/2025</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-09-22.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-09-22.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2025-09-22.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">O volume geral de mensagens foi alto, com muitas interações ao longo da semana, excluindo-se as notificações de segurança do WhatsApp. A participação mostrou-se distribuída entre diversos membros do grupo, com alguns participantes mais ativos no compartilhamento de links,...</p>
+            <div class="post-card-stats">
+              <span>💬 237 msgs</span>
+              <span>👥 61</span>
+              <span>🔗 35</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2025-09-22">16/09/2025 → 22/09/2025</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-09-15.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-09-15.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2025-09-15.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">O volume de mensagens foi alto, com participação distribuída entre diversos membros, incluindo contribuidores frequentes e a entrada de novos participantes. As interações predominantemente consistiram em compartilhamento de informações, notícias, artigos e ferramentas,...</p>
+            <div class="post-card-stats">
+              <span>💬 316 msgs</span>
+              <span>👥 67</span>
+              <span>🔗 51</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2025-09-15">09/09/2025 → 15/09/2025</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-09-08.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-09-08.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2025-09-08.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">A conversa da semana apresentou um volume de mensagens médio a alto, com picos de interação nos dias 02, 04 e 05 de setembro. O grau de participação foi distribuído, com diversos membros contribuindo ativamente. A natureza predominante das interações incluiu o...</p>
+            <div class="post-card-stats">
+              <span>💬 289 msgs</span>
+              <span>👥 66</span>
+              <span>🔗 64</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2025-09-08">02/09/2025 → 08/09/2025</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-09-01.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-09-01.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2025-09-01.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">A conversa da semana no grupo apresentou um volume alto de mensagens e participação distribuída entre diversos membros. A natureza predominante das interações incluiu o compartilhamento extensivo de artigos, links para eventos e recursos sobre inteligência artificial e...</p>
+            <div class="post-card-stats">
+              <span>💬 474 msgs</span>
+              <span>👥 92</span>
+              <span>🔗 67</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2025-09-01">26/08/2025 → 01/09/2025</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-08-25.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-08-25.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2025-08-25.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">A conversa da semana apresentou volume médio a alto de mensagens, com participação distribuída entre diversos membros que compartilharam informações, links e expressaram opiniões. A natureza predominante das interações incluiu o compartilhamento de conteúdos informativos...</p>
+            <div class="post-card-stats">
+              <span>💬 278 msgs</span>
+              <span>👥 72</span>
+              <span>🔗 57</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2025-08-25">19/08/2025 → 25/08/2025</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-08-18.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-08-18.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2025-08-18.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">O volume geral de mensagens foi alto, com participação distribuída entre os membros. A natureza predominante das interações foi o compartilhamento de informações e links, seguido por perguntas e debates sobre os temas. Houve a ocorrência de múltiplos tópicos paralelos, com...</p>
+            <div class="post-card-stats">
+              <span>💬 442 msgs</span>
+              <span>👥 89</span>
+              <span>🔗 94</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2025-08-18">12/08/2025 → 18/08/2025</div>
         </div>
         
         <div class="post-card">
+          
           <div class="post-card-header">
-            <span class="post-card-category">Resumo</span>
-            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-08-11.html'), '_blank')">📤 Compartilhar</span>
+            <span class="post-card-category">Destaques da Semana</span>
+            <span class="post-card-action" onclick="event.stopPropagation(); window.open('https://wa.me/?text=' + encodeURIComponent('Resumo Semanal - ' + window.location.origin + '/2025-08-11.html'), '_blank')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</span>
           </div>
           <a href="2025-08-11.html" style="text-decoration: none; color: inherit;">
-            <div class="post-card-image">🖼️ imagem gerada por IA</div>
             <h2 class="post-card-title">Resumo Semanal</h2>
             <p class="post-card-excerpt">A conversa da semana apresentou um volume de mensagens alto, com participação bastante distribuída entre diversos membros que contribuíram com compartilhamento de informações, perguntas e debates. Houve um engajamento significativo em torno de uma proposta de estruturação da...</p>
+            <div class="post-card-stats">
+              <span>💬 574 msgs</span>
+              <span>👥 120</span>
+              <span>🔗 57</span>
+            </div>
           </a>
+          <hr class="post-card-divider">
           <div class="post-card-footer" data-end-date="2025-08-11">05/08/2025 → 11/08/2025</div>
         </div>
         
@@ -778,7 +883,8 @@ body {
   </main>
   <footer class="footer">
     Aprendizados_IA+Educação // Resumos gerados com LLM // 2026<br>
-    <span style="opacity: 0.7;">Feito por Marina e Tiago Maluta</span>
+    <span style="opacity: 0.7;">Feito por Marina e Tiago Maluta</span><br>
+    <a href="https://wa.me/5511982151851?text=Oi%2C%20encontrei%20um%20problema%20no%20site" style="opacity: 0.7; color: inherit;">Encontrou um problema? Avise-nos</a>
   </footer>
   
 <script>
@@ -888,10 +994,15 @@ body {
     let html = '';
     results.slice(0, 20).forEach(item => {
       const snippet = createSnippet(item.content, query);
+      // Calcula delta de dias
+      const endParts = item.week.split(' → ')[1].split('/');
+      const endDate = new Date(`${endParts[2]}-${endParts[1]}-${endParts[0]}`);
+      const diffDays = Math.floor((new Date() - endDate) / (1000*60*60*24));
+      const delta = diffDays >= 0 ? ` <span style="color:#9ca3af">(~ ${diffDays} dias atrás)</span>` : '';
       html += `
         <a href="${item.url}" class="search-result-item">
           <div class="search-result-title">${item.title}</div>
-          <div class="search-result-meta">Semana: ${item.week}</div>
+          <div class="search-result-meta">Semana: ${item.week}${delta}</div>
           <div class="search-result-snippet">${snippet}</div>
         </a>
       `;
