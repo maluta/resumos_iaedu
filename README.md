@@ -8,5 +8,5 @@ Este repositório hospeda os arquivos estáticos da página pública com resumos
 
 Observação: este repositório contém apenas o site gerado. O processo de geração/atualização está no repositório indicado acima.
 
-Feito por Marina e Tiago Maluta.
+Feito por [Marina](https://www.linkedin.com/in/queirozmaluta/) e [Tiago Maluta](https://linkedin.com/in/maluta).
 
