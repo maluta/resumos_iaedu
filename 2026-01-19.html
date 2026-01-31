@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resumo Semanal | IA+Educação</title>
+  <meta name="description" content="A conversa da semana apresentou um volume alto de mensagens e participação distribuída entre diversos membros. A natureza predominante das interações foi o compartilhamento de informações (artigos, relatórios, posts, vídeos sobre IA e educação), acompanhada de avisos sobre a...">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg-primary: #f3f4f6;
+  --bg-secondary: #ffffff;
+  --text-primary: #000000;
+  --text-secondary: #4b5563;
+  --accent-blue: #2563eb;
+  --accent-yellow: #fbbf24;
+  --border-color: #000000;
+  --border-light: #d1d5db;
+  --font-main: 'Space Grotesk', -apple-system, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-main);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+  background-image: radial-gradient(circle, #00000015 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.migration-banner {
+  background: #F9DC03;
+  color: #000000;
+  padding: 0.75rem 1.5rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+.migration-banner a { color: #000000; font-weight: 700; text-decoration: underline; }
+.header {
+  position: sticky;
+  top: 0;
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--border-color);
+  z-index: 100;
+  padding: 1rem 1.5rem;
+}
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.logo-bracket { color: var(--accent-blue); }
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+.nav a { color: var(--text-secondary); text-decoration: none; transition: color 0.15s; }
+.nav a:hover { color: var(--text-primary); }
+.nav-separator { color: var(--border-light); }
+.main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  width: 100%;
+}
+/* Search */
+.search-container { margin-bottom: 2rem; }
+.search-input {
+  width: 100%;
+  padding: 1rem;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  outline: none;
+}
+.search-input:focus { box-shadow: 4px 4px 0 var(--border-color); }
+.search-input::placeholder { color: var(--text-secondary); }
+.search-stats {
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.search-results {
+  margin-top: 1.5rem;
+  display: none;
+}
+.search-results.active { display: block; }
+.search-result-item {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  display: block;
+  transition: all 0.15s;
+}
+.search-result-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+.search-result-title {
+  font-weight: 700;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent-blue);
+}
+.search-result-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+.search-result-snippet {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.search-result-snippet mark {
+  background: var(--accent-yellow);
+  color: var(--text-primary);
+  padding: 0.1em 0.2em;
+}
+.no-results {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-secondary);
+  display: none;
+}
+.no-results.active { display: block; }
+.page-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.page-title {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.page-subtitle { font-size: 1rem; color: var(--text-secondary); }
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+.posts-grid.hidden { display: none; }
+.post-card {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 1.5rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.post-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+.badge-new {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ef4444;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+}
+.post-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.post-card-action {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  padding: 0.25rem 0.5rem;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.post-card-action:hover {
+  border-color: #25D366;
+  color: #25D366;
+}
+.post-card-image {
+  width: 100%;
+  height: 120px;
+  background: var(--bg-primary);
+  border: 1px dashed var(--border-light);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-secondary);
+}
+.post-card-category {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-blue);
+  background: rgba(37, 99, 235, 0.1);
+  padding: 0.25rem 0.5rem;
+}
+.post-card-date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.post-card-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+.post-card-excerpt {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  flex: 1;
+}
+.post-card-footer {
+  margin-top: 0;
+  padding-top: 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-blue);
+}
+.post-card-stats {
+  display: flex;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.75rem;
+}
+.post-card-divider {
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: 0.75rem 0;
+}
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+.back-link:hover { color: var(--text-primary); }
+.back-link::before { content: "< "; }
+.post-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.post-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+.post-category {
+  color: var(--accent-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+.post-date { color: var(--text-secondary); }
+.post-title { font-size: 2rem; font-weight: 700; line-height: 1.2; }
+.post-week {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+.content {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 2rem;
+}
+.content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-light);
+}
+.content h2:first-child { margin-top: 0; }
+.content h3 { font-size: 1.125rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.5rem; }
+.content p { margin-bottom: 1rem; }
+.content ul, .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+.content li { margin-bottom: 0.5rem; }
+.content li ul { margin-top: 0.5rem; margin-bottom: 0.5rem; }
+.content a { color: var(--accent-blue); text-decoration: none; border-bottom: 1px solid transparent; }
+.content a:hover { border-bottom-color: var(--accent-blue); }
+.content strong { font-weight: 700; }
+/* Links page - Hacker News style */
+.links-list {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 0;
+}
+.link-item {
+  display: flex;
+  align-items: baseline;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--border-light);
+  gap: 0.5rem;
+}
+.link-item:last-child { border-bottom: none; }
+.link-item.hidden { display: none; }
+.link-item:hover { background: rgba(0,0,0,0.02); }
+.link-rank {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  min-width: 2.5rem;
+  text-align: right;
+}
+.link-content { flex: 1; min-width: 0; }
+.link-title {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  word-break: break-word;
+}
+.link-title:hover { text-decoration: underline; }
+.link-title:visited { color: #828282; }
+.link-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.125rem;
+}
+.link-meta a {
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+.link-meta a:hover { text-decoration: underline; }
+.link-domain {
+  color: var(--text-secondary);
+}
+.link-share {
+  color: var(--text-secondary);
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+.link-share:hover { color: #25D366; }
+.links-count {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+.footer {
+  background: var(--text-primary);
+  color: var(--bg-secondary);
+  padding: 1rem 1.5rem;
+  margin-top: auto;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+@media (max-width: 768px) {
+  .header-content { flex-direction: column; gap: 1rem; }
+  .page-title, .post-title { font-size: 1.5rem; }
+  .posts-grid { grid-template-columns: 1fr; }
+  .content { padding: 1rem; }
+  .nav { flex-wrap: wrap; justify-content: center; }
+}
+  </style>
+  <script defer data-domain="maluta.github.io" src="https://plausible.io/js/plausible.js"></script>
+</head>
+<body>
+  <div class="migration-banner">
+    <a href="https://sites.google.com/view/aprendizados-ia-educacao/home" target="_blank">Para o histórico anterior a Agosto de 2025, clique aqui</a>
+  </div>
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <span class="logo-bracket">[</span>IA+EDU<span class="logo-bracket">]</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Resumos</a>
+        <span class="nav-separator">//</span>
+        <a href="links.html">Links</a>
+      </nav>
+    </div>
+  </header>
+  <main class="main">
+    
+    <a href="index.html" class="back-link">Voltar aos resumos</a>
+    <header class="post-header">
+      <div class="post-meta">
+        <span class="post-category">Resumo Semanal</span>
+        <span class="post-date">19/01/2026</span>
+      </div>
+      <h1 class="post-title">Resumo Semanal</h1>
+      <p class="post-week">Semana: 13/01/2026 → 19/01/2026</p>
+    </header>
+    <article class="content">
+      <h2>Sumário Executivo da Semana:</h2>
+<p>A conversa da semana apresentou um volume alto de mensagens e participação distribuída entre diversos membros. A natureza predominante das interações foi o compartilhamento de informações (artigos, relatórios, posts, vídeos sobre IA e educação), acompanhada de avisos sobre a gestão do grupo (entrada de novos membros e regras) e a divulgação de projetos e vagas. Dois temas principais se destacaram: o impacto da IA na educação, com discussões sobre o futuro da aprendizagem, avaliação e desigualdades, e um debate prolongado sobre a validade e aplicação de "estilos de aprendizagem" na personalização educacional com IA. Houve alinhamento explícito no apoio a projetos como o "Cloudinha" e sobre as preocupações com as desigualdades na avaliação. Sobre os "estilos de aprendizagem", manifestaram-se visões conflitantes, com alguns membros expressando ceticismo sobre a base científica do conceito e outros defendendo sua aplicação na personalização.</p>
+<hr />
+<h2>Principais Temas e Conteúdos:</h2>
+<ul>
+<li>
+<p><strong>Impacto da IA na Educação e o Futuro do Aprendizado</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, opiniões pessoais, divergências ou visões conflitantes</li>
+<li><strong>Descrição Factual</strong>: Membros compartilharam artigos e posts sobre a limitada capacidade de tutores de IA (Rose Luckin), LLMs lidando com contexto infinito (Savio Ferraz), a transformação da educação por IA na América Latina (Guilherme Cintra, BID), e armadilhas em EdTech (Giselle Santos). Houve discussão sobre o Claude AI potencialmente se tornando um sistema operacional, cenários "assustadores" do "Relatório IA 2027" e o anacronismo do formato escolar atual. Marília trouxe o tema do uso indevido da IA como meio. Rafael Parente publicou um artigo sobre como a avaliação e a IA expõem desigualdades, com o "erro" pesando de forma diferente para estudantes de diferentes perfis. Mary Grace e Ana Scavarda alinharam-se a essa perspectiva. Prof Julio César Passos compartilhou seu artigo sobre o medo e a dúvida de professores em relação à IA. Relatórios do Brookings Institute e da HolonIQ sobre o futuro da IA na educação foram compartilhados. Um debate sobre as previsões de Elon Musk acerca de robôs superarem cirurgiões foi trazido, contrastando com a necessidade de reinvenção educacional humana.</li>
+<li><strong>Recorrência</strong>: Várias mensagens e debates em sub-tópicos.</li>
+</ul>
+</li>
+<li>
+<p><strong>Ferramentas e Aplicações de IA na Educação</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, opiniões pessoais, perguntas, experiências</li>
+<li><strong>Descrição Factual</strong>: Foram compartilhados links para a plataforma "Learn Your Way with Google" e a "Plataforma Tá Pronto" (repositório coletivo de Gems e GPTs, com instruções de uso e modelos de capas). Marília perguntou sobre a ferramenta mlxar.com, que conecta IAs visualmente. Rafael Sampaio compartilhou um app que criou para gerar infográficos, considerando-o melhor que o NotebookLM. Leo Burd divulgou o podcast "Lifelong Kindergarten" sobre habilidades e IA/neurodiversidade. Um vídeo sobre a integração da IA na educação em Estônia, Índia e Alemanha foi compartilhado. Membros discutiram o uso de Gemini e NotebookLM em sala de aula: Prof Julio César Passos usa NotebookLM para sala de aula invertida e apresentações; +55 11 🫣-7667 usa NotebookLM para podcast e vídeos. Mary Grace relatou uso atrelado ao Classroom. Savio Ferraz e Leo Ornelas apresentaram o Claude Code e o Claude Cowork, destacando sua capacidade de desenvolver sistemas e auxiliar em tarefas diárias.</li>
+<li><strong>Recorrência</strong>: Várias mensagens.</li>
+</ul>
+</li>
+<li>
+<p><strong>Projetos e Iniciativas com IA em Educação</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, divulgação, opiniões pessoais, alinhamentos</li>
+<li><strong>Descrição Factual</strong>: Giselle Santos compartilhou sobre o projeto Hector da Multirio, focado em IA e educação para residentes do Rio. Guilherme Cintra divulgou uma reportagem da educador21 sobre edtechs, citando membros do grupo. Arthur William Santos divulgou uma vaga de trabalho remoto no Senac para desenvolvimento de assistentes de IA. Mary Grace e Juliana Duarte forneceram contexto sobre a criação do referencial curricular da Computacional.com.br, mencionando o envolvimento da UFMS e do Plano de Educação Digital e Midiática do Piauí. Laura Lopes apresentou o projeto "Cloudinha", uma IA gratuita do Nubo Educação para orientar jovens no acesso ao ensino superior, solicitando e recebendo apoio generalizado para divulgação de diversos membros. Juliana Lima compartilhou uma notícia da Folha sobre o aumento de cursos de graduação em IA no SISU.</li>
+<li><strong>Recorrência</strong>: Várias mensagens.</li>
+</ul>
+</li>
+<li>
+<p><strong>Regras do Grupo e Gestão de Membros</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Avisos, fatos compartilhados, perguntas, alinhamentos</li>
+<li><strong>Descrição Factual</strong>: Guilherme Cintra anunciou e gerenciou a entrada de vários novos membros no grupo. A "inspetora" Tanci Simões Gomes reforçou as regras do grupo, enfatizando a proibição de política, religião, ofensas e ofertas de serviços/produtos pagos, com exceção para conteúdos relevantes e exclusivos para a comunidade. Ela justificou a permissão para a divulgação da BETT BR por Adriana Martinelli devido a características específicas (visitação gratuita, espaço para educação pública gratuito, condições especiais para membros). Houve boas-vindas e elogios de novos membros à organização do grupo. Guilherme Cintra informou que as vagas estavam esgotadas novamente.</li>
+<li><strong>Recorrência</strong>: Recorrente ao longo da semana.</li>
+</ul>
+</li>
+<li>
+<p><strong>Debate sobre "Estilos de Aprendizagem" e Personalização da Educação com IA</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Opiniões pessoais, perguntas, divergências ou visões conflitantes, fatos compartilhados (pesquisas)</li>
+<li><strong>Descrição Factual</strong>: Nathan Lara questionou a base científica robusta dos "estilos de aprendizagem" e sugeriu que múltiplos formatos podem gerar aprendizado mais robusto. +55 11 🫣-7667 (Gustavo) defendeu que experiências com o VARK foram positivas para personalização e ofereceu pesquisas (revisões sistemáticas). Natalia (moderadora) descreveu sua prática de usar diferentes abordagens para adultos. Tanci Simões Gomes brincou sobre o grupo ser "ateu de estilos de aprendizagem" e mencionou a neurociência da aprendizagem sobre re-exposição ao conhecimento. Guilherme Cintra reiterou que não há evidências para estilos discretos (ex: sinestésico/auditivo) mas que variações de conteúdo podem ser positivas. Mariana Ochs defendeu a variação de formatos para multiletramento, mas criticou a padronização estética e narrativa limitada das IAs como NotebookLM, alertando para o risco de "achatamento da criatividade" na escola. Fabiana Paixão citou um professor que afirmava que "estilos de aprendizagem não existem". Gustavo, por fim, compartilhou as strings de busca e planilhas com artigos selecionados sobre o tema. Savio Ferraz e Guilherme Cintra expressaram concordância com as críticas à padronização das IAs.</li>
+<li><strong>Recorrência</strong>: Debate prolongado com múltiplas intervenções.</li>
+</ul>
+</li>
+<li>
+<p><strong>Organização e Resumos do Grupo</strong></p>
+<ul>
+<li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, divulgação, opiniões pessoais</li>
+<li><strong>Descrição Factual</strong>: Marina Maluta anunciou o relançamento dos resumos semanais do grupo em uma nova plataforma (GitHub Pages), destacando um novo layout, busca simples e um repositório de mais de 5.000 links. Ela indicou que o código da página foi feito com Claude Code e o resumo com Gemini. Guilherme Cintra e Rafael Sampaio elogiaram a iniciativa.</li>
+<li><strong>Recorrência</strong>: Pontual.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2>Links Compartilhados:</h2>
+<ul>
+<li><a href="https://www.linkedin.com/posts/rose-luckin-5245003_aieducation-humanlearning-learningscience-activity-7416747109233860608-zhiP?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAUUiCQBcndEaO0ad0P8f4qZcBb6pymGuN4">Interessante a quebra: Tutores de IA conseguiriam atuar em 16% das acoes necessárias a aprendizagem apenas</a> - Compartilhado por Guilherme Cintra, seguido de comentário do remetente.</li>
+<li><a href="https://towardsdatascience.com/llms-can-now-process-infinite-context-windows/?utm_source=newsletter&amp;utm_medium=email&amp;utm_term=2026-01-13&amp;utm_campaign=Global+AI+Weekly+-+Issue+132">LLMs can now process infinite context windows</a> - Compartilhado por Savio Ferraz, gerou comentário do remetente sobre o artigo.</li>
+<li><a href="https://www.iadb.org/en/blog/education/how-ai-transforming-education-latin-america-and-caribbean-lessons-193-solutions?utm_source=chatgpt.com">How AI is transforming education in Latin America and the Caribbean: Lessons from 193 solutions</a> - Compartilhado por Guilherme Cintra, gerou discussão e parabenizações a membros.</li>
+<li><a href="https://www.linkedin.com/posts/gemreport-unesco_how-to-avoid-3-pitfalls-in-edtech-impact-activity-7415324045094662144-KRXI?utm_source=social_share_send&amp;utm_medium=android_app&amp;rcm=ACoAAAzhyNIBOWZA2CRVwcfNshnWuwk8PtQSrOQ&amp;utm_campaign=whatsapp">How to avoid 3 pitfalls in EdTech impact</a> - Compartilhado por Giselle Santos.</li>
+<li><a href="https://x.com/claudeai/status/2010805682434666759?s=20">Claude AI post on X</a> - Compartilhado por +1 (305) 205-1306, com contexto sobre o Claude AI.</li>
+<li><a href="https://ai-2027.com/">AI 2027 Report</a> - Compartilhado por +1 (305) 205-1306, com contexto sobre cenários.</li>
+<li><a href="https://www.youtube.com/watch?v=5KVDDfAkRgc">AI 2027 Report Summary Video</a> - Compartilhado por +1 (305) 205-1306, como resumo em vídeo do relatório.</li>
+<li><a href="https://learnyourway.withgoogle.com/">Learn Your Way with Google</a> - Compartilhado por André Neves.</li>
+<li><a href="https://jatapronto.com.br">Plataforma Tá Pronto</a> - Compartilhado por Savio Ferraz, com longa explicação sobre uso.</li>
+<li><a href="https://docs.google.com/presentation/d/1uvkKHszxX0WmsiY63PHRDcFroHg-XKxWS-zRIgDf6Ik/template/preview">Modelos de capas para Gems e GPTs</a> - Compartilhado por Savio Ferraz, como recurso para a plataforma "Tá Pronto".</li>
+<li><a href="https://jatapronto.com.br/categoria/meu-gems">Categoria Meu Gems na plataforma Tá Pronto</a> - Compartilhado por Savio Ferraz, como link direto para baixar Gems e GPTs.</li>
+<li><a href="https://educador21.com/edtechs-2026-mapa-estrategico-para-gestores/">EdTechs 2026: Mapa Estratégico para Gestores</a> - Compartilhado por Guilherme Cintra, com menção a membros do grupo envolvidos.</li>
+<li><a href="https://revistaeducacao.com.br/2025/12/12/inteligencia-artificial-uso-indevido/">Inteligência Artificial: uso indevido</a> - Compartilhado por Marília, com comentário sobre IA como meio.</li>
+<li><a href="https://www.linkedin.com/jobs/view/4361512227/">Vaga para trabalho remoto com Tecnologias Educacionais do Senac</a> - Compartilhado por Arthur William Santos como vaga de trabalho.</li>
+<li><a href="https://www.linkedin.com/pulse/o-medo-de-errar-crise-para-quem-rafael-parente-phd-qvgff">O medo de errar: crise para quem?</a> - Compartilhado por Rafael Parente, com trechos do artigo, gerou discussão.</li>
+<li><a href="https://www.linkedin.com/posts/creators-lab-ugcPost-7417500397902319616-qRCY?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAC5AKZYBvAAFqCRhvFKCB3MxQsEtL7j8QSs">Ideia de ação de educação midiática e uso da IA entre os jovens</a> - Compartilhado por Marília, com contexto sobre inspiração para educação midiática.</li>
+<li><a href="https://www.instagram.com/reel/DTgkABmjRe8/?igsh=MTlsMDY0dTFlcWdyZw==">Instagram Reel</a> - Compartilhado por Leo Gmeiner.</li>
+<li><a href="https://educapes.capes.gov.br/handle/capes/1134078">Livro no repositório da Capes (EduCapes)</a> - Compartilhado por Rosa Maria, como um livro publicado.</li>
+<li><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5870623">Artigo em papers.ssrn.com</a> - Compartilhado por Marília.</li>
+<li><a href="https://juliopassos.com/inteligencia-artificial-educacao-professores/">Inteligência Artificial, Educação e Professores</a> - Compartilhado por Prof Julio César Passos como artigo próprio, com convite à reflexão.</li>
+<li><a href="https://www.computacional.com.br/ia/referencial-curricular.php">Referencial curricular da Computacional.com.br</a> - Compartilhado por +55 11 🫣-7414, com pergunta sobre envolvimento. Gerou discussão.</li>
+<li><a href="https://www.brookings.edu/articles/ais-future-for-students-is-in-our-hands/?utm_source=wwr.whiteboardadvisors.com&amp;utm_medium=newsletter&amp;utm_campaign=what-we-re-reading-wednesday-january-14-2026&amp;_bhlid=2a17cd72a480cc4a901782682989759569920d57">AI's future for students is in our hands</a> - Compartilhado por Guilherme Cintra como um relatório.</li>
+<li><a href="https://www.brookings.edu/wp-content/uploads/2026/01/A-New-Direction-for-Students-in-an-AI-World-FULL-REPORT.pdf">Full report: A New Direction for Students in an AI World</a> - Compartilhado por Guilherme Cintra como o relatório completo.</li>
+<li><a href="https://www.instagram.com/reel/DTh3SPakV33/?igsh=MTZncG15b29yZHUzbA==">Instagram Reel</a> - Compartilhado por Juliana Lima, com comentário "Surreal".</li>
+<li><a href="https://porvir.org/vencedores-world-education-medals-2025/">Vencedores World Education Medals 2025</a> - Compartilhado por Juliana Lima como notícia sobre prêmio internacional.</li>
+<li><a href="https://www.linkedin.com/posts/martinellisp_bettbrasil2026-educaaexaeto-tancisimaeles-activity-7417898591567953920-c6gh?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAJzlD0BbMDhDCD85sCE9R7MBWtb58tbFvM">Bett Brasil 2026 LinkedIn Post</a> - Compartilhado por Adriana Martinelli, gerou discussão sobre regras do grupo.</li>
+<li><a href="https://www.linkedin.com/posts/marygrace_institutoescolascriativas-escolascriativas-activity-7417910125123952641-w7cJ?utm_medium=ios_app&amp;rcm=ACoAAAHN19sBuanq9OsjEtRLs-0UjSG1mh69Fo0&amp;utm_source=social_share_send&amp;utm_campaign=copy_link">Webinários do Instituto Escolas Criativas LinkedIn Post</a> - Compartilhado por Mary Grace como sugestão de webinários.</li>
+<li><a href="https://www.linkedin.com/posts/sebastian-guevara-cota_we-spend-a-lot-of-time-asking-how-to-innovate-activity-7417896932821544960-13pI?utm_source=share&amp;utm_medium=member_ios&amp;rcm=ACoAAAAnf3YB4ETLlk84RvGgvl6Rv4AH1lHnfCI">LinkedIn Post sobre inovação</a> - Compartilhado por FERNANDO VALENZUELA.</li>
+<li><a href="https://youtu.be/HwSp1AvuupY?si=kE_F8nQF_xr-LA9R">Licenciaturas e Inteligência Artificial (YouTube)</a> - Compartilhado por Luciano Sathler, com trechos da descrição.</li>
+<li><a href="https://youtu.be/RSNuB9pj9P8?si=dxLFqjVEovFWiKP4">Elon Musk debate (YouTube)</a> - Compartilhado por Savio Ferraz, com contexto.</li>
+<li><a href="https://en.sedaily.com/international/2026/01/10/elon-musk-predicts-humanoid-robots-will-surpass-surgeons-in?utm_source=chatgpt.com">Elon Musk predicts humanoid robots will surpass surgeons</a> - Compartilhado por Savio Ferraz como contexto adicional ao vídeo.</li>
+<li><a href="https://m.ajupress.com/view/20260110171758259">Why Doctors Training Takes too Long, and Robots solve this problem</a> - Compartilhado por Savio Ferraz como contexto adicional ao vídeo.</li>
+<li><a href="https://www.instagram.com/reel/DTlEUTnEUov/?utm_source=ig_web_copy_link&amp;igsh=MzRlODBiNWFlZA==">Nubo Educação Instagram Reel</a> - Compartilhado por +55 11 🫣-2884 (Laura Lopes) como post para divulgação da Cloudinha.</li>
+<li><a href="https://cloudinha.nuboeducacao.org.br/?ref=D4392D7C">Cloudinha - Nubo Educação (Pré-inscrições)</a> - Compartilhado por +55 11 🫣-2884 (Laura Lopes) como link de pré-inscrições, gerou discussão e apoio para divulgação.</li>
+<li><a href="https://www.linkedin.com/posts/nicholasxthompson_the-most-interesting-thing-in-techa-new-ugcPost-7418058215294300160-_HhU?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAUUiCQBcndEaO0ad0P8f4qZcBb6pymGuN4">The most interesting thing in tech: a new UGC Post</a> - Compartilhado por Guilherme Cintra, mencionando o relatório do Brookings Institute.</li>
+<li><a href="https://www.brookings.edu/articles/a-new-direction-for-students-in-an-ai-world-prosper-prepare-protect/">A New Direction for Students in an AI World: Prosper, Prepare, Protect</a> - Compartilhado por Guilherme Cintra como o relatório do Brookings Institute (duplicata do link anterior, mas com título e texto de contexto ligeiramente diferentes no momento do compartilhamento).</li>
+<li><a href="https://www.instagram.com/p/DRm0JJsD3G-/?igsh=cTUzbDg2MDFtdXpx">Instagram Post</a> - Compartilhado por Sonia Rodrigues, com pergunta sobre redundância.</li>
+<li><a href="https://bit.ly/resumos_iaedu">Resumos IA e Educação (GitHub Pages)</a> - Compartilhado por Marina Maluta, anunciando o relançamento dos resumos do grupo, gerou discussão e elogios.</li>
+<li><a href="https://ppc.land/google-engineers-claude-code-confession-rattles-engineering-teams/#:~:text=Google%20principal%20engineer%20reveals%20AI,sparking%20debate%20over%20development%20productivity.&amp;text=A%20Google%20principal%20engineer%20publicly,5.4%20million%20views%20within%20hours.&amp;text=%22I'm%20not%20joking%20and,tools%20affect%20established%20engineering%20teams.">Google principal engineer reveals AI vs. Human code confession</a> - Compartilhado por Savio Ferraz como referência sobre o Claude Code.</li>
+<li><a href="https://claude.com/blog/cowork-research-preview">Claude Cowork Research Preview</a> - Compartilhado por Leo Ornelas, com explicação sobre o lançamento do Claude Cowork.</li>
+<li><a href="https://www.instagram.com/stories/cursinhonubo/3813201380127826848/">Nubo Educação Instagram Stories</a> - Compartilhado por +55 11 🫣-2884 (Laura Lopes) como post para divulgação da Cloudinha.</li>
+<li><a href="https://cloudinha.nuboeducacao.org.br">Cloudinha - Nubo Educação</a> - Compartilhado por +55 11 🫣-2884 (Laura Lopes) como link principal da Cloudinha (duplicata do link de pré-inscrições, mas sem o parâmetro <code>?ref=</code>).</li>
+<li><a href="https://www1.folha.uol.com.br/amp/educacao/2026/01/cursos-de-graduacao-em-inteligencia-artificial-no-sisu-sextuplicam-em-um-ano.shtml">Sisu 2026: Cursos de inteligência artificial sextuplicam - Folha</a> - Compartilhado por Juliana Lima como notícia.</li>
+<li><a href="https://sem-paywall.com/api/clean/www1.folha.uol.com.br/amp/educacao/2026/01/cursos-de-graduacao-em-inteligencia-artificial-no-sisu-sextuplicam-em-um-ano.shtml">Versão alternativa sem paywall do artigo da Folha</a> - Compartilhado por Juliana Lima como alternativa ao paywall.</li>
+<li><a href="https://www.oecd.org/en/publications/oecd-digital-education-outlook-2026_062a7394-en.html">OECD Digital Education Outlook 2026</a> - Compartilhado por Rodrigo N.</li>
+<li><a href="https://www.holoniq.com/notes/2026-education-trends-snapshot">HolonIQ 2026 Education Trends Snapshot</a> - Compartilhado por Alisson Valença.</li>
+<li><a href="https://originality.ai/">Originality.ai</a> - Compartilhado por Savio Ferraz, com contexto sobre verificação de IA.</li>
+</ul>
+<hr />
+<h2>Limitações do Resumo:</h2>
+<ul>
+<li>A conversa continha "Mensagem apagada" e "Mídia oculta" em diversas ocasiões, cujo conteúdo não pôde ser incluído neste resumo.</li>
+<li>Alguns links foram compartilhados sem contexto explicito adicional além do título ou da URL.</li>
+<li>As referências a pesquisas e estudos sobre "estilos de aprendizagem" foram feitas através de menção a strings de busca e planilhas com títulos, sem o compartilhamento dos artigos completos, o que limita a profundidade da análise das evidências citadas.</li>
+<li>A identidade de alguns participantes que interagiram apenas com o número de telefone não pôde ser estabelecida, a menos que se autoidentificassem.</li>
+</ul>
+    </article>
+    
+  </main>
+  <footer class="footer">
+    Aprendizados_IA+Educação // Resumos gerados com LLM // 2026<br>
+    <span style="opacity: 0.7;">Feito por Marina e Tiago Maluta</span><br>
+    <a href="https://wa.me/5511982151851?text=Oi%2C%20encontrei%20um%20problema%20no%20site" style="opacity: 0.7; color: inherit;">Encontrou um problema? Avise-nos</a>
+  </footer>
+  
+<script>
+(function() {
+  const weekEl = document.querySelector('.post-week');
+  if (!weekEl) return;
+  const text = weekEl.textContent;
+  const endMatch = text.match(/→\s*(\d{2})\/(\d{2})\/(\d{4})/);
+  if (endMatch) {
+    const endDate = new Date(`${endMatch[3]}-${endMatch[2]}-${endMatch[1]}`);
+    const diffDays = Math.floor((new Date() - endDate) / (1000*60*60*24));
+    if (diffDays >= 0) {
+      const span = document.createElement('span');
+      span.style.color = '#9ca3af';
+      span.textContent = ` (~ ${diffDays} dias atrás)`;
+      weekEl.appendChild(span);
+    }
+  }
+})();
+</script>
+
+</body>
+</html>
