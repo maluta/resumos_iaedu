@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resumo Semanal | IA+Educação</title>
+  <meta name="description" content="O volume de mensagens na semana foi alto, com participação distribuída entre múltiplos membros. A natureza predominante das interações foi o compartilhamento de informações, incluindo links para artigos, relatórios, eventos e projetos pessoais. Diversos tópicos paralelos...">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg-primary: #f3f4f6;
+  --bg-secondary: #ffffff;
+  --text-primary: #000000;
+  --text-secondary: #4b5563;
+  --accent-blue: #2563eb;
+  --accent-yellow: #fbbf24;
+  --border-color: #000000;
+  --border-light: #d1d5db;
+  --font-main: 'Space Grotesk', -apple-system, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-main);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+  background-image: radial-gradient(circle, #00000015 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.migration-banner {
+  background: #F9DC03;
+  color: #000000;
+  padding: 0.75rem 1.5rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+.migration-banner a { color: #000000; font-weight: 700; text-decoration: underline; }
+.header {
+  position: sticky;
+  top: 0;
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--border-color);
+  z-index: 100;
+  padding: 1rem 1.5rem;
+}
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.logo-bracket { color: var(--accent-blue); }
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+.nav a { color: var(--text-secondary); text-decoration: none; transition: color 0.15s; }
+.nav a:hover { color: var(--text-primary); }
+.nav-separator { color: var(--border-light); }
+.main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  width: 100%;
+}
+/* Search */
+.search-container { margin-bottom: 2rem; }
+.search-input {
+  width: 100%;
+  padding: 1rem;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  outline: none;
+}
+.search-input:focus { box-shadow: 4px 4px 0 var(--border-color); }
+.search-input::placeholder { color: var(--text-secondary); }
+.search-stats {
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.search-results {
+  margin-top: 1.5rem;
+  display: none;
+}
+.search-results.active { display: block; }
+.search-result-item {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  display: block;
+  transition: all 0.15s;
+}
+.search-result-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+.search-result-title {
+  font-weight: 700;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent-blue);
+}
+.search-result-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+.search-result-snippet {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.search-result-snippet mark {
+  background: var(--accent-yellow);
+  color: var(--text-primary);
+  padding: 0.1em 0.2em;
+}
+.no-results {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-secondary);
+  display: none;
+}
+.no-results.active { display: block; }
+.page-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.page-title {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.page-subtitle { font-size: 1rem; color: var(--text-secondary); }
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+.posts-grid.hidden { display: none; }
+.post-card {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 1.5rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.post-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+.badge-new {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ef4444;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+}
+.post-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.post-card-action {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  padding: 0.25rem 0.5rem;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.post-card-action:hover {
+  border-color: #25D366;
+  color: #25D366;
+}
+.post-card-image {
+  width: 100%;
+  height: 120px;
+  background: var(--bg-primary);
+  border: 1px dashed var(--border-light);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-secondary);
+}
+.post-card-category {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-blue);
+  background: rgba(37, 99, 235, 0.1);
+  padding: 0.25rem 0.5rem;
+}
+.post-card-date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.post-card-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+.post-card-excerpt {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  flex: 1;
+}
+.post-card-footer {
+  margin-top: 0;
+  padding-top: 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-blue);
+}
+.post-card-stats {
+  display: flex;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.75rem;
+}
+.post-card-divider {
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: 0.75rem 0;
+}
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+.back-link:hover { color: var(--text-primary); }
+.back-link::before { content: "< "; }
+.post-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.post-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+.post-category {
+  color: var(--accent-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+.post-date { color: var(--text-secondary); }
+.post-title { font-size: 2rem; font-weight: 700; line-height: 1.2; }
+.post-week {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+.content {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 2rem;
+}
+.content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-light);
+}
+.content h2:first-child { margin-top: 0; }
+.content h3 { font-size: 1.125rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.5rem; }
+.content p { margin-bottom: 1rem; }
+.content ul, .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+.content li { margin-bottom: 0.5rem; }
+.content li ul { margin-top: 0.5rem; margin-bottom: 0.5rem; }
+.content a { color: var(--accent-blue); text-decoration: none; border-bottom: 1px solid transparent; }
+.content a:hover { border-bottom-color: var(--accent-blue); }
+.content strong { font-weight: 700; }
+/* Links page - Hacker News style */
+.links-list {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 0;
+}
+.link-item {
+  display: flex;
+  align-items: baseline;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--border-light);
+  gap: 0.5rem;
+}
+.link-item:last-child { border-bottom: none; }
+.link-item.hidden { display: none; }
+.link-item:hover { background: rgba(0,0,0,0.02); }
+.link-rank {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  min-width: 2.5rem;
+  text-align: right;
+}
+.link-content { flex: 1; min-width: 0; }
+.link-title {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  word-break: break-word;
+}
+.link-title:hover { text-decoration: underline; }
+.link-title:visited { color: #828282; }
+.link-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.125rem;
+}
+.link-meta a {
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+.link-meta a:hover { text-decoration: underline; }
+.link-domain {
+  color: var(--text-secondary);
+}
+.link-share {
+  color: var(--text-secondary);
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+.link-share:hover { color: #25D366; }
+.links-count {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+.footer {
+  background: var(--text-primary);
+  color: var(--bg-secondary);
+  padding: 1rem 1.5rem;
+  margin-top: auto;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+@media (max-width: 768px) {
+  .header-content { flex-direction: column; gap: 1rem; }
+  .page-title, .post-title { font-size: 1.5rem; }
+  .posts-grid { grid-template-columns: 1fr; }
+  .content { padding: 1rem; }
+  .nav { flex-wrap: wrap; justify-content: center; }
+}
+  </style>
+  <script defer data-domain="maluta.github.io" src="https://plausible.io/js/plausible.js"></script>
+</head>
+<body>
+  <div class="migration-banner">
+    <a href="https://sites.google.com/view/aprendizados-ia-educacao/home" target="_blank">Para o histórico anterior a Agosto de 2025, clique aqui</a>
+  </div>
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <span class="logo-bracket">[</span>IA+EDU<span class="logo-bracket">]</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Resumos</a>
+        <span class="nav-separator">//</span>
+        <a href="links.html">Links</a>
+      </nav>
+    </div>
+  </header>
+  <main class="main">
+    
+    <a href="index.html" class="back-link">Voltar aos resumos</a>
+    <header class="post-header">
+      <div class="post-meta">
+        <span class="post-category">Resumo Semanal</span>
+        <span class="post-date">16/02/2026</span>
+      </div>
+      <h1 class="post-title">Resumo Semanal</h1>
+      <p class="post-week">Semana: 10/02/2026 → 16/02/2026</p>
+    </header>
+    <article class="content">
+      <h2>Sumário Executivo da Semana</h2>
+<p>O volume de mensagens na semana foi alto, com participação distribuída entre múltiplos membros. A natureza predominante das interações foi o compartilhamento de informações, incluindo links para artigos, relatórios, eventos e projetos pessoais. Diversos tópicos paralelos foram discutidos, com alguns temas recorrentes gerando debates prolongados, como a nova avaliação do PISA sobre IA e letramento midiático, e a segurança em modelos de IA. Foram observadas divergências explícitas de pontos de vista, especialmente em torno de especulações sobre avanços em IA e os motivos para demissões em empresas do setor.</p>
+<hr />
+<h2>Principais Temas e Conteúdos:</h2>
+<p><strong>1. Nova Matriz do PISA 2029 sobre Letramento Midiático e IA (MAIL)</strong>
+- <strong>Tipo de Conteúdo</strong>: Fatos compartilhados; Opiniões pessoais; Perguntas ou dúvidas.
+- <strong>Descrição Factual</strong>: Mariana Ochs compartilhou o primeiro rascunho da nova avaliação do PISA, que unifica letramento midiático e de IA. Outros membros compartilharam links para resumos, o site oficial do projeto na OCDE e a "mandala de habilidades da educação midiática" como framework relacionado. A discussão envolveu múltiplos participantes que manifestaram interesse no tema, com alguns relatando participação prévia em conferências da OCDE sobre o assunto e agendando trocas de informações. Foi mencionado que o framework ALIT da OCDE serve de base para o MAIL.
+- <strong>Recorrência</strong>: Debate prolongado ao longo de vários dias.</p>
+<p><strong>2. Segurança, Ética e Riscos em Modelos de IA</strong>
+- <strong>Tipo de Conteúdo</strong>: Fatos compartilhados; Divergências ou visões conflitantes.
+- <strong>Descrição Factual</strong>: Savio Ferraz compartilhou notícias sobre a demissão de um funcionário de segurança da Anthropic, gerando uma discussão. Marconi contextualizou a saída com outras demissões de alto nível, apontando uma tensão entre segurança e comercialização. Guilherme Cintra ofereceu uma visão alternativa, sugerindo que o alto salário permitiria ao funcionário se dedicar a paixões como a poesia. Rafael Parente posteriormente compartilhou um relatório da Anthropic sobre os riscos do modelo Claude Opus 4.6.
+- <strong>Recorrência</strong>: Debate prolongado.</p>
+<p><strong>3. Divulgação de Projetos, Eventos e Iniciativas</strong>
+- <strong>Tipo de Conteúdo</strong>: Fatos compartilhados.
+- <strong>Descrição Factual</strong>: Diversos membros divulgaram iniciativas:
+    - Um membro pediu apoio para encontrar um local para o "1º Congresso Internacional da Mensa Brasil".
+    - Guilherme Cintra apresentou a nova versão de seu site "edtechdasemana.com.br", construído com auxílio de IA, e pediu feedback.
+    - Foi divulgado o lançamento do "Mapa Brasileiro da Educação Midiática" com um link para o webinário.
+    - Felipe anunciou a abertura das inscrições para a "Olimpíada Nacional de Educação Financeira da Tangram".
+    - Adriana Martinelli anunciou o lançamento do "Edtech Bett Award edição 26".
+    - Arthur Galamba compartilhou um artigo acadêmico de sua autoria sobre avaliação formativa com IA generativa.
+- <strong>Recorrência</strong>: Várias menções pontuais de diferentes membros.</p>
+<p><strong>4. Uso de Celulares e Tecnologia na Sala de Aula</strong>
+- <strong>Tipo de Conteúdo</strong>: Fatos compartilhados; Opiniões pessoais.
+- <strong>Descrição Factual</strong>: Giselle Santos compartilhou uma notícia sobre o Insper vetar o uso de celular em sala. Savio Ferraz e Diogo comentaram a aparente contradição com o incentivo ao uso de IA. Fabiana Paixão e Priscilla esclareceram que, tanto no Insper quanto na FGV, a política é definida pelo professor em sala, que pode permitir o uso de eletrônicos com objetivo pedagógico claro. Guy C A Filho compartilhou um artigo de um profissional do Insper sobre o tema.
+- <strong>Recorrência</strong>: Várias mensagens.</p>
+<p><strong>5. Especulações sobre Avanços em IA ("Something Big is Happening")</strong>
+- <strong>Tipo de Conteúdo</strong>: Fatos compartilhados; Divergências ou visões conflitantes.
+- <strong>Descrição Factual</strong>: Andre Gusman e Ciça Melo compartilharam um artigo de Matt Shumer com tom otimista sobre um grande avanço em IA. Em contrapartida, um membro compartilhou um post de Gary Marcus criticando a publicação de Shumer. Outros links foram compartilhados na sequência, oferecendo diferentes perspectivas sobre o mesmo tema, incluindo a citação de que "conhecimento virou commodity" pelo CEO da Nvidia.
+- <strong>Recorrência</strong>: Debate prolongado.</p>
+<p><strong>6. Questões sobre Processos Seletivos</strong>
+- <strong>Tipo de Conteúdo</strong>: Perguntas ou dúvidas.
+- <strong>Descrição Factual</strong>: Oliveira Júnior perguntou se alguém tinha informações sobre os critérios de avaliação de currículos para a especialização em IA da UFAL. A pergunta não recebeu respostas diretas no trecho fornecido.
+- <strong>Recorrência</strong>: 1 menção.</p>
+<hr />
+<h2>Links Compartilhados (SEÇÃO CRÍTICA):</h2>
+<ul>
+<li>
+<p><strong><a href="https://cimb.mensa.org.br/eventos/i-congresso-internacional-da-mensa-brasil-temas-em-saude-mental/">I Congresso Internacional da Mensa Brasil</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: +55 21 95900-6014</li>
+<li><strong>Contexto</strong>: Divulgação do evento e pedido de apoio para encontrar um local.</li>
+<li><strong>Discussão gerada</strong>: Não gerou discussão sobre o conteúdo, apenas sobre o pedido de apoio.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://apres-parceria-mensa-evento.figma.site/">Apresentação de Parceria - Mensa Evento</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: +55 21 95900-6014</li>
+<li><strong>Contexto</strong>: Resumo da proposta de parceria para o congresso da Mensa.</li>
+<li><strong>Discussão gerada</strong>: Não gerou discussão.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www.instagram.com/reel/DUimvTpEUcd/?igsh=MTF4amsxY2xpcXpuaQ==">Reel do Instagram sobre reflexão</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Mariana Ochs</li>
+<li><strong>Contexto</strong>: Compartilhado com a frase "Jogando aqui para reflexão".</li>
+<li><strong>Discussão gerada</strong>: Sim, gerou comentários de Giselle Santos.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://youtu.be/uoa-IBw9Fug?si=qgAj9fm2-eLTSpmA">Vídeo no YouTube (clássico nostalgia)</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Giselle Santos</li>
+<li><strong>Contexto</strong>: Em resposta a uma mídia oculta, como lembrança de um "clássico que é pura nostalgia".</li>
+<li><strong>Discussão gerada</strong>: Não gerou discussão direta sobre o link.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://share.google/2kiTJao7xBYwAqNM7">PISA 2029 MAIL Assessment Framework First Draft.pdf</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Mariana Ochs</li>
+<li><strong>Contexto</strong>: Anúncio do primeiro rascunho da nova avaliação do PISA sobre letramento midiático e IA.</li>
+<li><strong>Discussão gerada</strong>: Sim, iniciou uma longa discussão sobre o tema.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www1.folha.uol.com.br/educacao/2026/01/insper-veta-uso-de-celular-em-sala-de-aula-na-graduacao.shtml">Insper veta uso de celular em sala de aula na graduação - Folha</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Giselle Santos</li>
+<li><strong>Contexto</strong>: Para iniciar uma discussão sobre o uso de tecnologia em sala de aula.</li>
+<li><strong>Discussão gerada</strong>: Sim, gerou debate e esclarecimentos de outros membros.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://share.google/3nyhFYZt1UjAXkRHi">Google Gemini permitirá criar músicas completas via IA - Tudocelular.com</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Giselle Santos</li>
+<li><strong>Contexto</strong>: Compartilhamento de notícia sobre nova funcionalidade de IA.</li>
+<li><strong>Discussão gerada</strong>: Sim, Luciano Meira conectou a notícia a outro link.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www.linkedin.com/posts/brunonstefani_por-que-o-google-est%C3%A1-vencendo-a-corrida-activity-7426663701715480576-VHsb?utm_source=social_share_send&amp;utm_medium=android_app&amp;rcm=ACoAAAB1vqIBy-unqbLGOMw0qNz1VqlM9HjHlFA&amp;utm_campaign=whatsapp">Post no LinkedIn sobre Google na corrida de IA</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Luciano Meira</li>
+<li><strong>Contexto</strong>: Em resposta ao link sobre o Gemini, como uma colocação relacionada.</li>
+<li><strong>Discussão gerada</strong>: Sim, gerou comentários de Giselle Santos.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www.linkedin.com/posts/guilherme-martins-b0862b6_tecnologia-foco-e-aprendizagem-no-insper-ugcPost-7424579921471004672-0JP6?utm_medium=ios_app&amp;rcm=ACoAAAFH-DoBCPFAtzgqoVfOG_oQL7lIfTxd6AU&amp;utm_source=social_share_send&amp;utm_campaign=whatsapp">Post no LinkedIn de Guilherme Martins sobre tecnologia no Insper</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Guy C A Filho</li>
+<li><strong>Contexto</strong>: Complementando a discussão sobre a política de uso de tecnologia no Insper.</li>
+<li><strong>Discussão gerada</strong>: Não gerou nova discussão.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www.youtube.com/watch?v=KvgLVng_N9c">Webinário de lançamento do Mapa Brasileiro da Educação Midiática - YouTube</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: +55 11 98234-1627</li>
+<li><strong>Contexto</strong>: Divulgação do evento ao vivo.</li>
+<li><strong>Discussão gerada</strong>: Gerou o compartilhamento de um link complementar.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://bit.ly/mapaedmidiatica">Site do Mapa de Educação Midiática</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Vinícius de Oliveira</li>
+<li><strong>Contexto</strong>: Em resposta ao compartilhamento do webinário, fornecendo o link direto para o site.</li>
+<li><strong>Discussão gerada</strong>: Não gerou discussão.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www.edtechdasemana.com.br/">Site Edtech da Semana</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Guilherme Cintra</li>
+<li><strong>Contexto</strong>: Lançamento da nova versão do seu site pessoal, construído com IA, pedindo feedback.</li>
+<li><strong>Discussão gerada</strong>: Sim, gerou vários comentários de feedback positivo e perguntas técnicas.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://bluestudio.estadao.com.br/agencia-de-comunicacao/prnewswire/relatorio-internacional-de-seguranca-da-ia-de-2026-aponta-mudancas-rapidas-e-riscos-emergentes/">Relatório Internacional de Segurança da IA - Estadão</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Savio Ferraz</li>
+<li><strong>Contexto</strong>: Ligado à notícia da demissão de um funcionário de segurança da Anthropic.</li>
+<li><strong>Discussão gerada</strong>: Sim, iniciou a discussão sobre segurança em IA.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www.diariodocentrodomundo.com.br/executivo-uma-das-principais-empresas-de-ia-pede-demissao-e-alerta-o-mundo-esta-em-perigo/">Executivo de empresa de IA pede demissão e alerta - DCM</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Savio Ferraz</li>
+<li><strong>Contexto</strong>: Junto com o link anterior, sobre a demissão na Anthropic.</li>
+<li><strong>Discussão gerada</strong>: Sim, parte da mesma discussão sobre segurança em IA.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www.tangrameducacao.com/olimpiada">Olimpíada Nacional de Educação Financeira da Tangram</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Felipe</li>
+<li><strong>Contexto</strong>: Divulgação e pedido de ajuda na divulgação da olimpíada.</li>
+<li><strong>Discussão gerada</strong>: Não gerou discussão.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www.linkedin.com/posts/martinellisp_j%C3%A1-est%C3%A3o-abertas-as-inscri%C3%A7%C3%B5es-para-a-2%C2%AA-activity-7427093146569793536-oTqi?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAJzlD0BbMDhDCD85sCE9R7MBWtb58tbFvM">Post no LinkedIn sobre Edtech Bett Award 26</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Adriana Martinelli</li>
+<li><strong>Contexto</strong>: Anunciando o lançamento do prêmio.</li>
+<li><strong>Discussão gerada</strong>: Sim, um membro comentou sobre a experiência como avaliadora.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www.instagram.com/p/DUnbqHljdb_/?img_index=2&amp;igsh=bnE0dXM5Y2N2bGEz">Post no Instagram com 2 imagens</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: FERNANDO VALENZUELA</li>
+<li><strong>Contexto</strong>: Compartilhado sem texto adicional.</li>
+<li><strong>Discussão gerada</strong>: Não gerou discussão.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www.linkedin.com/posts/marianaochs_pisa-mail-2029resumo-activity-7427471445431271424-ApPh?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAAAvAg0BJYVBRfSNLfHgQo0cFzJbq0Y1uMc">Resumo da nova matriz do PISA no LinkedIn</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Mariana Ochs</li>
+<li><strong>Contexto</strong>: Compartilhamento de um resumo pessoal sobre o documento do PISA.</li>
+<li><strong>Discussão gerada</strong>: Sim, aprofundou o debate sobre o tema.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://bera-journals.onlinelibrary.wiley.com/doi/10.1111/bjet.70051">Artigo Open Access - BERA Journals</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Arthur Galamba</li>
+<li><strong>Contexto</strong>: Compartilhamento de artigo acadêmico de própria autoria sobre avaliação formativa com IA.</li>
+<li><strong>Discussão gerada</strong>: Não gerou discussão.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www.oecd.org/en/about/projects/pisa-2029-media-and-artificial-intelligence-literacy.html">PISA 2029: Media and Artificial Intelligence Literacy - OECD</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Osvaldo Junior</li>
+<li><strong>Contexto</strong>: Compartilhado como parte da discussão sobre o PISA 2029.</li>
+<li><strong>Discussão gerada</strong>: Parte da discussão já em andamento.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="http://www.mac.usp.br/mac/expos/2025/antagonistas/index.html">Exposição 'Antagonistas: Resistências Algorítmicas' no MAC-USP</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Helena Mendonça</li>
+<li><strong>Contexto</strong>: Recomendação de exposição em São Paulo.</li>
+<li><strong>Discussão gerada</strong>: Não gerou discussão.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www.linkedin.com/posts/ana-scavarda-a9432427_i-was-at-my-desk-when-i-came-across-the-articleburied-activity-7427703412571488257-5bmI?utm_medium=ios_app&amp;rcm=ACoAAAWQlxABHRjnqf6L1DMNnVGDdv4x8HmC-hc&amp;utm_source=social_share_send&amp;utm_campaign=whatsapp">Reflexão sobre IA na educação no LinkedIn</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Ana Scavarda</li>
+<li><strong>Contexto</strong>: Compartilhamento de uma reflexão pessoal.</li>
+<li><strong>Discussão gerada</strong>: Não gerou discussão.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://open.substack.com/pub/aprenderdestrava/p/a-espiral-do-futuro-da-aprendizagem?utm_source=share&amp;utm_medium=android&amp;r=ej81h">Ensaio "A espiral do futuro da aprendizagem" - Substack</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: +55 11 99240-5223</li>
+<li><strong>Contexto</strong>: Compartilhamento de um ensaio pessoal sobre o futuro da aprendizagem.</li>
+<li><strong>Discussão gerada</strong>: Sim, gerou comentários sobre a natureza do grupo.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www.researchgate.net/figure/A-mandala-de-habilidades-da-educacao-midiatica-segundo-o-EducaMidia_fig1_395593487">Mandala de habilidades da educação midiática - ResearchGate</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Sora Lacerda</li>
+<li><strong>Contexto</strong>: Para conectar o debate do PISA com o framework do Educamídia.</li>
+<li><strong>Discussão gerada</strong>: Sim, gerou comentários de Mariana Ochs e Janine.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www-cdn.anthropic.com/f21d93f21602ead5cdbecb8c8e1c765759d9e232.pdf?utm_source=www.8020ai.co&amp;utm_medium=newsletter&amp;utm_campaign=china-s-new-ai-shocks-the-world&amp;_bhlid=3de76e92a333a19c946a94644a57a40e8a2d2b91">Relatório de Risco de Sabotagem do Claude Opus 4.6 - Anthropic PDF</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Rafael Parente</li>
+<li><strong>Contexto</strong>: Alerta sobre os riscos do novo modelo da Anthropic.</li>
+<li><strong>Discussão gerada</strong>: Sim, gerou comentários de Marconi.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www1.folha.uol.com.br/mercado/2026/02/open-english-aposta-em-ia-para-ensino-de-ingles-mas-sem-demitir-professores-pessoas-querem-pessoas.shtml">Open English aposta em IA para ensino de inglês - Folha</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Luciano Sathler</li>
+<li><strong>Contexto</strong>: Compartilhado sem texto adicional.</li>
+<li><strong>Discussão gerada</strong>: Não gerou discussão.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://lnkd.in/d-uP_Bvs">Link para webinar Edtech Award - LinkedIn</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Adriana Martinelli</li>
+<li><strong>Contexto</strong>: Divulgando o início do webinar.</li>
+<li><strong>Discussão gerada</strong>: Não gerou discussão.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www.linkedin.com/posts/axelcoustere_face-scan-age-verification-systems-have-come-ugcPost-7427661801913405440-Fr0y?utm_source=social_share_send&amp;utm_medium=android_app&amp;rcm=ACoAAAzhyNIBOWZA2CRVwcfNshnWuwk8PtQSrOQ&amp;utm_campaign=whatsapp">Post sobre verificação de idade por escaneamento facial - LinkedIn</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Giselle Santos</li>
+<li><strong>Contexto</strong>: Compartilhado com risadas.</li>
+<li><strong>Discussão gerada</strong>: Não gerou discussão.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www.instagram.com/p/DUl5_-5kzvU/?igsh=aHpzemx2ZWNsNW1m">Post no Instagram sobre "IA viva"</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Giselle Santos</li>
+<li><strong>Contexto</strong>: Compartilhado sem texto adicional.</li>
+<li><strong>Discussão gerada</strong>: Sim, gerou comentários sobre o conteúdo do post.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www.linkedin.com/pulse/something-big-happening-matt-shumer-so5he?utm_source=share&amp;utm_medium=member_ios&amp;utm_campaign=share_via">Artigo "Something big is happening" - LinkedIn</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Andre Gusman de Oliveira (primeira vez), Ciça Melo (segunda vez).</li>
+<li><strong>Contexto</strong>: Especulação sobre um grande avanço próximo em IA.</li>
+<li><strong>Discussão gerada</strong>: Sim, gerou um debate com compartilhamento de links com visões opostas.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://garymarcus.substack.com/p/about-that-matt-shumer-post-that">Crítica de Gary Marcus ao post de Matt Shumer - Substack</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: +55 11 99420-8325</li>
+<li><strong>Contexto</strong>: Como contraponto direto ao link anterior.</li>
+<li><strong>Discussão gerada</strong>: Parte da mesma discussão.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://exame.com/carreira/teremos-desempenho-de-nivel-humano-na-maioria-das-tarefas-profissionais-diz-ceo-da-microsoft-ai/?utm_source=copiaecola&amp;utm_medium=compartilhamento">CEO da Microsoft AI sobre desempenho de nível humano - Exame</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Rafael Parente</li>
+<li><strong>Contexto</strong>: Trazendo a visão de um executivo do setor para a discussão sobre o futuro da IA.</li>
+<li><strong>Discussão gerada</strong>: Gerou um comentário com citação do CEO da Nvidia.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://x.com/johnpalmer/status/2021966462198460849?s=46">Post no X.com de John Palmer</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Marconi</li>
+<li><strong>Contexto</strong>: Como parte da discussão sobre o artigo de Matt Shumer.</li>
+<li><strong>Discussão gerada</strong>: Parte da mesma discussão.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://youtube.com/shorts/xUz3MDqpI3Y?si=K1hZjNLvxLxbsiQY">Short no YouTube</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Marcos Cavalcanti</li>
+<li><strong>Contexto</strong>: Compartilhado sem texto adicional.</li>
+<li><strong>Discussão gerada</strong>: Não gerou discussão.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www.instagram.com/p/DUt1WQikTAo/?igsh=Z2hibXMxMHAyZmJy">Post no Instagram sobre engenheiros do Spotify</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Savio Ferraz</li>
+<li><strong>Contexto</strong>: Relacionando o conteúdo do post com a automação de processos de codificação.</li>
+<li><strong>Discussão gerada</strong>: Não gerou discussão.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://x.com/ericmarkowitz/status/2022005480240120229?s=46">Post no X.com de Eric Markowitz</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Henrick</li>
+<li><strong>Contexto</strong>: Compartilhado sem texto adicional.</li>
+<li><strong>Discussão gerada</strong>: Gerou o compartilhamento de uma longa citação.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://www.instagram.com/p/DUvysC1iTrz/?igsh=OHk5NHN4Z3p5eXdr">Post no Instagram sobre IA no Ensino Superior - NYT</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Luciano Sathler</li>
+<li><strong>Contexto</strong>: Divulgando a tradução de um artigo de opinião do New York Times.</li>
+<li><strong>Discussão gerada</strong>: Sim, gerou um comentário ("Muito bom.").</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://restofworld.org/2026/india-ai-summit-third-way-global-south-big-tech/">Índia e a terceira via da IA - Rest of World</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Marconi</li>
+<li><strong>Contexto</strong>: Compartilhado sem texto adicional.</li>
+<li><strong>Discussão gerada</strong>: Sim, gerou um comentário ("Sensacional!").</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://johnrushx.substack.com/p/im-from-2058-the-ai-didnt-destroy">História do futuro "I'm from 2058" - Substack</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: +1 (305) 205-1306</li>
+<li><strong>Contexto</strong>: Compartilhando uma "história interessante do que pode acontecer no futuro".</li>
+<li><strong>Discussão gerada</strong>: Não gerou discussão.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="https://x.com/angusdav/status/2023536903899807977?s=48">Testemunho de pai da Alpha School - X.com</a></strong></p>
+<ul>
+<li><strong>Quem compartilhou</strong>: Marcio Cohen</li>
+<li><strong>Contexto</strong>: Compartilhando um testemunho que considerou complementar a outros já vistos no grupo e que o fez ter uma opinião mais favorável sobre a escola.</li>
+<li><strong>Discussão gerada</strong>: Não gerou discussão no trecho fornecido.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2>Limitações do Resumo:</h2>
+<ul>
+<li>A conversa inclui múltiplas menções a "Mídia oculta", cujo conteúdo (imagens, vídeos, áudios, figurinhas) não pode ser analisado e contextualizado.</li>
+<li>O significado de mensagens curtas ou o uso de emojis pode ser ambíguo e depender de um contexto cultural ou relacional não explícito no texto.</li>
+<li>Existem referências a discussões ou materiais compartilhados anteriormente no grupo (ex.: "aquele que rotineiramente postam aqui"), cujo conteúdo é desconhecido.</li>
+<li>Várias mensagens foram apagadas, impedindo a análise completa do fluxo da conversa.</li>
+</ul>
+    </article>
+    
+  </main>
+  <footer class="footer">
+    Aprendizados_IA+Educação // Resumos gerados com LLM // 2026<br>
+    <span style="opacity: 0.7;">Feito por Marina e Tiago Maluta</span><br>
+    <a href="https://wa.me/5511982151851?text=Oi%2C%20encontrei%20um%20problema%20no%20site" style="opacity: 0.7; color: inherit;">Encontrou um problema? Avise-nos</a>
+  </footer>
+  
+<script>
+(function() {
+  const weekEl = document.querySelector('.post-week');
+  if (!weekEl) return;
+  const text = weekEl.textContent;
+  const endMatch = text.match(/→\s*(\d{2})\/(\d{2})\/(\d{4})/);
+  if (endMatch) {
+    const endDate = new Date(`${endMatch[3]}-${endMatch[2]}-${endMatch[1]}`);
+    const diffDays = Math.floor((new Date() - endDate) / (1000*60*60*24));
+    if (diffDays >= 0) {
+      const span = document.createElement('span');
+      span.style.color = '#9ca3af';
+      span.textContent = ` (~ ${diffDays} dias atrás)`;
+      weekEl.appendChild(span);
+    }
+  }
+})();
+</script>
+
+</body>
+</html>

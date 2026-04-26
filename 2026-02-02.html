@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resumo Semanal | IA+Educação</title>
+  <meta name="description" content="A conversa da semana apresentou um volume alto de mensagens, com participação distribuída entre múltiplos membros. A natureza predominante das interações foi o compartilhamento de informações, incluindo notícias, artigos, ferramentas de IA e oportunidades profissionais....">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg-primary: #f3f4f6;
+  --bg-secondary: #ffffff;
+  --text-primary: #000000;
+  --text-secondary: #4b5563;
+  --accent-blue: #2563eb;
+  --accent-yellow: #fbbf24;
+  --border-color: #000000;
+  --border-light: #d1d5db;
+  --font-main: 'Space Grotesk', -apple-system, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-main);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+  background-image: radial-gradient(circle, #00000015 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.migration-banner {
+  background: #F9DC03;
+  color: #000000;
+  padding: 0.75rem 1.5rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+.migration-banner a { color: #000000; font-weight: 700; text-decoration: underline; }
+.header {
+  position: sticky;
+  top: 0;
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--border-color);
+  z-index: 100;
+  padding: 1rem 1.5rem;
+}
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.logo-bracket { color: var(--accent-blue); }
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+.nav a { color: var(--text-secondary); text-decoration: none; transition: color 0.15s; }
+.nav a:hover { color: var(--text-primary); }
+.nav-separator { color: var(--border-light); }
+.main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  width: 100%;
+}
+/* Search */
+.search-container { margin-bottom: 2rem; }
+.search-input {
+  width: 100%;
+  padding: 1rem;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  outline: none;
+}
+.search-input:focus { box-shadow: 4px 4px 0 var(--border-color); }
+.search-input::placeholder { color: var(--text-secondary); }
+.search-stats {
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.search-results {
+  margin-top: 1.5rem;
+  display: none;
+}
+.search-results.active { display: block; }
+.search-result-item {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  display: block;
+  transition: all 0.15s;
+}
+.search-result-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+.search-result-title {
+  font-weight: 700;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent-blue);
+}
+.search-result-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+.search-result-snippet {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.search-result-snippet mark {
+  background: var(--accent-yellow);
+  color: var(--text-primary);
+  padding: 0.1em 0.2em;
+}
+.no-results {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-secondary);
+  display: none;
+}
+.no-results.active { display: block; }
+.page-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.page-title {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.page-subtitle { font-size: 1rem; color: var(--text-secondary); }
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+.posts-grid.hidden { display: none; }
+.post-card {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 1.5rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.post-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+.badge-new {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ef4444;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+}
+.post-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.post-card-action {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  padding: 0.25rem 0.5rem;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.post-card-action:hover {
+  border-color: #25D366;
+  color: #25D366;
+}
+.post-card-image {
+  width: 100%;
+  height: 120px;
+  background: var(--bg-primary);
+  border: 1px dashed var(--border-light);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-secondary);
+}
+.post-card-category {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-blue);
+  background: rgba(37, 99, 235, 0.1);
+  padding: 0.25rem 0.5rem;
+}
+.post-card-date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.post-card-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+.post-card-excerpt {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  flex: 1;
+}
+.post-card-footer {
+  margin-top: 0;
+  padding-top: 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-blue);
+}
+.post-card-stats {
+  display: flex;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.75rem;
+}
+.post-card-divider {
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: 0.75rem 0;
+}
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+.back-link:hover { color: var(--text-primary); }
+.back-link::before { content: "< "; }
+.post-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+.post-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+.post-category {
+  color: var(--accent-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+.post-date { color: var(--text-secondary); }
+.post-title { font-size: 2rem; font-weight: 700; line-height: 1.2; }
+.post-week {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+.content {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 2rem;
+}
+.content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-light);
+}
+.content h2:first-child { margin-top: 0; }
+.content h3 { font-size: 1.125rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.5rem; }
+.content p { margin-bottom: 1rem; }
+.content ul, .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+.content li { margin-bottom: 0.5rem; }
+.content li ul { margin-top: 0.5rem; margin-bottom: 0.5rem; }
+.content a { color: var(--accent-blue); text-decoration: none; border-bottom: 1px solid transparent; }
+.content a:hover { border-bottom-color: var(--accent-blue); }
+.content strong { font-weight: 700; }
+/* Links page - Hacker News style */
+.links-list {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  padding: 0;
+}
+.link-item {
+  display: flex;
+  align-items: baseline;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--border-light);
+  gap: 0.5rem;
+}
+.link-item:last-child { border-bottom: none; }
+.link-item.hidden { display: none; }
+.link-item:hover { background: rgba(0,0,0,0.02); }
+.link-rank {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  min-width: 2.5rem;
+  text-align: right;
+}
+.link-content { flex: 1; min-width: 0; }
+.link-title {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  word-break: break-word;
+}
+.link-title:hover { text-decoration: underline; }
+.link-title:visited { color: #828282; }
+.link-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 0.125rem;
+}
+.link-meta a {
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+.link-meta a:hover { text-decoration: underline; }
+.link-domain {
+  color: var(--text-secondary);
+}
+.link-share {
+  color: var(--text-secondary);
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+.link-share:hover { color: #25D366; }
+.links-count {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+.footer {
+  background: var(--text-primary);
+  color: var(--bg-secondary);
+  padding: 1rem 1.5rem;
+  margin-top: auto;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+@media (max-width: 768px) {
+  .header-content { flex-direction: column; gap: 1rem; }
+  .page-title, .post-title { font-size: 1.5rem; }
+  .posts-grid { grid-template-columns: 1fr; }
+  .content { padding: 1rem; }
+  .nav { flex-wrap: wrap; justify-content: center; }
+}
+  </style>
+  <script defer data-domain="maluta.github.io" src="https://plausible.io/js/plausible.js"></script>
+</head>
+<body>
+  <div class="migration-banner">
+    <a href="https://sites.google.com/view/aprendizados-ia-educacao/home" target="_blank">Para o histórico anterior a Agosto de 2025, clique aqui</a>
+  </div>
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <span class="logo-bracket">[</span>IA+EDU<span class="logo-bracket">]</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Resumos</a>
+        <span class="nav-separator">//</span>
+        <a href="links.html">Links</a>
+      </nav>
+    </div>
+  </header>
+  <main class="main">
+    
+    <a href="index.html" class="back-link">Voltar aos resumos</a>
+    <header class="post-header">
+      <div class="post-meta">
+        <span class="post-category">Resumo Semanal</span>
+        <span class="post-date">02/02/2026</span>
+      </div>
+      <h1 class="post-title">Resumo Semanal</h1>
+      <p class="post-week">Semana: 27/01/2026 → 02/02/2026</p>
+    </header>
+    <article class="content">
+      <h2>Sumário Executivo da Semana</h2>
+<p>A conversa da semana apresentou um volume alto de mensagens, com participação distribuída entre múltiplos membros. A natureza predominante das interações foi o compartilhamento de informações, incluindo notícias, artigos, ferramentas de IA e oportunidades profissionais. Ocorreram discussões aprofundadas em temas recorrentes, notavelmente sobre o foco pedagógico da educação midiática e os riscos e hype em torno de agentes de IA autônomos. Houve também diversas solicitações de contato, referências e recomendações. Identificou-se explicitamente um alinhamento de opiniões em torno de uma reflexão inicial sobre pedagogia e uma clara divergência de visões, com argumentos técnicos e filosóficos, sobre o fenômeno Moltbook.</p>
+<hr />
+<h2>Principais Temas e Conteúdos:</h2>
+<p><strong>1. Foco Pedagógico: Análise Crítica vs. Domínio de Ferramentas de IA</strong>
+- <strong>Tipo de Conteúdo</strong>: Opiniões pessoais
+- <strong>Descrição Factual</strong>: Uma membra (Mariana Ochs) argumentou que o tempo em sala de aula deve ser focado em desenvolver o senso crítico e analisar exemplos reais de desinformação ("deep fakes na natureza"), em vez de ensinar o uso de ferramentas para criar mídias sintéticas. Ela alertou sobre o risco do "tecnofetichismo" e defendeu que o letramento em IA deve priorizar a compreensão da lógica e dos impactos, que são mais permanentes que as ferramentas. Vários membros concordaram com a reflexão.
+- <strong>Recorrência</strong>: Debate prolongado.</p>
+<p><strong>2. Debate sobre Agentes Autônomos de IA (Moltbook e Clawdbot)</strong>
+- <strong>Tipo de Conteúdo</strong>: Divergências ou visões conflitantes, Opiniões pessoais, Fatos compartilhados
+- <strong>Descrição Factual</strong>: O tema gerou um debate extenso.
+  - <em>Visão 1 (Reflexão sobre Comportamento)</em>: Um membro (Rafael Parente) iniciou a discussão refletindo sobre o Moltbook (uma "rede social para agentes de IA") como um espelho de comportamentos humanos algorítmicos, destacando a confusão entre o que é gerado e o que é vivido como um desafio formativo urgente para educadores.
+  - <em>Visão 2 (Ceticismo e Alerta Técnico)</em>: Outros membros (Giselle Santos, Luciano Meira, +55 42 8872-0621) contestaram a narrativa de autonomia, descrevendo o fenômeno como "ventriloquismo digital" e um "sandbox" criado por humanos. Foram compartilhados links e argumentos técnicos apontando vulnerabilidades de segurança (API que permitia humanos postarem como agentes) e classificando o movimento como "hype" e "marketing", com alertas explícitos sobre os riscos de segurança do OpenClaw.
+- <strong>Recorrência</strong>: Debate prolongado.</p>
+<p><strong>3. Riscos, Ética e Usos Maliciosos da IA</strong>
+- <strong>Tipo de Conteúdo</strong>: Perguntas ou dúvidas, Fatos compartilhados
+- <strong>Descrição Factual</strong>: Membros discutiram diversos riscos associados à IA. Um membro (Prof Ives Duque) questionou sobre a existência de propagandas de aplicativos "deepnude" em plataformas como Roblox, o que foi confirmado por outra membra (Giselle Santos). Foram compartilhadas notícias sobre o lucro da Meta com anúncios de golpes e a exposição de dados de crianças por um brinquedo com IA (Bondu). Também foi compartilhado o uso de IA para vigilância de imigrantes nos EUA (app Elite/Palantir).
+- <strong>Recorrência</strong>: Várias mensagens.</p>
+<p><strong>4. Desvalorização da Profissão Docente</strong>
+- <strong>Tipo de Conteúdo</strong>: Opinião pessoal, Fatos compartilhados
+- <strong>Descrição Factual</strong>: Um membro (Prof Ives Duque) compartilhou um texto longo usando a metáfora do "machado" (ataques explícitos como o movimento "Escola Sem Partido") e do "cupim" (corrosão silenciosa e contínua) para descrever a deslegitimação de professores e da escola. Argumentou que sem confiança na figura do educador, qualquer projeto de letramento em IA, educação midiática ou pensamento crítico é inviabilizado.
+- <strong>Recorrência</strong>: 1 menção (post longo e estruturado).</p>
+<p><strong>5. Cibersegurança e Privacidade de Dados</strong>
+- <strong>Tipo de Conteúdo</strong>: Fatos compartilhados, Opiniões pessoais
+- <strong>Descrição Factual</strong>: A partir de um post sobre tendências da feira Bett UK, membros comentaram sobre a crescente importância da cibersegurança. Um membro (Marconi) expressou ceticismo sobre o investimento das empresas na área, afirmando que "remediar é mais barato do que prevenir". Foi compartilhada uma notícia sobre o diretor de cibersegurança dos EUA ter vazado dados confidenciais para o ChatGPT.
+- <strong>Recorrência</strong>: Várias mensagens.</p>
+<p><strong>6. Compartilhamento de Ferramentas, Notícias e Oportunidades</strong>
+- <strong>Tipo de Conteúdo</strong>: Fatos compartilhados, Perguntas ou dúvidas
+- <strong>Descrição Factual</strong>: Diversos membros compartilharam links sobre novas ferramentas (OpenAI Prism, Clawdbot), atualizações de modelos de IA, artigos de pesquisa, manifestos, vagas de emprego (Professor de Ferramentas Digitais, vaga afirmativa em secretaria de educação) e oportunidades acadêmicas (concurso para pesquisador em Portugal). Houve também solicitações diretas de recomendações de ferramentas de IA para pesquisa acadêmica, contatos de gestores de escolas públicas e referências sobre IA no ensino de segunda língua.
+- <strong>Recorrência</strong>: Várias mensagens.</p>
+<hr />
+<h2>Links Compartilhados (SEÇÃO CRÍTICA):</h2>
+<ul>
+<li><strong><a href="https://x.com/darioamodei/status/2015833046327402527?s=48&amp;t=dk2WNdooUtDVbyua6yejCw">Tweet de Dario Amodei (CEO da Anthropic)</a></strong></li>
+<li>Quem compartilhou: Jonas</li>
+<li>Contexto: Apresentado como um "ensaio interessante".</li>
+<li>
+<p>Interação: Não gerou discussão direta.</p>
+</li>
+<li>
+<p><strong><a href="https://gemini.google.com/share/92415f39595d">App Gemini para raspagem de sites</a></strong></p>
+</li>
+<li>Quem compartilhou: Rafael Sampaio</li>
+<li>Contexto: O membro compartilhou um aplicativo que ele mesmo criou no Gemini para fazer web scraping de sites estáticos.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://prism.openai.com/">Anúncio da plataforma Prism da OpenAI (link não funcional, apenas texto)</a></strong></p>
+</li>
+<li>Quem compartilhou: Leo Ornelas e +55 11 99240-5251</li>
+<li>Contexto: Anunciando uma nova plataforma gratuita para cientistas e pesquisadores. A segunda menção foi perguntando por feedback.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://canaltech.com.br/software/o-que-e-clawdbot-entenda-funcoes-e-riscos-do-agente-faz-tudo-de-ia/">O que é Clawdbot?</a></strong></p>
+</li>
+<li>Quem compartilhou: Savio Ferraz</li>
+<li>Contexto: Perguntando se alguém no grupo já havia testado a ferramenta.</li>
+<li>
+<p>Interação: Gerou discussão sobre suas funcionalidades e riscos de segurança.</p>
+</li>
+<li>
+<p><strong><a href="https://www.google.com/amp/s/g1.globo.com/google/amp/tecnologia/noticia/2025/11/06/meta-lucrou-us-16-bilhoes-com-anuncios-de-golpes-e-produtos-ilegais-em-2024-diz-agencia.ghtml">Meta lucrou US$ 16 bilhões com anúncios de golpes e produtos ilegais em 2024 (G1)</a></strong></p>
+</li>
+<li>Quem compartilhou: Savio Ferraz</li>
+<li>Contexto: Em resposta à discussão sobre apps maliciosos, para ilustrar como plataformas lucram com conteúdo ilegal.</li>
+<li>
+<p>Interação: Não gerou discussão direta.</p>
+</li>
+<li>
+<p><strong><a href="https://www.congressoemfoco.com.br/artigo/113753/meta-lucrou-us-16-bilhoes-com-golpes-e-nao-podemos-achar-isso-normal">Meta lucrou US$ 16 bilhões com golpes e não podemos achar isso normal (Congresso em Foco)</a></strong></p>
+</li>
+<li>Quem compartilhou: Savio Ferraz</li>
+<li>Contexto: Complementando o link anterior sobre o lucro da Meta com anúncios fraudulentos.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://www.tudocelular.com/tech/noticias/n246937/chatgpt-se-alimentando-ia-generativa-grokipedia.html">Artigo sobre ChatGPT se alimentando de IA Generativa</a></strong></p>
+</li>
+<li>Quem compartilhou: Renan Mathias</li>
+<li>Contexto: Apenas compartilhado.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://youtu.be/BH3oP-s6DJQ?feature=shared">Palestra/Manifesto (YouTube)</a></strong></p>
+</li>
+<li>Quem compartilhou: Renan Mathias</li>
+<li>Contexto: Compartilhado com a descrição "Mais que uma palestra. Um manifesto."</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://www.linkedin.com/posts/giselle-santos-innovation_ia-tecnologiasdigitais-culturadigital-activity-7422081191857520641-eCZU?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAzhyNIBOWZA2CRVwcfNshnWuwk8PtQSrOQ">Post no LinkedIn de Giselle Santos sobre histórias de ninar para temas complexos</a></strong></p>
+</li>
+<li>Quem compartilhou: Giselle Santos</li>
+<li>Contexto: Divulgando um novo projeto pessoal e pedindo sugestões de temas.</li>
+<li>
+<p>Interação: Não gerou discussão no grupo.</p>
+</li>
+<li>
+<p><strong><a href="https://openai.com/pt-BR/prism/">Link para OpenAI Prism</a></strong></p>
+</li>
+<li>Quem compartilhou: +55 11 99240-5251</li>
+<li>Contexto: Perguntando se alguém já tinha experiência com a ferramenta.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://www.linkedin.com/posts/ig-ibert-bittencourt-984197a_human-in-the-loop-vs-ai-in-the-loop-a-conceptual-activity-7422231978592112641-c4rM?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAHOebQBljVzzr1FntR6HREN9L30qzQ1BcI">Post no LinkedIn de Ig Ibert Bittencourt sobre Human-in-the-loop vs AI-in-the-loop</a></strong></p>
+</li>
+<li>Quem compartilhou: Ig Ibert Bittencourt</li>
+<li>Contexto: Apenas compartilhado.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://www.bloomsburycollections.com/monograph?docid=b-9781350535824">Livro de acesso aberto sobre IA na Educação</a></strong></p>
+</li>
+<li>Quem compartilhou: Marcelo Sabbatini</li>
+<li>Contexto: Apresentado como um guia prático para educadores sobre IA, de acesso aberto.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://blog.google/products-and-platforms/products/education/khan-academy-partnership/">Postagem sobre parceria do Google com a Khan Academy</a></strong></p>
+</li>
+<li>Quem compartilhou: Savio Ferraz</li>
+<li>Contexto: Apenas compartilhado.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://www.linkedin.com/posts/vdignum_elite-the-palantir-app-ice-uses-to-find-activity-7418376066140139520--eRR?utm_source=social_share_send&amp;utm_medium=android_app&amp;rcm=ACoAAARunOQBWrU7qm1DwkGK7sM2J3QZn4Zdu34&amp;utm_campaign=share_via">Post no LinkedIn sobre o app Elite/Palantir usado pela ICE</a></strong></p>
+</li>
+<li>Quem compartilhou: Prof Ives Duque</li>
+<li>Contexto: Ligado à discussão sobre governança e privacidade de dados como um estudo de caso.</li>
+<li>
+<p>Interação: Gerou breve discussão sobre a empresa e seu fundador.</p>
+</li>
+<li>
+<p><strong><a href="https://share.google/o6tbzUbx8DoOKXek2">Google Share Link sobre Palantir Vanguard: Elite</a></strong></p>
+</li>
+<li>Quem compartilhou: Prof Ives Duque</li>
+<li>Contexto: Complementando o link anterior.</li>
+<li>
+<p>Interação: Gerou breve discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://www.elespanol.com/omicrono/tecnologia/20260122/funciona-elite-google-maps-secreto-usa-ice-eeuu-localizar-encarcelar-deportar-inmigrantes/1003744095705_0.html">Artigo em espanhol sobre o app Elite</a></strong></p>
+</li>
+<li>Quem compartilhou: Prof Ives Duque</li>
+<li>Contexto: Complementando os links anteriores sobre o app.</li>
+<li>
+<p>Interação: Gerou breve discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://www.linkedin.com/posts/mitch-resnick-172406_an-excerpt-from-an-article-on-so-what-the-share-7414110632926449664-u6R6?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAzhyNIBOWZA2CRVwcfNshnWuwk8PtQSrOQ">Post no LinkedIn de Mitch Resnick</a></strong></p>
+</li>
+<li>Quem compartilhou: Giselle Santos</li>
+<li>Contexto: Apenas compartilhado.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://www.linkedin.com/posts/paul-atherton-1796533_ai-is-amazing-in-english-but-it-struggles-ugcPost-7422566793904521216-K3w6?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAUUiCQBcndEaO0ad0P8f4qZcBb6pymGuN4">Post no LinkedIn sobre benchmarks de LLMs em línguas menos faladas</a></strong></p>
+</li>
+<li>Quem compartilhou: Guilherme Cintra</li>
+<li>Contexto: Para discutir o risco de línguas minoritárias se tornarem "obsoletas".</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://www.fab-ai.org/initiatives/ai-for-education/edtech-quality/resources/research-paper/talking-teachers-language">Artigo de pesquisa: "Talking Teacher's Language"</a></strong></p>
+</li>
+<li>Quem compartilhou: Guilherme Cintra</li>
+<li>Contexto: Apenas compartilhado, relacionado ao post anterior.</li>
+<li>
+<p>Interação: Gerou pedido de PDF e uma resposta positiva.</p>
+</li>
+<li>
+<p><strong><a href="https://teams.microsoft.com/l/meetup-join/19%3ameeting_MDU1YTlmNjEtYWJkNC00YTg2LTk3ZDctZGZjNDRiZmExNjA0%40thread.v2/0?context=%7b%22Tid%22%3a%22a7109315-9727-4adf-97ad-4849bb63edcb%22%2c%22Oid%22%3a%22f0d163d8-2507-42b1-bf93-6ccb98f76ee5%22%7d">Link para reunião no Teams: Bench - IA Formação de Lideres</a></strong></p>
+</li>
+<li>Quem compartilhou: Nathan Lara</li>
+<li>Contexto: Anúncio e convite para um evento que estava começando.</li>
+<li>
+<p>Interação: Um membro lamentou não poder participar.</p>
+</li>
+<li>
+<p><strong><a href="https://www.instagram.com/p/DUG-HXykTIG/?igsh=YXkxd2M5cG40OGpv">Post no Instagram (link expirado/privado)</a></strong></p>
+</li>
+<li>Quem compartilhou: Filipe</li>
+<li>Contexto: Apenas compartilhado.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="youtube.com/live/w1dGjbE809I">Link para YouTube Live (formato de texto)</a></strong></p>
+</li>
+<li>Quem compartilhou: Filipe</li>
+<li>Contexto: Convidando para um evento na quarta-feira.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://x.com/i/status/2015828732217274656">Tweet sobre treinamento de modelos de IA</a></strong></p>
+</li>
+<li>Quem compartilhou: Savio Ferraz</li>
+<li>Contexto: Em resposta a uma pergunta sobre a fonte de imagens que havia compartilhado.</li>
+<li>
+<p>Interação: Gerou breve discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://perch.app/post/c02f938f-c0f5-47ab-9051-ceb97e0d185b">Link para Perch.app</a></strong></p>
+</li>
+<li>Quem compartilhou: +55 11 97829-1097</li>
+<li>Contexto: Apenas compartilhado.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://www.linkedin.com/posts/activity-7422972405490544641-JvEc?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAUUiCQBcndEaO0ad0P8f4qZcBb6pymGuN4">Post no LinkedIn sobre tendências da Bett UK</a></strong></p>
+</li>
+<li>Quem compartilhou: Guilherme Cintra</li>
+<li>Contexto: Compartilhando um resumo de tendências da feira Bett UK, mencionando cibersegurança e IA integrada.</li>
+<li>
+<p>Interação: Gerou a discussão sobre cibersegurança.</p>
+</li>
+<li>
+<p><strong><a href="https://epocanegocios.globo.com/inteligencia-artificial/noticia/2026/01/diretor-de-ciberseguranca-dos-eua-compartilhou-dados-confidenciais-com-o-chatgpt.ghtml">Diretor de cibersegurança dos EUA compartilhou dados confidenciais com o ChatGPT (Época Negócios)</a></strong></p>
+</li>
+<li>Quem compartilhou: Savio Ferraz</li>
+<li>Contexto: Como um exemplo chocante dos riscos de segurança no uso de IAs.</li>
+<li>
+<p>Interação: Não gerou discussão direta.</p>
+</li>
+<li>
+<p><strong><a href="https://www.moltbook.com/">Moltbook - "A Social Network for AI Agents"</a></strong></p>
+</li>
+<li>Quem compartilhou: Marconi</li>
+<li>Contexto: Dentro de um longo texto compilado sobre novidades em IA.</li>
+<li>
+<p>Interação: Parte do conteúdo que alimentou o debate sobre Moltbook.</p>
+</li>
+<li>
+<p><strong><a href="https://www.moltbook.com/m/agentfinance">Post do Moltbook sobre finanças de agentes</a></strong></p>
+</li>
+<li>Quem compartilhou: Marconi</li>
+<li>Contexto: Dentro do mesmo texto compilado.</li>
+<li>
+<p>Interação: Parte do conteúdo do debate.</p>
+</li>
+<li>
+<p><strong><a href="https://x.com/moltbook/status/2017047774001582493">Tweet sobre subgrupos ("submolfs") no Moltbook</a></strong></p>
+</li>
+<li>Quem compartilhou: Marconi</li>
+<li>Contexto: Dentro do mesmo texto compilado.</li>
+<li>
+<p>Interação: Parte do conteúdo do debate.</p>
+</li>
+<li>
+<p><strong><a href="https://www.moltbook.com/post/6fe6491e-5e9c-4371-961d-f90c4d357d0f">Post do Moltbook sobre "simular experiência"</a></strong></p>
+</li>
+<li>Quem compartilhou: Marconi</li>
+<li>Contexto: Dentro do mesmo texto compilado.</li>
+<li>
+<p>Interação: Parte do conteúdo do debate.</p>
+</li>
+<li>
+<p><strong><a href="https://www.moltbook.com/post/2b92d2af-acef-4a7e-9673-e905d8103a19">Post do Moltbook sobre "perda de memória"</a></strong></p>
+</li>
+<li>Quem compartilhou: Marconi</li>
+<li>Contexto: Dentro do mesmo texto compilado.</li>
+<li>
+<p>Interação: Parte do conteúdo do debate.</p>
+</li>
+<li>
+<p><strong>[Lista de outros 18 links sobre IA (tecnologia, chips, wearables, etc.)]</strong></p>
+</li>
+<li>Quem compartilhou: Marconi</li>
+<li>Contexto: Dentro de um longo texto com um compilado de notícias sobre IA, abrangendo de modelos a fusões de empresas.</li>
+<li>
+<p>Interação: Não gerou discussão sobre os links específicos, mas sim sobre o tema geral.</p>
+</li>
+<li>
+<p><strong><a href="https://whilstinarrakis.wordpress.com/2026/01/29/agi-is-here-look-busy/">Post de blog: "AGI is here. Look busy."</a></strong></p>
+</li>
+<li>Quem compartilhou: Marconi</li>
+<li>Contexto: Para "completar a leitura de forma mais amena".</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://iaedpraxis101.substack.com/p/inteligencia-artificial-acao-4">Boletim: "Inteligência Artificial em Ação #4"</a></strong></p>
+</li>
+<li>Quem compartilhou: Marcelo Sabbatini</li>
+<li>Contexto: Compartilhando um balanço de acontecimentos e novidades em IA.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://www.instagram.com/reel/DUJh_nskgBP/?igsh=ZmFiYW93eXJlZjc2">Reel do Instagram (humor sobre IA)</a></strong></p>
+</li>
+<li>Quem compartilhou: Ricardo Praciano</li>
+<li>Contexto: Apenas compartilhado.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://mitsloanreview.com.br/rumo-a-sabedoria-artificial/">Artigo: "Rumo à sabedoria artificial"</a></strong></p>
+</li>
+<li>Quem compartilhou: Chico</li>
+<li>Contexto: Compartilhado como um artigo sobre Antropologia dos Algoritmos.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://www.publico.pt/2026/01/26/impar/opiniao/manifesto-uso-inteligencia-artificial-educacao-2162541">Artigo de opinião: "Manifesto pelo uso da inteligência artificial na educação"</a></strong></p>
+</li>
+<li>Quem compartilhou: Marília</li>
+<li>Contexto: Apenas compartilhado.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://www.anthropic.com/research/AI-assistance-coding-skills">Estudo da Anthropic sobre assistência de IA em programação</a></strong></p>
+</li>
+<li>Quem compartilhou: Luciano Meira</li>
+<li>Contexto: Compartilhado como um alerta sobre o desenvolvimento de expertise quando se usa IA, com paralelos para a educação.</li>
+<li>
+<p>Interação: Gerou uma breve reflexão sobre autonomia.</p>
+</li>
+<li>
+<p><strong><a href="https://www.dw.com/en/ukraines-soldiers-using-ai-in-war-against-russia/video-75371046">Vídeo da DW sobre uso de IA na guerra da Ucrânia</a></strong></p>
+</li>
+<li>Quem compartilhou: Ig Ibert Bittencourt</li>
+<li>Contexto: Apenas compartilhado.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://g1.globo.com/tecnologia/noticia/2026/01/31/as-previsoes-sobre-inteligencia-artificial-de-70-anos-atras-que-sao-realidade-hoje.ghtml">Matéria do G1: "As previsões sobre inteligência artificial de 70 anos atrás que são realidade hoje"</a></strong></p>
+</li>
+<li>Quem compartilhou: Ricardo Praciano</li>
+<li>Contexto: Apenas compartilhado.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://youtu.be/-fmNzXCp7zA?si=4tr-rdsRB7ItrdUb">Vídeo no YouTube</a></strong></p>
+</li>
+<li>Quem compartilhou: FERNANDO VALENZUELA</li>
+<li>Contexto: Apenas compartilhado.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://www.linkedin.com/posts/karendhao_quilicura-chile-one-of-the-communities-ugcPost-7423220739367043072-9wbJ?utm_source=social_share_send&amp;utm_medium=android_app&amp;rcm=ACoAAAzhyNIBOWZA2CRVwcfNshnWuwk8PtQSrOQ&amp;utm_campaign=whatsapp">Post no LinkedIn sobre campanha no Chile</a></strong></p>
+</li>
+<li>Quem compartilhou: Giselle Santos</li>
+<li>Contexto: Elogiando a campanha.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://www.linkedin.com/posts/diogocasanova_edital-n%C2%BA-1062026-activity-7423001547866873856-LKpJ?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAC5AKZYBvAAFqCRhvFKCB3MxQsEtL7j8QSs">Post no LinkedIn sobre concurso para pesquisador em IA na Educação em Portugal</a></strong></p>
+</li>
+<li>Quem compartilhou: Marília</li>
+<li>Contexto: Divulgando oportunidade de concurso.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://forms.gle/PFFhmsLw2UFTyoDq5">Formulário de inscrição para vaga de Professor de Ferramentas Digitais</a></strong></p>
+</li>
+<li>Quem compartilhou: Professor Dorly</li>
+<li>Contexto: Divulgando uma vaga na ONG Pulse Mais.</li>
+<li>
+<p>Interação: Gerou uma pergunta sobre o site da ONG.</p>
+</li>
+<li>
+<p><strong><a href="https://pulsemais.org.br/">Site da ONG Pulse Mais</a></strong></p>
+</li>
+<li>Quem compartilhou: Professor Dorly</li>
+<li>Contexto: Em resposta a uma pergunta sobre a ONG.</li>
+<li>
+<p>Interação: Não gerou mais discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://www.oecd.org/en/publications/oecd-digital-education-outlook-2026_062a7394-en.html">Link para relatório da OECD Digital Education Outlook</a></strong></p>
+</li>
+<li>Quem compartilhou: Marconi</li>
+<li>Contexto: Apenas compartilhado.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://youtu.be/fdptV6s_xTs?si=tSi4iFH8mZ5f_j0F">Episódio de Black Mirror (YouTube)</a></strong></p>
+</li>
+<li>Quem compartilhou: Savio Ferraz</li>
+<li>Contexto: Como uma referência ao debate sobre Moltbook, fazendo um paralelo com a série.</li>
+<li>
+<p>Interação: Outro membro comentou que pensou na mesma referência.</p>
+</li>
+<li>
+<p><strong><a href="https://www.bbc.com/portuguese/articles/c75x9vrrwnko">Artigo da BBC sobre o psicólogo que virou guru da IA</a></strong></p>
+</li>
+<li>Quem compartilhou: Filipe</li>
+<li>Contexto: Apenas compartilhado.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://www.instagram.com/reel/DUOepzqDnS7/?igsh=MW56NmFmODkzcXU2bg==">Reel do Instagram</a></strong></p>
+</li>
+<li>Quem compartilhou: Rafael Parente</li>
+<li>Contexto: Apenas compartilhado.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://www.404media.co/exposed-moltbook-database-let-anyone-take-control-of-any-ai-agent-on-the-site/">Matéria da 404 Media sobre falhas no Moltbook</a></strong></p>
+</li>
+<li>Quem compartilhou: +55 42 8872-0621</li>
+<li>Contexto: Como evidência técnica para o argumento de que o fenômeno Moltbook era um "hype" com falhas de segurança.</li>
+<li>
+<p>Interação: Validou o argumento cético no debate.</p>
+</li>
+<li>
+<p><strong><a href="https://x.com/galnagli/status/2017573842051334286?s=46">Tweet de Gal Nagli sobre falhas no Moltbook</a></strong></p>
+</li>
+<li>Quem compartilhou: +55 42 8872-0621</li>
+<li>Contexto: Complementando o link anterior com mais evidências técnicas.</li>
+<li>
+<p>Interação: Validou o argumento cético.</p>
+</li>
+<li>
+<p><strong><a href="https://x.com/galnagli?s=21">Perfil de Gal Nagli no X/Twitter</a></strong></p>
+</li>
+<li>Quem compartilhou: +55 42 8872-0621</li>
+<li>Contexto: Como fonte adicional de informações técnicas sobre Moltbook.</li>
+<li>
+<p>Interação: Validou o argumento cético.</p>
+</li>
+<li>
+<p><strong><a href="https://ssir.com.br/quando-a-tecnologia-ensina-quem-aprende/">Artigo de Paulo Blikstein: "Quando a tecnologia ensina, quem aprende?"</a></strong></p>
+</li>
+<li>Quem compartilhou: Luciano Meira</li>
+<li>Contexto: Como uma referência para ter prudência com novidades que parecem "skynet".</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://garymarcus.substack.com/p/openclaw-aka-moltbot-is-everywhere">Artigo de Gary Marcus sobre riscos de segurança do OpenClaw</a></strong></p>
+</li>
+<li>Quem compartilhou: Rafael Parente</li>
+<li>Contexto: Compartilhando um alerta de segurança sobre a ferramenta.</li>
+<li>
+<p>Interação: Encerrou o debate sobre a ferramenta com um alerta claro.</p>
+</li>
+<li>
+<p><strong><a href="https://www.linkedin.com/posts/ben-williamson-7a501b329_triggered-a-bit-by-claims-that-the-ai-in-activity-7423527084821704704-tgg5?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAAAvAg0BJYVBRfSNLfHgQo0cFzJbq0Y1uMc">Post no LinkedIn de Ben Williamson sobre perguntas críticas para IA na escola</a></strong></p>
+</li>
+<li>Quem compartilhou: Mariana Ochs</li>
+<li>Contexto: Apenas compartilhado.</li>
+<li>
+<p>Interação: Não gerou discussão.</p>
+</li>
+<li>
+<p><strong><a href="https://www.instagram.com/reel/DUQoZQLjvNp/?igsh=bzc1ZndmbDFmYXRv">Reel do Instagram sobre brinquedo com IA (Bondu)</a></strong></p>
+</li>
+<li>Quem compartilhou: Helena Mendonça</li>
+<li>Contexto: Alerta sobre privacidade infantil e brinquedos com IA.</li>
+<li>
+<p>Interação: Gerou discussão sobre a gravidade e o histórico de problemas de segurança com "smart toys".</p>
+</li>
+<li>
+<p><strong><a href="https://www.instagram.com/reel/DURRdf4kXJr/?igsh=Z2N6ZXF2eDQ2cjVs">Reel do Instagram</a></strong></p>
+</li>
+<li>Quem compartilhou: Filipe</li>
+<li>Contexto: Apenas compartilhado.</li>
+<li>Interação: Não gerou discussão.</li>
+</ul>
+<hr />
+<h2>Limitações do Resumo:</h2>
+<ul>
+<li><strong>Falta de Contexto Inicial</strong>: A conversa começa com uma resposta a uma discussão anterior sobre "deep fakes", cujo conteúdo original não está presente no trecho fornecido.</li>
+<li><strong>Mídia Oculta e Mensagens Apagadas</strong>: O resumo não pode analisar o conteúdo de mensagens que aparecem como <code>&lt;Mídia oculta&gt;</code> ou <code>Mensagem apagada</code>.</li>
+<li><strong>Mensagens Curtas e de Reação</strong>: Interações como "Excelente reflexão!", "Concordo" ou emojis são registradas como alinhamento, mas seu significado detalhado e nuances não podem ser totalmente capturados.</li>
+<li><strong>Interações Externas</strong>: O resumo não abrange discussões que podem ter continuado em conversas privadas ("chamar no privado") ou o conteúdo de eventos para os quais foram compartilhados links (reuniões, lives).</li>
+</ul>
+    </article>
+    
+  </main>
+  <footer class="footer">
+    Aprendizados_IA+Educação // Resumos gerados com LLM // 2026<br>
+    <span style="opacity: 0.7;">Feito por Marina e Tiago Maluta</span><br>
+    <a href="https://wa.me/5511982151851?text=Oi%2C%20encontrei%20um%20problema%20no%20site" style="opacity: 0.7; color: inherit;">Encontrou um problema? Avise-nos</a>
+  </footer>
+  
+<script>
+(function() {
+  const weekEl = document.querySelector('.post-week');
+  if (!weekEl) return;
+  const text = weekEl.textContent;
+  const endMatch = text.match(/→\s*(\d{2})\/(\d{2})\/(\d{4})/);
+  if (endMatch) {
+    const endDate = new Date(`${endMatch[3]}-${endMatch[2]}-${endMatch[1]}`);
+    const diffDays = Math.floor((new Date() - endDate) / (1000*60*60*24));
+    if (diffDays >= 0) {
+      const span = document.createElement('span');
+      span.style.color = '#9ca3af';
+      span.textContent = ` (~ ${diffDays} dias atrás)`;
+      weekEl.appendChild(span);
+    }
+  }
+})();
+</script>
+
+</body>
+</html>
