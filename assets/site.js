@@ -24,7 +24,9 @@ const RadarSearch = (() => {
 
   function occurrences(item, state, config) {
     const [start, end] = bounds(state.periodo, config);
-    return (item.occurrences || []).filter(occ => (!state.pessoa || occ.by === state.pessoa)
+    if (item.verification !== 'source_message') return [];
+    return (item.occurrences || []).filter(occ => occ.verification === 'source_message' && occ.evidence_id
+      && (!state.pessoa || occ.by === state.pessoa)
       && (!state.periodo || (occ.date >= start && occ.date <= end)));
   }
 
@@ -131,12 +133,13 @@ if (typeof document !== 'undefined') {
     };
 
     async function fetchJSON(file) {
-      const response = await fetch(base + 'data/' + file);
+      const response = await fetch(base + 'data/' + file, {cache: 'no-cache'});
       if (!response.ok) throw new Error('Acervo indisponível');
       return response.json();
     }
     async function loadConfig() {
       if (!configPending) configPending = fetchJSON('config.json').then(data => {
+        if (data.version !== 2) throw new Error('O acervo precisa de revisão de atribuições');
         config = data;
         for (const person of config.people) get('person').add(new Option(person, person));
         return data;
@@ -145,12 +148,18 @@ if (typeof document !== 'undefined') {
     }
     async function loadEditions() {
       if (!editionsPending) editionsPending = fetchJSON('editions.json').then(data => {
+        if (!data.every(item => item.attribution_reviewed === true)) throw new Error('Edições ainda não revisadas');
         editionData = data; return data;
       }).catch(error => { editionsPending = null; throw error; });
       return editionsPending;
     }
     async function loadMaterials() {
       if (!materialsPending) materialsPending = fetchJSON('materials.json').then(data => {
+        if (!data.every(item => ['source_message', 'unconfirmed'].includes(item.verification)
+          && item.occurrences.every(occ => occ.verification === 'source_message' && occ.evidence_id && occ.time)
+          && (item.verification !== 'unconfirmed' || (!item.people.length && !item.occurrences.length)))) {
+          throw new Error('Créditos ainda não revisados');
+        }
         materialData = data; return data;
       }).catch(error => { materialsPending = null; throw error; });
       return materialsPending;
@@ -211,7 +220,7 @@ if (typeof document !== 'undefined') {
       const aside = node('div', 'result-aside');
       aside.append(node('span', 'result-kind', item.kind === 'material' ? item.format : item.kind === 'tema' ? 'Na conversa' : 'Edição'));
       aside.append(node('span', '', item.kind === 'material'
-        ? (item.date_source === 'edition' ? 'Na edição de ' : '') + dateLabel(date) : item.period));
+        ? (item.verification === 'unconfirmed' ? 'Compartilhamento não confirmado' : dateLabel(date)) : item.period));
       const body = node('div');
       const title = node('h2');
       title.append(link(item.title + (item.kind === 'material' ? ' ↗' : ''), item.kind === 'material' ? item.url : base + item.url, item.kind === 'material'));
@@ -220,7 +229,8 @@ if (typeof document !== 'undefined') {
       if (item.kind === 'material') {
         const selected = RadarSearch.occurrences(item, state, config);
         const names = [...new Set(selected.filter(occ => occ.date === date).map(occ => occ.by))];
-        body.append(credit(names.length ? names : ['Participante do grupo'], item.date_source === 'edition' ? 'Referenciado no resumo · ' : 'Compartilhado por '));
+        if (item.verification === 'source_message') body.append(credit(names, 'Compartilhado por '));
+        else body.append(node('p', 'result-credit', 'Crédito não confirmado'));
         if (date !== item.date) body.append(node('p', 'source-note', 'Último compartilhamento no grupo: ' + dateLabel(item.date) + '. A data acima corresponde aos filtros.'));
         actions.append(node('span', 'domain', item.domain));
         if (item.context_url) actions.append(link(item.context_kind === 'edition' ? 'Ver a edição do período →' : 'Ver na conversa →', base + item.context_url));
@@ -234,10 +244,11 @@ if (typeof document !== 'undefined') {
           history.hidden = true;
           historyButton.addEventListener('click', () => {
             if (!history.childElementCount) {
-              history.append(node('p', '', 'Compartilhamentos registrados no acervo:'));
+              history.append(node('p', '', 'Conferido na exportação original. Nomes e horários conforme o arquivo:'));
               for (const occ of item.occurrences) {
-                const line = node('p', '', dateLabel(occ.date) + ' · ');
+                const line = node('p', '', dateLabel(occ.date) + ' às ' + occ.time + ' · ');
                 line.append(personLink(occ.by));
+                if (occ.by === 'Participante do grupo') line.append(' (nome não disponível na exportação)');
                 if (occ.edition) line.append(' · ', link('Edição →', base + occ.edition));
                 history.append(line);
               }
