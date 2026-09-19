@@ -1,560 +1,132 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Resumo Semanal | IA+Educação</title>
-  <meta name="description" content="A conversa da semana teve um volume alto de mensagens e participação distribuída entre vários membros. A natureza das interações foi mista, com predominância no compartilhamento de links e informações, mas também incluiu debates sobre a implementação de políticas públicas, a...">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-:root {
-  --bg-primary: #f3f4f6;
-  --bg-secondary: #ffffff;
-  --text-primary: #000000;
-  --text-secondary: #4b5563;
-  --accent-blue: #2563eb;
-  --accent-yellow: #fbbf24;
-  --border-color: #000000;
-  --border-light: #d1d5db;
-  --font-main: 'Space Grotesk', -apple-system, sans-serif;
-  --font-mono: 'Space Mono', monospace;
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: var(--font-main);
-  color: var(--text-primary);
-  line-height: 1.6;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--bg-primary);
-  background-image: radial-gradient(circle, #00000015 1px, transparent 1px);
-  background-size: 20px 20px;
-}
-.migration-banner {
-  background: #F9DC03;
-  color: #000000;
-  padding: 0.75rem 1.5rem;
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
-}
-.migration-banner a { color: #000000; font-weight: 700; text-decoration: underline; }
-.header {
-  position: sticky;
-  top: 0;
-  background: var(--bg-secondary);
-  border-bottom: 2px solid var(--border-color);
-  z-index: 100;
-  padding: 1rem 1.5rem;
-}
-.header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.logo {
-  text-decoration: none;
-  font-family: var(--font-mono);
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-.logo-bracket { color: var(--accent-blue); }
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
-}
-.nav a { color: var(--text-secondary); text-decoration: none; transition: color 0.15s; }
-.nav a:hover { color: var(--text-primary); }
-.nav-separator { color: var(--border-light); }
-.main {
-  flex: 1;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 3rem 1.5rem;
-  width: 100%;
-}
-/* Search */
-.search-container { margin-bottom: 2rem; }
-.search-input {
-  width: 100%;
-  padding: 1rem;
-  font-family: var(--font-mono);
-  font-size: 1rem;
-  border: 2px solid var(--border-color);
-  background: var(--bg-secondary);
-  outline: none;
-}
-.search-input:focus { box-shadow: 4px 4px 0 var(--border-color); }
-.search-input::placeholder { color: var(--text-secondary); }
-.search-stats {
-  margin-top: 0.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-}
-.search-results {
-  margin-top: 1.5rem;
-  display: none;
-}
-.search-results.active { display: block; }
-.search-result-item {
-  background: var(--bg-secondary);
-  border: 2px solid var(--border-color);
-  padding: 1.25rem;
-  margin-bottom: 1rem;
-  text-decoration: none;
-  color: var(--text-primary);
-  display: block;
-  transition: all 0.15s;
-}
-.search-result-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 4px 4px 0 var(--border-color);
-}
-.search-result-title {
-  font-weight: 700;
-  font-size: 1.125rem;
-  margin-bottom: 0.5rem;
-  color: var(--accent-blue);
-}
-.search-result-meta {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  margin-bottom: 0.75rem;
-}
-.search-result-snippet {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-.search-result-snippet mark {
-  background: var(--accent-yellow);
-  color: var(--text-primary);
-  padding: 0.1em 0.2em;
-}
-.no-results {
-  text-align: center;
-  padding: 3rem;
-  color: var(--text-secondary);
-  display: none;
-}
-.no-results.active { display: block; }
-.page-header {
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 2px solid var(--border-color);
-}
-.page-title {
-  font-family: var(--font-mono);
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-.page-subtitle { font-size: 1rem; color: var(--text-secondary); }
-.posts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.5rem;
-}
-.posts-grid.hidden { display: none; }
-.post-card {
-  background: var(--bg-secondary);
-  border: 2px solid var(--border-color);
-  padding: 1.5rem;
-  text-decoration: none;
-  color: var(--text-primary);
-  transition: all 0.15s ease;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-.post-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 4px 4px 0 var(--border-color);
-}
-.badge-new {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background: #ef4444;
-  color: white;
-  font-size: 0.7rem;
-  font-weight: 700;
-  padding: 0.25rem 0.5rem;
-  border-radius: 2px;
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
-}
-.post-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-.post-card-action {
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  padding: 0.25rem 0.5rem;
-  background: transparent;
-  border: 1px solid var(--border-light);
-  color: var(--text-secondary);
-  text-decoration: none;
-  transition: all 0.15s;
-}
-.post-card-action:hover {
-  border-color: #25D366;
-  color: #25D366;
-}
-.post-card-image {
-  width: 100%;
-  height: 120px;
-  background: var(--bg-primary);
-  border: 1px dashed var(--border-light);
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  color: var(--text-secondary);
-}
-.post-card-category {
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--accent-blue);
-  background: rgba(37, 99, 235, 0.1);
-  padding: 0.25rem 0.5rem;
-}
-.post-card-date {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-}
-.post-card-title {
-  font-size: 1.125rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  line-height: 1.3;
-}
-.post-card-excerpt {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  flex: 1;
-}
-.post-card-footer {
-  margin-top: 0;
-  padding-top: 0;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--accent-blue);
-}
-.post-card-stats {
-  display: flex;
-  gap: 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  margin-top: 0.75rem;
-}
-.post-card-divider {
-  border: none;
-  border-top: 1px solid var(--border-light);
-  margin: 0.75rem 0;
-}
-.back-link {
-  display: inline-block;
-  margin-bottom: 1.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  text-decoration: none;
-}
-.back-link:hover { color: var(--text-primary); }
-.back-link::before { content: "< "; }
-.post-header {
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 2px solid var(--border-color);
-}
-.post-meta {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-}
-.post-category {
-  color: var(--accent-blue);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 700;
-}
-.post-date { color: var(--text-secondary); }
-.post-title { font-size: 2rem; font-weight: 700; line-height: 1.2; }
-.post-week {
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  margin-top: 0.5rem;
-}
-.content {
-  background: var(--bg-secondary);
-  border: 2px solid var(--border-color);
-  padding: 2rem;
-}
-.content h2 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-top: 3rem;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border-light);
-}
-.content h2:first-child { margin-top: 0; }
-.content h3 { font-size: 1.125rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.5rem; }
-.content p { margin-bottom: 1rem; }
-.content ul, .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
-.content li { margin-bottom: 0.5rem; }
-.content li ul { margin-top: 0.5rem; margin-bottom: 0.5rem; }
-.content a { color: var(--accent-blue); text-decoration: none; border-bottom: 1px solid transparent; }
-.content a:hover { border-bottom-color: var(--accent-blue); }
-.content strong { font-weight: 700; }
-/* Links page - Hacker News style */
-.links-list {
-  background: var(--bg-secondary);
-  border: 2px solid var(--border-color);
-  padding: 0;
-}
-.link-item {
-  display: flex;
-  align-items: baseline;
-  padding: 0.5rem 1rem;
-  border-bottom: 1px solid var(--border-light);
-  gap: 0.5rem;
-}
-.link-item:last-child { border-bottom: none; }
-.link-item.hidden { display: none; }
-.link-item:hover { background: rgba(0,0,0,0.02); }
-.link-rank {
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  min-width: 2.5rem;
-  text-align: right;
-}
-.link-content { flex: 1; min-width: 0; }
-.link-title {
-  font-size: 0.95rem;
-  color: var(--text-primary);
-  text-decoration: none;
-  word-break: break-word;
-}
-.link-title:hover { text-decoration: underline; }
-.link-title:visited { color: #828282; }
-.link-meta {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  margin-top: 0.125rem;
-}
-.link-meta a {
-  color: var(--text-secondary);
-  text-decoration: none;
-}
-.link-meta a:hover { text-decoration: underline; }
-.link-domain {
-  color: var(--text-secondary);
-}
-.link-share {
-  color: var(--text-secondary);
-  cursor: pointer;
-  margin-left: 0.5rem;
-}
-.link-share:hover { color: #25D366; }
-.links-count {
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  margin-bottom: 1.5rem;
-}
-.footer {
-  background: var(--text-primary);
-  color: var(--bg-secondary);
-  padding: 1rem 1.5rem;
-  margin-top: auto;
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-}
-@media (max-width: 768px) {
-  .header-content { flex-direction: column; gap: 1rem; }
-  .page-title, .post-title { font-size: 1.5rem; }
-  .posts-grid { grid-template-columns: 1fr; }
-  .content { padding: 1rem; }
-  .nav { flex-wrap: wrap; justify-content: center; }
-}
-  </style>
-  <script defer data-domain="maluta.github.io" src="https://plausible.io/js/plausible.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Participantes discutiram os desafios na implementação de políticas públicas e a verificação de fontes em ferramentas de busca, além do uso de IA para correção de redações e as preocupações com viés e exclusão digital.">
+  <meta name="theme-color" content="#006b63">
+  <title>Políticas de IA na educação e os desafios de verificação de fontes digitais · IA + Educação</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/site.css">
+  <script defer src="assets/site.js"></script>
+  
 </head>
-<body>
-  <div class="migration-banner">
-    <a href="https://sites.google.com/view/aprendizados-ia-educacao/home" target="_blank">Para o histórico anterior a Agosto de 2025, clique aqui</a>
-  </div>
-  <header class="header">
-    <div class="header-content">
-      <a href="index.html" class="logo">
-        <span class="logo-bracket">[</span>IA+EDU<span class="logo-bracket">]</span>
+<body data-page="editions" data-base="" data-cutoff="2026-09-19">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <a class="brand" href="index.html" aria-label="IA + Educação — início">
+        <svg class="brand-symbol" aria-hidden="true" viewBox="0 0 48 48" width="48" height="48"><path d="M24 4v40M4 24h40M10 10l28 28M10 38l28-28" stroke="currentColor" stroke-width="4"/></svg>
+        <span>IA <span class="brand-plus">+</span> Educação<small>O caderno da comunidade</small></span>
       </a>
-      <nav class="nav">
-        <a href="index.html">Resumos</a>
-        <span class="nav-separator">//</span>
-        <a href="links.html">Links</a>
+      <nav aria-label="Navegação principal">
+        <a href="index.html" >Radar</a>
+        <a href="explorar.html" >Explorar</a>
+        <a href="edicoes.html" aria-current="page">Edições</a>
+        <a href="sobre.html" >Sobre</a>
       </nav>
     </div>
   </header>
-  <main class="main">
-    
-    <a href="index.html" class="back-link">Voltar aos resumos</a>
-    <header class="post-header">
-      <div class="post-meta">
-        <span class="post-category">Resumo Semanal</span>
-        <span class="post-date">02/03/2026</span>
-      </div>
-      <h1 class="post-title">Resumo Semanal</h1>
-      <p class="post-week">Semana: 24/02/2026 → 02/03/2026</p>
-    </header>
-    <article class="content">
-      <h2>Sumário Executivo da Semana</h2>
-<p>A conversa da semana teve um volume alto de mensagens e participação distribuída entre vários membros. A natureza das interações foi mista, com predominância no compartilhamento de links e informações, mas também incluiu debates sobre a implementação de políticas públicas, a dificuldade de verificação de fontes na era da IA e a aplicação de IA na correção de redações. Vários tópicos paralelos ocorreram simultaneamente. Foi registrada uma divergência explícita, quando uma participante anunciou sua saída do grupo por perceber um desalinhamento entre os temas discutidos e a sua realidade como professora de sala de aula. Em outros momentos, houve alinhamento de opiniões, como na crítica às mudanças nas ferramentas de busca de imagens do Google.</p>
-<hr />
-<h2>Principais Temas e Conteúdos:</h2>
-<p><strong>Título do Tema</strong>: Desafios na Implementação de Políticas Públicas e Tecnologias
-- <strong>Tipo de Conteúdo</strong>: Opiniões pessoais, Fatos compartilhados
-- <strong>Descrição Factual</strong>: Um membro (Guilherme Cintra) opinou que a implementação de um produto é mais crucial para a adoção do que o design em si. Outro membro (Felipe prof Volta Redonda) compartilhou uma experiência negativa com a Política Nacional Escolas Conectadas (FUST) em sua cidade, citando falta de suporte e problemas de execução. Andrea Barreto concordou, relatando uma experiência com a elaboração da BNCC onde a contribuição dos professores foi alterada por "entendidos por educação", e defendeu que a voz de quem está na sala de aula deve ser ouvida. Ela anunciou sua saída do grupo por sentir que as discussões não se conectavam com a realidade da escola.
-- <strong>Recorrência</strong>: Debate prolongado.</p>
-<p><strong>Título do Tema</strong>: Verificação de Fontes (Fact-Checking) e Mudanças em Ferramentas de Busca
-- <strong>Tipo de Conteúdo</strong>: Fatos compartilhados, Opiniões pessoais, Divergências ou visões conflitantes
-- <strong>Descrição Factual</strong>: O compartilhamento de um gráfico sobre adoção de IA gerou uma longa discussão sobre sua origem. Membros (Mariana Ochs, Carla Arena) relataram dificuldades em rastrear a fonte original, com Carla mencionando uma informação incorreta fornecida pelo Gemini. Mariana Ochs criticou a substituição da busca reversa de imagens do Google pelo Google Lens, afirmando que a mudança removeu "uma ferramenta essencial, e acessível, de verificação" e que "decisões de design das big techs mudam a nossa compreensão do mundo". Outros membros (Sora Lacerda) concordaram com a frustração. Roberta Freitas posteriormente compartilhou links que parecem ser a origem dos dados e da visualização.
-- <strong>Recorrência</strong>: Debate prolongado.</p>
-<p><strong>Título do Tema</strong>: Uso de IA para Correção de Redações e Avaliações
-- <strong>Tipo de Conteúdo</strong>: Perguntas ou dúvidas, Fatos compartilhados
-- <strong>Descrição Factual</strong>: Um membro (Rafael Chaves) questionou sobre a proposta do CNE para correção de redações com IA, especialmente em vestibulares. Em resposta, um membro (+55 81 9748-8062) relatou ter criado um agente de IA para corrigir redações do ENEM com alta precisão. Outro membro (Savio Ferraz) compartilhou a existência da plataforma "E-genio" do Objetivo/UNIP para o mesmo fim. Um representante da "Pontue" (+55 11 97431-4540) mencionou que o uso da Gemini para correção em escala apresenta desafios distintos.
-- <strong>Recorrência</strong>: Várias mensagens.</p>
-<p><strong>Título do Tema</strong>: Regulamentação do Uso de IA na Educação pelo CNE
-- <strong>Tipo de Conteúdo</strong>: Perguntas ou dúvidas, Fatos compartilhados
-- <strong>Descrição Factual</strong>: Rafael Chaves compartilhou links sobre a votação no Conselho Nacional de Educação (CNE) de regras para o uso de IA nas escolas e perguntou se o texto de referência divulgado era o correto. Ingrid Soares informou que o documento compartilhado era antigo, de antes da audiência pública.
-- <strong>Recorrência</strong>: Pontual.</p>
-<p><strong>Título do Tema</strong>: IA, Viés e Exclusão Digital
-- <strong>Tipo de Conteúdo</strong>: Opiniões pessoais, Fatos compartilhados
-- <strong>Descrição Factual</strong>: Após o compartilhamento de um post no Instagram, Kelly Baptista opinou que "a maior parte das discussões parte de uma bolha privilegiada". Giselle Santos complementou afirmando que o novo gap digital não será sobre conectividade, mas sobre a qualidade da informação ("AI slop"). Um membro (+55 11 99133-5368) concordou, citando a observação do aumento do gap na rotina da escola pública.
-- <strong>Recorrência</strong>: Várias mensagens.</p>
-<hr />
-<h2>Links Compartilhados (SEÇÃO CRÍTICA):</h2>
-<ul>
-<li><a href="https://www.linkedin.com/posts/hassan-khosravi_aiineducation-learninganalytics-peerfeedback-activity-7431797508583960576-h-ru?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAC5AKZYBvAAFqCRhvFKCB3MxQsEtL7j8QSs">Post no LinkedIn de Hassan Khosravi sobre IA em educação</a> - Compartilhado por Marília. - <strong>Gerou discussão</strong> sobre a importância da implementação.</li>
-<li><a href="https://www.linkedin.com/posts/activity-7432031807832842240-EQwd?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAUUiCQBcndEaO0ad0P8f4qZcBb6pymGuN4">Post no LinkedIn de Guilherme Cintra sobre um evento de IA no contexto escolar</a> - Compartilhado por Guilherme Cintra. Contexto: Divulgação de sua participação em um evento. - Foi apenas compartilhado, com um pedido de resumo posterior.</li>
-<li><a href="https://www.linkedin.com/posts/tanci-simoes_quando-iniciei-minha-carreira-com-tecnologias-activity-7432046727970394112-sSLS">Post no LinkedIn de Tanci Simões sobre transformação digital com IA para escolas</a> - Compartilhado por Tanci Simões Gomes. Contexto: Divulgação de uma série de posts e pedido de contribuições. - Foi apenas compartilhado.</li>
-<li><a href="https://www.linkedin.com/posts/empresamunicipaldemultimeios-_voc%C3%AA-tem-propostas-para-impulsionar-a-educa%C3%A7%C3%A3o-activity-7432043528744009730-AG69?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAC5AKZYBvAAFqCRhvFKCB3MxQsEtL7j8QSs">Post no LinkedIn da MultiRio sobre propostas para a educação no Rio de Janeiro</a> - Compartilhado por Marília. Contexto: Divulgação de uma iniciativa no Rio de Janeiro. - Foi apenas compartilhado.</li>
-<li><a href="https://x.com/NoahEpstein_/status/2025604844711510432">Post no X (Twitter) contendo um gráfico sobre o uso de IA</a> - Compartilhado por Fernando. Contexto: Apresentação de um gráfico sobre adoção de IA. - <strong>Gerou discussão</strong> extensa sobre a origem do gráfico e ferramentas de verificação.</li>
-<li><a href="https://www.oneusefulthing.org/p/signs-and-portents">Artigo do Substack "One Useful Thing"</a> - Compartilhado por Carla Arena. Contexto: Durante a investigação da origem do gráfico, o Gemini sugeriu este link como fonte, o que se provou incorreto. - <strong>Gerou discussão</strong>.</li>
-<li><a href="https://mashable.com/article/openai-retiring-chatgpt-gpt-4o-users-are-heartbroken">Artigo da Mashable sobre usuários lamentando a aposentadoria de uma voz do ChatGPT</a> - Compartilhado por Giselle Santos. Contexto: Relacionado à antropomorfização de IAs. - Foi apenas compartilhado.</li>
-<li><a href="https://global-ai-adoption.netlify.app/">Visualização de dados animada sobre a evolução do uso de IA</a> - Compartilhado por Roberta Freitas. Contexto: Resultado da investigação sobre a origem do gráfico. - <strong>Gerou discussão</strong>.</li>
-<li><a href="https://www.microsoft.com/en-us/corporate-responsibility/topics/ai-economy-institute/reports/global-ai-adoption-2025/">Relatório da Microsoft sobre a adoção global de IA</a> - Compartilhado por Roberta Freitas. Contexto: Fonte dos dados para a visualização. - Foi apenas compartilhado.</li>
-<li><a href="https://x.com/damianplayer/status/2025234388137468387">Post no X (Twitter) de Damian Player que supostamente criou a imagem do gráfico</a> - Compartilhado por Roberta Freitas. Contexto: Parte da investigação sobre a origem do gráfico. - Foi apenas compartilhado.</li>
-<li><a href="https://www.anthropic.com/research/measuring-agent-autonomy">Artigo da Anthropic sobre medição de autonomia de agentes de IA</a> - Compartilhado por Thais Pianucci Alura Start. Contexto: Compartilhado sem contexto explícito, mas durante a discussão sobre o gráfico de adoção de IA. - Foi apenas compartilhado.</li>
-<li><a href="https://share.google/uv0W6SQ7cwiA8VYCi">Artigo da WIRED sobre scams com AI Overviews do Google</a> - Compartilhado por Giselle Santos. Contexto: Discussão sobre "fraud as a service" para burlar o buscador do Google. - <strong>Gerou discussão</strong>.</li>
-<li><a href="https://www.gov.br/mec/pt-br/assuntos/noticias/2026/fevereiro/mec-aborda-uso-responsavel-de-ia-em-cupula-global">Notícia do MEC sobre uso responsável de IA em Cúpula Global</a> - Compartilhado por Juliana Lima. Contexto: Compartilhamento de notícias. - Foi apenas compartilhado.</li>
-<li><a href="https://www.manaus.am.gov.br/semcom/prefeitura-semed-guia-de-tecnologias-digitais/">Guia com atividades digitais da Prefeitura de Manaus</a> - Compartilhado por Juliana Lima. Contexto: Compartilhamento de notícias. - Foi apenas compartilhado.</li>
-<li><a href="https://www.linkedin.com/posts/bridgetannpearce_the-simpsons-has-always-provided-superb-provocations-ugcPost-7432301691749720064-BAR-?utm_source=social_share_send&amp;utm_medium=android_app&amp;rcm=ACoAAAzhyNIBOWZA2CRVwcfNshnWuwk8PtQSrOQ&amp;utm_campaign=whatsapp">Post no LinkedIn com provocação dos Simpsons sobre IA</a> - Compartilhado por Giselle Santos. Contexto: Compartilhado como material para provocações sobre o tema. - Gerou discussão.</li>
-<li><a href="https://g1.globo.com/educacao/noticia/2026/02/23/conselho-nacional-de-educacao-marca-data-para-votar-regras-para-o-uso-de-inteligencia-artificial-nas-escolas.ghtml">Notícia do G1 sobre votação de regras para IA nas escolas pelo CNE</a> - Compartilhado por Rafael Chaves. Contexto: Início de uma pergunta sobre o tema. - <strong>Gerou discussão</strong>.</li>
-<li><a href="https://www.gov.br/mec/pt-br/cne/2025/Fevereiro%202025/texto-referencia-inteligencia-artificial.pdf">Texto de referência do CNE sobre inteligência artificial (versão antiga)</a> - Compartilhado por Rafael Chaves. Contexto: Pergunta se este era o documento atual. - <strong>Gerou discussão</strong>.</li>
-<li><a href="https://www.objetivo.br/e-genio/">Página da plataforma E-genio do Objetivo</a> - Compartilhado por Savio Ferraz. Contexto: Exemplo de IA para correção de redações. - Foi apenas compartilhado.</li>
-<li><a href="https://simuladordeentrevistadeemprego.senai.br/">Simulador de Entrevistas de Emprego SENAI/Google</a> - Compartilhado por Luiz Eduardo Leao. Contexto: Divulgação de uma ferramenta gratuita de IA para educação profissional. - Foi apenas compartilhado.</li>
-<li><a href="https://preview--triagen-digital-spark.lovable.app/">Preview da ferramenta Triagen para entrevistas com IA</a> - Compartilhado por Savio Ferraz. Contexto: Exemplo de outra ferramenta de entrevista com IA em desenvolvimento. - Foi apenas compartilhado.</li>
-<li><a href="https://artizen.fund/index/p/uppia-training-support-via-whatsappenglishmp4">Página de votação da startup UppIA no Artizen</a> - Compartilhado por Savio Ferraz. Contexto: Pedido de votos para um amigo em um concurso de startups. - Foi apenas compartilhado.</li>
-<li><a href="https://www.instagram.com/p/DVI4OdZCD7u/?img_index=1&amp;igsh=MjhheGhlM3MwOThi">Post no Instagram com infográfico</a> - Compartilhado por Adriana Ramalho. - Foi apenas compartilhado.</li>
-<li><a href="https://mecred.mec.gov.br/recurso/364589">Recurso no MECred (ID 364589)</a> - Compartilhado por Savio Ferraz. - Foi apenas compartilhado.</li>
-<li><a href="https://mecred.mec.gov.br/recurso/364590">Recurso no MECred (ID 364590)</a> - Compartilhado por Savio Ferraz. - Foi apenas compartilhado.</li>
-<li><a href="https://www.instagram.com/p/DVJ5fo_CUZF/?igsh=YXcxMDlmbmZsajd2">Post no Instagram com agenda de eventos</a> - Compartilhado por Juliana Lima. - Foi apenas compartilhado.</li>
-<li><a href="https://blog.fsck.com/2026/02/05/prompt-injection/">Artigo de blog sobre prompt injection</a> - Compartilhado por Gabriel F. Contexto: Anedota sobre IA e educação. - <strong>Gerou discussão</strong>.</li>
-<li><a href="https://editorarealize.com.br/edicao/detalhes/educacao-de-criancas-e-tecnologias-digitais-dialogos-internacionais-entre-brasil-argentina-e-peru">E-book "Educação de Crianças e Tecnologias Digitais"</a> - Compartilhado por Luciano Meira. Contexto: Divulgação de publicação com um artigo de sua autoria. - <strong>Gerou discussão</strong>.</li>
-<li><a href="https://www.linkedin.com/redir/redirect/?url=https%3A%2F%2Fconteudos%2Edataprivacy%2Ecom%2Ebr%2Fbibliotecadedanosemia&amp;urlhash=QmgI&amp;mt=rWGYDlK1WA4yWZItmCTkt2EzH_kRSgW4FjRCp6CkqngIeWrcQIaCIAvYiKqToUV9gPkJlUVtIi0JRFTeO90BBDF9BGab991ZkQJ_QN-TfEYRwzDQZMc8rQ&amp;isSdui=true">Biblioteca de Danos em IA da Data Privacy Brasil</a> - Compartilhado por Giselle Santos. Contexto: Divulgação de uma iniciativa. - <strong>Gerou discussão</strong>.</li>
-<li><a href="https://www.youtube.com/live/8aoglGSC1ys?si=y9tMXxZyBJxm-24k">Live do YouTube do podcast "Understanding Artificial Intelligence"</a> - Compartilhado por Helena Mendonça. Contexto: Divulgação de evento ao vivo. - Foi apenas compartilhado.</li>
-<li><a href="https://www.instagram.com/p/DVMIy1elNpv/?igsh=MWdxeTl2b3NqZXNhMg==">Post no Instagram com divulgação de evento</a> - Compartilhado por Adriana Martinelli. - Foi apenas compartilhado.</li>
-<li><a href="https://zoom.us/j/95346373234">Link de Zoom para evento</a> - Compartilhado por Adriana Martinelli. Contexto: Link de acesso para o evento divulgado anteriormente. - Foi apenas compartilhado.</li>
-<li><a href="https://www.linkedin.com/posts/marceloecheverria_replit-gratuito-para-qualquer-professor-e-activity-7432868820173840385-P82e?utm_source=share&amp;utm_medium=member_ios&amp;rcm=ACoAAB0i_FkBrD2OtRW9tFIX7T8rWclXGQKkK4o">Post no LinkedIn sobre Replit gratuito para professores</a> - Compartilhado por Laura FL. - <strong>Gerou discussão</strong>.</li>
-<li><a href="https://www.instagram.com/reel/DVOcCz8kQEk/?igsh=MThzajMxMzI3dHNqYg==">Reel no Instagram com sátira</a> - Compartilhado por Savio Ferraz. - Foi apenas compartilhado.</li>
-<li><a href="https://www.linkedin.com/posts/a-messina_a-lovable-vai-ser-100-gratuita-no-dia-internacional-activity-7432794085318549504-GRk0">Post no LinkedIn sobre a ferramenta Lovable ser gratuita no Dia Internacional da Mulher</a> - Compartilhado por Laura FL. - Foi apenas compartilhado.</li>
-<li><a href="https://ai.google/literacy/">Hub de Alfabetização em IA do Google</a> - Compartilhado por Savio Ferraz. - Gerou discussão.</li>
-<li><a href="https://www.linkedin.com/posts/dorakaufman_artigo-meu-no-valor-de-hoje-2702-activity-7433087663789920256-35yv?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAC5AKZYBvAAFqCRhvFKCB3MxQsEtL7j8QSs">Post no LinkedIn de Dora Kaufman sobre IA</a> - Compartilhado por Marília. - Foi apenas compartilhado.</li>
-<li><a href="https://www.linkedin.com/posts/mrochalucas_num-workshop-internacional-sobre-ia-e-educa%C3%A7%C3%A3o-activity-7433156530373435392-vGL5?utm_source=social_share_send&amp;utm_medium=member_desktop_web&amp;rcm=ACoAAAXvnJ4BrxgJFK9D_GoYXKKuPg53I70L-dI">Post no LinkedIn de Lucas Machado sobre alfabetização em IA</a> - Compartilhado por Lucas Machado. - <strong>Gerou discussão</strong>.</li>
-<li><a href="https://braziljournal.com/block-demite-40-do-staff-e-diz-que-faz-mais-e-melhor-com-ajuda-da-ai/">Notícia do Brazil Journal sobre demissões na Block com uso de IA</a> - Compartilhado por Rafael Parente. - Gerou discussão.</li>
-<li><a href="https://www.sciencedirect.com/science/article/pii/S2666920X25001766">Artigo científico sobre IA em educação (ScienceDirect)</a> - Compartilhado por Guilherme Rodrigues Alves. - Foi apenas compartilhado.</li>
-<li><a href="https://www.sciencedirect.com/science/article/pii/S2666920X25001468">Artigo científico sobre IA e engajamento estudantil (ScienceDirect)</a> - Compartilhado por Guilherme Rodrigues Alves. - Foi apenas compartilhado.</li>
-<li><a href="https://link.springer.com/article/10.1007/s10639-024-12677-0">Artigo científico sobre uso do ChatGPT na educação (Springer)</a> - Compartilhado por Guilherme Rodrigues Alves. - Foi apenas compartilhado.</li>
-<li><a href="https://www.instagram.com/reel/DVRP8QYEalo/?igsh=eGNwM3J5dHdhdzNt">Reel no Instagram</a> - Compartilhado por Giselle Santos. - Foi apenas compartilhado.</li>
-<li><a href="https://www.instagram.com/reel/DVTzA1bjiGa/?igsh=MThiZjU4dXFiYXB0Zw==">Reel no Instagram sobre IA com Gregório Duvivier</a> - Compartilhado por Mary Grace. - <strong>Gerou discussão</strong>.</li>
-<li><a href="https://medium.com/@leandroguarnieri/the-chess-paradox-why-machines-beating-humans-made-chess-more-human-than-ever-5dbbd7c8e8f7">Artigo do Medium "The Chess Paradox"</a> - Compartilhado por Ricardo, Motrix. - Foi apenas compartilhado.</li>
-<li><a href="https://notdivided.org/">Site "Not Divided" com depoimentos de funcionários da Google e OpenAI</a> - Compartilhado por Alex (UFPE). - Foi apenas compartilhado.</li>
-<li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7432202053256523776/">Post no LinkedIn</a> - Compartilhado por Alex (UFPE). - Foi apenas compartilhado.</li>
-<li><a href="https://www.instagram.com/reel/DVWg6yaEZdv/?igsh=MXM2b3g5M2V4dWVvOQ==">Reel no Instagram com entrevista do CEO da Anthropic</a> - Compartilhado por Savio Ferraz. - Foi apenas compartilhado.</li>
-<li><a href="https://www.linkedin.com/posts/lilianbacich_no-dia-6-de-mar%C3%A7o-sexta-feira-estarei-no-share-7433685019367378944-3iEQ?utm_medium=ios_app&amp;rcm=ACoAAAdT7PIBUu30iNzYos2rR3FYDCaeEkHBLyM&amp;utm_source=social_share_send&amp;utm_campaign=whatsapp">Post no LinkedIn de Lilian Bacich sobre evento</a> - Compartilhado por Adriana Ramalho. - Foi apenas compartilhado.</li>
-<li><a href="https://www.linkedin.com/posts/dr-carlos-bifi_pisa2029-educaaexaetoinovadora-letramentoia-share-7433926487751225344-8rzR?utm_medium=ios_app&amp;rcm=ACoAAAdT7PIBUu30iNzYos2rR3FYDCaeEkHBLyM&amp;utm_source=social_share_send&amp;utm_campaign=whatsapp">Post no LinkedIn de Carlos Bifi sobre PISA 2029</a> - Compartilhado por Adriana Ramalho. - Foi apenas compartilhado.</li>
-<li><a href="https://www.instagram.com/p/DVWyr-PCeA-/?igsh=MndieXd0NDViYnow">Post no Instagram com carrossel sobre IA e desigualdade</a> - Compartilhado por Giselle Santos. - <strong>Gerou discussão</strong> sobre vieses e o gap digital.</li>
-<li><a href="https://share.google/EHkEks6UtE7tHRU18">Link do Google Share para o filme "Estrelas Além do Tempo"</a> - Compartilhado por +55 11 96534-0824. Contexto: Enviado por engano, mas gerou comentários sobre o filme. - Gerou discussão.</li>
-<li><a href="https://www.testingcatalog.com/google-tests-new-learning-hub-powered-by-goal-based-actions/">Artigo sobre o "Learning Hub" do Google</a> - Compartilhado por Alessandro Arpetti. - Foi apenas compartilhado.</li>
-<li><a href="https://www.linkedin.com/posts/fengchun-miao-5b999077_frameworks-on-ai-in-education-and-digital-share-7434201708504870912-ZTvR?utm_source=social_share_send&amp;utm_medium=android_app&amp;rcm=ACoAAAzhyNIBOWZA2CRVwcfNshnWuwk8PtQSrOQ&amp;utm_campaign=whatsapp">Post no LinkedIn de Fengchun Miao (UNESCO) sobre frameworks de IA na educação</a> - Compartilhado por Giselle Santos. - Foi apenas compartilhado.</li>
-</ul>
-<hr />
-<h2>Limitações do Resumo:</h2>
-<ul>
-<li>O conteúdo de mensagens marcadas como <code>&lt;Mídia oculta&gt;</code> (imagens, vídeos, áudios, stickers) não foi analisado e pode conter informações contextuais relevantes.</li>
+  <main id="conteudo" tabindex="-1"><div class="reading-shell"><nav class="breadcrumbs" aria-label="Caminho"><a href="index.html">Radar</a> / <a href="edicoes.html">Edições</a> / 24 fev – 2 mar 2026</nav>
+      <header class="reading-header"><div class="meta"><span class="pill">Semana completa</span><span>24 fev – 2 mar 2026</span></div>
+        <h1>Políticas de IA na educação e os desafios de verificação de fontes digitais</h1><p class="dek">Participantes discutiram os desafios na implementação de políticas públicas e a verificação de fontes em ferramentas de busca, além do uso de IA para correção de redações e as preocupações com viés e exclusão digital.</p>
+        <p class="meta">9 min de leitura · 196 mensagens na fonte</p>
+        <div class="reading-tools"><button class="small-button" type="button" data-copy-link>Copiar link da edição</button><a class="small-button" data-share-whatsapp href="https://wa.me/" target="_blank" rel="noopener noreferrer">Compartilhar no WhatsApp ↗</a></div><div class="topic-chips"><a class="chip" href="explorar.html?tema=politicas">Políticas e ética</a><a class="chip" href="explorar.html?tema=ferramentas">Ferramentas</a><a class="chip" href="explorar.html?tema=comunidade">Comunidade e oportunidades</a></div>
+      </header><div class="reading-layout"><article class="article" aria-label="Resumo das conversas">
+        <section id="em-um-minuto"><h2>Em um minuto</h2><ol class="highlights"><li><a href="#tema-1">Membros relataram experiências negativas com a implementação de políticas públicas, destacando a necessidade de ouvir a voz de quem está na sala de aula.</a></li><li><a href="#tema-2">Discussões sobre dificuldades em rastrear a fonte original de dados e críticas à remoção da busca reversa de imagens, afetando a verificação de informações.</a></li><li><a href="#tema-5">Participantes opinaram que as discussões sobre IA partem de uma &quot;bolha privilegiada&quot; e alertaram sobre o novo gap digital relacionado à qualidade da informação.</a></li></ol>
+        <details class="overview-original"><summary>Ler o panorama completo da semana</summary><div><p>A conversa da semana teve um volume alto de mensagens e participação distribuída entre vários membros. A natureza das interações foi mista, com predominância no compartilhamento de links e informações, mas também incluiu debates sobre a implementação de políticas públicas, a dificuldade de verificação de fontes na era da IA e a aplicação de IA na correção de redações. Vários tópicos paralelos ocorreram simultaneamente. Foi registrada uma divergência explícita, quando uma participante anunciou sua saída do grupo por perceber um desalinhamento entre os temas discutidos e a sua realidade como professora de sala de aula. Em outros momentos, houve alinhamento de opiniões, como na crítica às mudanças nas ferramentas de busca de imagens do Google.</p></div></details></section>
+        <section id="tema-1"><h2>Desafios na Implementação de Políticas Públicas e Tecnologias</h2><ul>
+<li><strong>Tipo de Conteúdo</strong>: Opiniões pessoais, Fatos compartilhados</li>
+<li><strong>Descrição Factual</strong>: Um membro (Guilherme Cintra) opinou que a implementação de um produto é mais crucial para a adoção do que o design em si. Outro membro (Felipe prof Volta Redonda) compartilhou uma experiência negativa com a Política Nacional Escolas Conectadas (FUST) em sua cidade, citando falta de suporte e problemas de execução. Andrea Barreto concordou, relatando uma experiência com a elaboração da BNCC onde a contribuição dos professores foi alterada por &quot;entendidos por educação&quot;, e defendeu que a voz de quem está na sala de aula deve ser ouvida. Ela anunciou sua saída do grupo por sentir que as discussões não se conectavam com a realidade da escola.</li>
+<li><strong>Recorrência</strong>: Debate prolongado.</li>
+</ul><aside class="theme-resources"><p>Para seguir este fio</p><a href="https://www.instagram.com/p/DVJ5fo_CUZF" target="_blank" rel="noopener noreferrer">Post no Instagram com agenda de eventos ↗</a></aside></section><section id="tema-2"><h2>Verificação de Fontes (Fact-Checking) e Mudanças em Ferramentas de Busca</h2><ul>
+<li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, Opiniões pessoais, Divergências ou visões conflitantes</li>
+<li><strong>Descrição Factual</strong>: O compartilhamento de um gráfico sobre adoção de IA gerou uma longa discussão sobre sua origem. Membros (Mariana Ochs, Carla Arena) relataram dificuldades em rastrear a fonte original, com Carla mencionando uma informação incorreta fornecida pelo Gemini. Mariana Ochs criticou a substituição da busca reversa de imagens do Google pelo Google Lens, afirmando que a mudança removeu &quot;uma ferramenta essencial, e acessível, de verificação&quot; e que &quot;decisões de design das big techs mudam a nossa compreensão do mundo&quot;. Outros membros (Sora Lacerda) concordaram com a frustração. Roberta Freitas posteriormente compartilhou links que parecem ser a origem dos dados e da visualização.</li>
+<li><strong>Recorrência</strong>: Debate prolongado.</li>
+</ul><aside class="theme-resources"><p>Para seguir este fio</p><a href="https://x.com/NoahEpstein_/status/2025604844711510432" target="_blank" rel="noopener noreferrer">Post no X (Twitter) contendo um gráfico sobre o uso de IA ↗</a></aside></section><section id="tema-3"><h2>Uso de IA para Correção de Redações e Avaliações</h2><ul>
+<li><strong>Tipo de Conteúdo</strong>: Perguntas ou dúvidas, Fatos compartilhados</li>
+<li><strong>Descrição Factual</strong>: Um membro (Rafael Chaves) questionou sobre a proposta do CNE para correção de redações com IA, especialmente em vestibulares. Em resposta, um membro (Participante do grupo) relatou ter criado um agente de IA para corrigir redações do ENEM com alta precisão. Outro membro (Savio Ferraz) compartilhou a existência da plataforma &quot;E-genio&quot; do Objetivo/UNIP para o mesmo fim. Um representante da &quot;Pontue&quot; (Participante do grupo) mencionou que o uso da Gemini para correção em escala apresenta desafios distintos.</li>
+<li><strong>Recorrência</strong>: Várias mensagens.</li>
+</ul><aside class="theme-resources"><p>Para seguir este fio</p><a href="https://www.objetivo.br/e-genio" target="_blank" rel="noopener noreferrer">Página da plataforma E-genio do Objetivo ↗</a></aside></section><section id="tema-4"><h2>Regulamentação do Uso de IA na Educação pelo CNE</h2><ul>
+<li><strong>Tipo de Conteúdo</strong>: Perguntas ou dúvidas, Fatos compartilhados</li>
+<li><strong>Descrição Factual</strong>: Rafael Chaves compartilhou links sobre a votação no Conselho Nacional de Educação (CNE) de regras para o uso de IA nas escolas e perguntou se o texto de referência divulgado era o correto. Ingrid Soares informou que o documento compartilhado era antigo, de antes da audiência pública.</li>
+<li><strong>Recorrência</strong>: Pontual.</li>
+</ul><aside class="theme-resources"><p>Para seguir este fio</p><a href="https://www.instagram.com/reel/DVRP8QYEalo" target="_blank" rel="noopener noreferrer">Reel no Instagram ↗</a></aside></section><section id="tema-5"><h2>IA, Viés e Exclusão Digital</h2><ul>
+<li><strong>Tipo de Conteúdo</strong>: Opiniões pessoais, Fatos compartilhados</li>
+<li><strong>Descrição Factual</strong>: Após o compartilhamento de um post no Instagram, Kelly Baptista opinou que &quot;a maior parte das discussões parte de uma bolha privilegiada&quot;. Giselle Santos complementou afirmando que o novo gap digital não será sobre conectividade, mas sobre a qualidade da informação (&quot;AI slop&quot;). Um membro (Participante do grupo) concordou, citando a observação do aumento do gap na rotina da escola pública.</li>
+<li><strong>Recorrência</strong>: Várias mensagens.</li>
+</ul></section>
+        <section id="materiais" class="all-materials"><h2>Materiais compartilhados</h2><p class="source-note">Os créditos indicam quem compartilhou na conversa, não a autoria dos materiais. Links externos abrem em outra aba.</p><ul>
+<li><a href="https://www.linkedin.com/posts/hassan-khosravi_aiineducation-learninganalytics-peerfeedback-activity-7431797508583960576-h-ru?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAC5AKZYBvAAFqCRhvFKCB3MxQsEtL7j8QSs" target="_blank" rel="noopener noreferrer">Post no LinkedIn de Hassan Khosravi sobre IA em educação</a> - Compartilhado por Marília. - <strong>Gerou discussão</strong> sobre a importância da implementação.</li>
+<li><a href="https://www.linkedin.com/posts/activity-7432031807832842240-EQwd?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAUUiCQBcndEaO0ad0P8f4qZcBb6pymGuN4" target="_blank" rel="noopener noreferrer">Post no LinkedIn de Guilherme Cintra sobre um evento de IA no contexto escolar</a> - Compartilhado por Guilherme Cintra. Contexto: Divulgação de sua participação em um evento. - Foi apenas compartilhado, com um pedido de resumo posterior.</li>
+<li><a href="https://www.linkedin.com/posts/tanci-simoes_quando-iniciei-minha-carreira-com-tecnologias-activity-7432046727970394112-sSLS" target="_blank" rel="noopener noreferrer">Post no LinkedIn de Tanci Simões sobre transformação digital com IA para escolas</a> - Compartilhado por Tanci Simões Gomes. Contexto: Divulgação de uma série de posts e pedido de contribuições. - Foi apenas compartilhado.</li>
+<li><a href="https://www.linkedin.com/posts/empresamunicipaldemultimeios-_voc%C3%AA-tem-propostas-para-impulsionar-a-educa%C3%A7%C3%A3o-activity-7432043528744009730-AG69?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAC5AKZYBvAAFqCRhvFKCB3MxQsEtL7j8QSs" target="_blank" rel="noopener noreferrer">Post no LinkedIn da MultiRio sobre propostas para a educação no Rio de Janeiro</a> - Compartilhado por Marília. Contexto: Divulgação de uma iniciativa no Rio de Janeiro. - Foi apenas compartilhado.</li>
+<li><a href="https://x.com/NoahEpstein_/status/2025604844711510432" target="_blank" rel="noopener noreferrer">Post no X (Twitter) contendo um gráfico sobre o uso de IA</a> - Compartilhado por Fernando. Contexto: Apresentação de um gráfico sobre adoção de IA. - <strong>Gerou discussão</strong> extensa sobre a origem do gráfico e ferramentas de verificação.</li>
+<li><a href="https://www.oneusefulthing.org/p/signs-and-portents" target="_blank" rel="noopener noreferrer">Artigo do Substack &quot;One Useful Thing&quot;</a> - Compartilhado por Carla Arena. Contexto: Durante a investigação da origem do gráfico, o Gemini sugeriu este link como fonte, o que se provou incorreto. - <strong>Gerou discussão</strong>.</li>
+<li><a href="https://mashable.com/article/openai-retiring-chatgpt-gpt-4o-users-are-heartbroken" target="_blank" rel="noopener noreferrer">Artigo da Mashable sobre usuários lamentando a aposentadoria de uma voz do ChatGPT</a> - Compartilhado por Giselle Santos. Contexto: Relacionado à antropomorfização de IAs. - Foi apenas compartilhado.</li>
+<li><a href="https://global-ai-adoption.netlify.app/" target="_blank" rel="noopener noreferrer">Visualização de dados animada sobre a evolução do uso de IA</a> - Compartilhado por Roberta Freitas. Contexto: Resultado da investigação sobre a origem do gráfico. - <strong>Gerou discussão</strong>.</li>
+<li><a href="https://www.microsoft.com/en-us/corporate-responsibility/topics/ai-economy-institute/reports/global-ai-adoption-2025/" target="_blank" rel="noopener noreferrer">Relatório da Microsoft sobre a adoção global de IA</a> - Compartilhado por Roberta Freitas. Contexto: Fonte dos dados para a visualização. - Foi apenas compartilhado.</li>
+<li><a href="https://x.com/damianplayer/status/2025234388137468387" target="_blank" rel="noopener noreferrer">Post no X (Twitter) de Damian Player que supostamente criou a imagem do gráfico</a> - Compartilhado por Roberta Freitas. Contexto: Parte da investigação sobre a origem do gráfico. - Foi apenas compartilhado.</li>
+<li><a href="https://www.anthropic.com/research/measuring-agent-autonomy" target="_blank" rel="noopener noreferrer">Artigo da Anthropic sobre medição de autonomia de agentes de IA</a> - Compartilhado por Thais Pianucci Alura Start. Contexto: Compartilhado sem contexto explícito, mas durante a discussão sobre o gráfico de adoção de IA. - Foi apenas compartilhado.</li>
+<li><a href="https://share.google/uv0W6SQ7cwiA8VYCi" target="_blank" rel="noopener noreferrer">Artigo da WIRED sobre scams com AI Overviews do Google</a> - Compartilhado por Giselle Santos. Contexto: Discussão sobre &quot;fraud as a service&quot; para burlar o buscador do Google. - <strong>Gerou discussão</strong>.</li>
+<li><a href="https://www.gov.br/mec/pt-br/assuntos/noticias/2026/fevereiro/mec-aborda-uso-responsavel-de-ia-em-cupula-global" target="_blank" rel="noopener noreferrer">Notícia do MEC sobre uso responsável de IA em Cúpula Global</a> - Compartilhado por Juliana Lima. Contexto: Compartilhamento de notícias. - Foi apenas compartilhado.</li>
+<li><a href="https://www.manaus.am.gov.br/semcom/prefeitura-semed-guia-de-tecnologias-digitais/" target="_blank" rel="noopener noreferrer">Guia com atividades digitais da Prefeitura de Manaus</a> - Compartilhado por Juliana Lima. Contexto: Compartilhamento de notícias. - Foi apenas compartilhado.</li>
+<li><a href="https://www.linkedin.com/posts/bridgetannpearce_the-simpsons-has-always-provided-superb-provocations-ugcPost-7432301691749720064-BAR-?utm_source=social_share_send&amp;utm_medium=android_app&amp;rcm=ACoAAAzhyNIBOWZA2CRVwcfNshnWuwk8PtQSrOQ&amp;utm_campaign=whatsapp" target="_blank" rel="noopener noreferrer">Post no LinkedIn com provocação dos Simpsons sobre IA</a> - Compartilhado por Giselle Santos. Contexto: Compartilhado como material para provocações sobre o tema. - Gerou discussão.</li>
+<li><a href="https://g1.globo.com/educacao/noticia/2026/02/23/conselho-nacional-de-educacao-marca-data-para-votar-regras-para-o-uso-de-inteligencia-artificial-nas-escolas.ghtml" target="_blank" rel="noopener noreferrer">Notícia do G1 sobre votação de regras para IA nas escolas pelo CNE</a> - Compartilhado por Rafael Chaves. Contexto: Início de uma pergunta sobre o tema. - <strong>Gerou discussão</strong>.</li>
+<li><a href="https://www.gov.br/mec/pt-br/cne/2025/Fevereiro%202025/texto-referencia-inteligencia-artificial.pdf" target="_blank" rel="noopener noreferrer">Texto de referência do CNE sobre inteligência artificial (versão antiga)</a> - Compartilhado por Rafael Chaves. Contexto: Pergunta se este era o documento atual. - <strong>Gerou discussão</strong>.</li>
+<li><a href="https://www.objetivo.br/e-genio/" target="_blank" rel="noopener noreferrer">Página da plataforma E-genio do Objetivo</a> - Compartilhado por Savio Ferraz. Contexto: Exemplo de IA para correção de redações. - Foi apenas compartilhado.</li>
+<li><a href="https://simuladordeentrevistadeemprego.senai.br/" target="_blank" rel="noopener noreferrer">Simulador de Entrevistas de Emprego SENAI/Google</a> - Compartilhado por Luiz Eduardo Leao. Contexto: Divulgação de uma ferramenta gratuita de IA para educação profissional. - Foi apenas compartilhado.</li>
+<li><a href="https://preview--triagen-digital-spark.lovable.app/" target="_blank" rel="noopener noreferrer">Preview da ferramenta Triagen para entrevistas com IA</a> - Compartilhado por Savio Ferraz. Contexto: Exemplo de outra ferramenta de entrevista com IA em desenvolvimento. - Foi apenas compartilhado.</li>
+<li><a href="https://artizen.fund/index/p/uppia-training-support-via-whatsappenglishmp4" target="_blank" rel="noopener noreferrer">Página de votação da startup UppIA no Artizen</a> - Compartilhado por Savio Ferraz. Contexto: Pedido de votos para um amigo em um concurso de startups. - Foi apenas compartilhado.</li>
+<li><a href="https://www.instagram.com/p/DVI4OdZCD7u/?img_index=1&amp;igsh=MjhheGhlM3MwOThi" target="_blank" rel="noopener noreferrer">Post no Instagram com infográfico</a> - Compartilhado por Adriana Ramalho. - Foi apenas compartilhado.</li>
+<li><a href="https://mecred.mec.gov.br/recurso/364589" target="_blank" rel="noopener noreferrer">Recurso no MECred (ID 364589)</a> - Compartilhado por Savio Ferraz. - Foi apenas compartilhado.</li>
+<li><a href="https://mecred.mec.gov.br/recurso/364590" target="_blank" rel="noopener noreferrer">Recurso no MECred (ID 364590)</a> - Compartilhado por Savio Ferraz. - Foi apenas compartilhado.</li>
+<li><a href="https://www.instagram.com/p/DVJ5fo_CUZF/?igsh=YXcxMDlmbmZsajd2" target="_blank" rel="noopener noreferrer">Post no Instagram com agenda de eventos</a> - Compartilhado por Juliana Lima. - Foi apenas compartilhado.</li>
+<li><a href="https://blog.fsck.com/2026/02/05/prompt-injection/" target="_blank" rel="noopener noreferrer">Artigo de blog sobre prompt injection</a> - Compartilhado por Gabriel F. Contexto: Anedota sobre IA e educação. - <strong>Gerou discussão</strong>.</li>
+<li><a href="https://editorarealize.com.br/edicao/detalhes/educacao-de-criancas-e-tecnologias-digitais-dialogos-internacionais-entre-brasil-argentina-e-peru" target="_blank" rel="noopener noreferrer">E-book &quot;Educação de Crianças e Tecnologias Digitais&quot;</a> - Compartilhado por Luciano Meira. Contexto: Divulgação de publicação com um artigo de sua autoria. - <strong>Gerou discussão</strong>.</li>
+<li><a href="https://www.linkedin.com/redir/redirect/?url=https%3A%2F%2Fconteudos%2Edataprivacy%2Ecom%2Ebr%2Fbibliotecadedanosemia&amp;urlhash=QmgI&amp;mt=rWGYDlK1WA4yWZItmCTkt2EzH_kRSgW4FjRCp6CkqngIeWrcQIaCIAvYiKqToUV9gPkJlUVtIi0JRFTeO90BBDF9BGab991ZkQJ_QN-TfEYRwzDQZMc8rQ&amp;isSdui=true" target="_blank" rel="noopener noreferrer">Biblioteca de Danos em IA da Data Privacy Brasil</a> - Compartilhado por Giselle Santos. Contexto: Divulgação de uma iniciativa. - <strong>Gerou discussão</strong>.</li>
+<li><a href="https://www.youtube.com/live/8aoglGSC1ys?si=y9tMXxZyBJxm-24k" target="_blank" rel="noopener noreferrer">Live do YouTube do podcast &quot;Understanding Artificial Intelligence&quot;</a> - Compartilhado por Helena Mendonça. Contexto: Divulgação de evento ao vivo. - Foi apenas compartilhado.</li>
+<li><a href="https://www.instagram.com/p/DVMIy1elNpv/?igsh=MWdxeTl2b3NqZXNhMg==" target="_blank" rel="noopener noreferrer">Post no Instagram com divulgação de evento</a> - Compartilhado por Adriana Martinelli. - Foi apenas compartilhado.</li>
+<li><a href="https://zoom.us/j/95346373234" target="_blank" rel="noopener noreferrer">Link de Zoom para evento</a> - Compartilhado por Adriana Martinelli. Contexto: Link de acesso para o evento divulgado anteriormente. - Foi apenas compartilhado.</li>
+<li><a href="https://www.linkedin.com/posts/marceloecheverria_replit-gratuito-para-qualquer-professor-e-activity-7432868820173840385-P82e?utm_source=share&amp;utm_medium=member_ios&amp;rcm=ACoAAB0i_FkBrD2OtRW9tFIX7T8rWclXGQKkK4o" target="_blank" rel="noopener noreferrer">Post no LinkedIn sobre Replit gratuito para professores</a> - Compartilhado por Laura FL. - <strong>Gerou discussão</strong>.</li>
+<li><a href="https://www.instagram.com/reel/DVOcCz8kQEk/?igsh=MThzajMxMzI3dHNqYg==" target="_blank" rel="noopener noreferrer">Reel no Instagram com sátira</a> - Compartilhado por Savio Ferraz. - Foi apenas compartilhado.</li>
+<li><a href="https://www.linkedin.com/posts/a-messina_a-lovable-vai-ser-100-gratuita-no-dia-internacional-activity-7432794085318549504-GRk0" target="_blank" rel="noopener noreferrer">Post no LinkedIn sobre a ferramenta Lovable ser gratuita no Dia Internacional da Mulher</a> - Compartilhado por Laura FL. - Foi apenas compartilhado.</li>
+<li><a href="https://ai.google/literacy/" target="_blank" rel="noopener noreferrer">Hub de Alfabetização em IA do Google</a> - Compartilhado por Savio Ferraz. - Gerou discussão.</li>
+<li><a href="https://www.linkedin.com/posts/dorakaufman_artigo-meu-no-valor-de-hoje-2702-activity-7433087663789920256-35yv?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAC5AKZYBvAAFqCRhvFKCB3MxQsEtL7j8QSs" target="_blank" rel="noopener noreferrer">Post no LinkedIn de Dora Kaufman sobre IA</a> - Compartilhado por Marília. - Foi apenas compartilhado.</li>
+<li><a href="https://www.linkedin.com/posts/mrochalucas_num-workshop-internacional-sobre-ia-e-educa%C3%A7%C3%A3o-activity-7433156530373435392-vGL5?utm_source=social_share_send&amp;utm_medium=member_desktop_web&amp;rcm=ACoAAAXvnJ4BrxgJFK9D_GoYXKKuPg53I70L-dI" target="_blank" rel="noopener noreferrer">Post no LinkedIn de Lucas Machado sobre alfabetização em IA</a> - Compartilhado por Lucas Machado. - <strong>Gerou discussão</strong>.</li>
+<li><a href="https://braziljournal.com/block-demite-40-do-staff-e-diz-que-faz-mais-e-melhor-com-ajuda-da-ai/" target="_blank" rel="noopener noreferrer">Notícia do Brazil Journal sobre demissões na Block com uso de IA</a> - Compartilhado por Rafael Parente. - Gerou discussão.</li>
+<li><a href="https://www.sciencedirect.com/science/article/pii/S2666920X25001766" target="_blank" rel="noopener noreferrer">Artigo científico sobre IA em educação (ScienceDirect)</a> - Compartilhado por Guilherme Rodrigues Alves. - Foi apenas compartilhado.</li>
+<li><a href="https://www.sciencedirect.com/science/article/pii/S2666920X25001468" target="_blank" rel="noopener noreferrer">Artigo científico sobre IA e engajamento estudantil (ScienceDirect)</a> - Compartilhado por Guilherme Rodrigues Alves. - Foi apenas compartilhado.</li>
+<li><a href="https://link.springer.com/article/10.1007/s10639-024-12677-0" target="_blank" rel="noopener noreferrer">Artigo científico sobre uso do ChatGPT na educação (Springer)</a> - Compartilhado por Guilherme Rodrigues Alves. - Foi apenas compartilhado.</li>
+<li><a href="https://www.instagram.com/reel/DVRP8QYEalo/?igsh=eGNwM3J5dHdhdzNt" target="_blank" rel="noopener noreferrer">Reel no Instagram</a> - Compartilhado por Giselle Santos. - Foi apenas compartilhado.</li>
+<li><a href="https://www.instagram.com/reel/DVTzA1bjiGa/?igsh=MThiZjU4dXFiYXB0Zw==" target="_blank" rel="noopener noreferrer">Reel no Instagram sobre IA com Gregório Duvivier</a> - Compartilhado por Mary Grace. - <strong>Gerou discussão</strong>.</li>
+<li><a href="https://medium.com/@leandroguarnieri/the-chess-paradox-why-machines-beating-humans-made-chess-more-human-than-ever-5dbbd7c8e8f7" target="_blank" rel="noopener noreferrer">Artigo do Medium &quot;The Chess Paradox&quot;</a> - Compartilhado por Ricardo, Motrix. - Foi apenas compartilhado.</li>
+<li><a href="https://notdivided.org/" target="_blank" rel="noopener noreferrer">Site &quot;Not Divided&quot; com depoimentos de funcionários da Google e OpenAI</a> - Compartilhado por Alex (UFPE). - Foi apenas compartilhado.</li>
+<li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7432202053256523776/" target="_blank" rel="noopener noreferrer">Post no LinkedIn</a> - Compartilhado por Alex (UFPE). - Foi apenas compartilhado.</li>
+<li><a href="https://www.instagram.com/reel/DVWg6yaEZdv/?igsh=MXM2b3g5M2V4dWVvOQ==" target="_blank" rel="noopener noreferrer">Reel no Instagram com entrevista do CEO da Anthropic</a> - Compartilhado por Savio Ferraz. - Foi apenas compartilhado.</li>
+<li><a href="https://www.linkedin.com/posts/lilianbacich_no-dia-6-de-mar%C3%A7o-sexta-feira-estarei-no-share-7433685019367378944-3iEQ?utm_medium=ios_app&amp;rcm=ACoAAAdT7PIBUu30iNzYos2rR3FYDCaeEkHBLyM&amp;utm_source=social_share_send&amp;utm_campaign=whatsapp" target="_blank" rel="noopener noreferrer">Post no LinkedIn de Lilian Bacich sobre evento</a> - Compartilhado por Adriana Ramalho. - Foi apenas compartilhado.</li>
+<li><a href="https://www.linkedin.com/posts/dr-carlos-bifi_pisa2029-educaaexaetoinovadora-letramentoia-share-7433926487751225344-8rzR?utm_medium=ios_app&amp;rcm=ACoAAAdT7PIBUu30iNzYos2rR3FYDCaeEkHBLyM&amp;utm_source=social_share_send&amp;utm_campaign=whatsapp" target="_blank" rel="noopener noreferrer">Post no LinkedIn de Carlos Bifi sobre PISA 2029</a> - Compartilhado por Adriana Ramalho. - Foi apenas compartilhado.</li>
+<li><a href="https://www.instagram.com/p/DVWyr-PCeA-/?igsh=MndieXd0NDViYnow" target="_blank" rel="noopener noreferrer">Post no Instagram com carrossel sobre IA e desigualdade</a> - Compartilhado por Giselle Santos. - <strong>Gerou discussão</strong> sobre vieses e o gap digital.</li>
+<li><a href="https://share.google/EHkEks6UtE7tHRU18" target="_blank" rel="noopener noreferrer">Link do Google Share para o filme &quot;Estrelas Além do Tempo&quot;</a> - Compartilhado por Participante do grupo. Contexto: Enviado por engano, mas gerou comentários sobre o filme. - Gerou discussão.</li>
+<li><a href="https://www.testingcatalog.com/google-tests-new-learning-hub-powered-by-goal-based-actions/" target="_blank" rel="noopener noreferrer">Artigo sobre o &quot;Learning Hub&quot; do Google</a> - Compartilhado por Alessandro Arpetti. - Foi apenas compartilhado.</li>
+<li><a href="https://www.linkedin.com/posts/fengchun-miao-5b999077_frameworks-on-ai-in-education-and-digital-share-7434201708504870912-ZTvR?utm_source=social_share_send&amp;utm_medium=android_app&amp;rcm=ACoAAAzhyNIBOWZA2CRVwcfNshnWuwk8PtQSrOQ&amp;utm_campaign=whatsapp" target="_blank" rel="noopener noreferrer">Post no LinkedIn de Fengchun Miao (UNESCO) sobre frameworks de IA na educação</a> - Compartilhado por Giselle Santos. - Foi apenas compartilhado.</li>
+</ul></section>
+        <section id="limitacoes" class="limitations"><h2>Sobre este resumo</h2><ul>
+<li>O conteúdo de mensagens marcadas como <code>&amp;lt;Mídia oculta&amp;gt;</code> (imagens, vídeos, áudios, stickers) não foi analisado e pode conter informações contextuais relevantes.</li>
 <li>O resumo não capta o tom emocional, humor ou sarcasmo que pode estar presente em algumas mensagens curtas e interações informais.</li>
-<li>Algumas mensagens são respostas diretas a outras, mas sem o recurso de "responder" do WhatsApp, o que pode tornar o fluxo da conversa e a conexão entre os pontos ambíguos.</li>
+<li>Algumas mensagens são respostas diretas a outras, mas sem o recurso de &quot;responder&quot; do WhatsApp, o que pode tornar o fluxo da conversa e a conexão entre os pontos ambíguos.</li>
 <li>A identificação de alguns membros é feita apenas pelo número de telefone, limitando a atribuição completa das falas.</li>
-</ul>
-    </article>
-    
-  </main>
+</ul><p class="source-note">Resumo produzido com IA a partir das mensagens deste período. Consulte as fontes e o contexto antes de reutilizar uma informação. Títulos e destaques preparados em 19 set 2026. A data da edição corresponde às conversas, não à preparação da página.</p></section>
+      </article><details class="toc" open><summary>Nesta edição</summary><nav aria-label="Índice da edição"><ol><li><a href="#em-um-minuto">Em um minuto</a></li><li><a href="#tema-1">Desafios na Implementação de Políticas Públicas e Tecnologias</a></li><li><a href="#tema-2">Verificação de Fontes (Fact-Checking) e Mudanças em Ferramentas de Busca</a></li><li><a href="#tema-3">Uso de IA para Correção de Redações e Avaliações</a></li><li><a href="#tema-4">Regulamentação do Uso de IA na Educação pelo CNE</a></li><li><a href="#tema-5">IA, Viés e Exclusão Digital</a></li><li><a href="#materiais">Materiais compartilhados</a></li><li><a href="#limitacoes">Sobre este resumo</a></li></ol><a class="toc-home" href="edicoes.html">← Ver todas as edições</a></nav></details></div>
+      <nav class="edition-navigation" aria-label="Outras edições"><a href="2026-02-23.html"><small>← Edição anterior</small>Transparência na Alpha School e as diretrizes de IA para a educação</a><a class="next" href="2026-03-09.html"><small>Próxima edição →</small>Regulamentação e bem-estar: desafios da IA na pesquisa e no trabalho educacional</a></nav></div></main>
   <footer class="footer">
-    Aprendizados_IA+Educação // Resumos gerados com LLM // 2026<br>
-    <span style="opacity: 0.7;">Feito por Marina e Tiago Maluta</span><br>
-    <a href="https://wa.me/5511982151851?text=Oi%2C%20encontrei%20um%20problema%20no%20site" style="opacity: 0.7; color: inherit;">Encontrou um problema? Avise-nos</a>
+    <div class="shell footer-grid">
+      <div><a class="footer-brand" href="index.html">IA + Educação <svg aria-hidden="true" viewBox="0 0 48 48" width="24" height="24"><path d="M24 4v40M4 24h40M10 10l28 28M10 38l28-28" stroke="currentColor" stroke-width="4"/></svg></a><p>As conversas passam. As ideias ficam.</p></div>
+      <div><strong>Um acervo feito de conversas</strong><p>Grupo Aprendizados sobre IA e Educação.<br>Resumos produzidos com IA, com referências à conversa.</p></div>
+      <div class="footer-links"><a href="sobre.html">Sobre este caderno</a><a href="https://sites.google.com/view/aprendizados-ia-educacao/home" rel="noopener" target="_blank">Histórico anterior a agosto de 2025 ↗</a><a href="https://wa.me/5511982151851?text=Oi%2C%20encontrei%20um%20problema%20no%20site">Sugerir uma correção ↗</a></div>
+    </div>
+    <div class="shell footer-bottom"><span>Conversas reunidas até 19 set 2026</span><span>Aprender, compartilhar, continuar.</span></div>
   </footer>
-  
-<script>
-(function() {
-  const weekEl = document.querySelector('.post-week');
-  if (!weekEl) return;
-  const text = weekEl.textContent;
-  const endMatch = text.match(/→\s*(\d{2})\/(\d{2})\/(\d{4})/);
-  if (endMatch) {
-    const endDate = new Date(`${endMatch[3]}-${endMatch[2]}-${endMatch[1]}`);
-    const diffDays = Math.floor((new Date() - endDate) / (1000*60*60*24));
-    if (diffDays >= 0) {
-      const span = document.createElement('span');
-      span.style.color = '#9ca3af';
-      span.textContent = ` (~ ${diffDays} dias atrás)`;
-      weekEl.appendChild(span);
-    }
-  }
-})();
-</script>
-
+  <div class="toast" role="status" aria-live="polite" id="toast"></div>
 </body>
 </html>

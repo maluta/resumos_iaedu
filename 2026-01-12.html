@@ -1,618 +1,215 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Resumo Semanal | IA+Educação</title>
-  <meta name="description" content="A conversa da semana apresentou um volume médio a alto de mensagens, com participação distribuída entre diversos membros, incluindo alguns mais ativos no compartilhamento de links e opiniões. A natureza predominante das interações foi o compartilhamento de informações (links...">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-:root {
-  --bg-primary: #f3f4f6;
-  --bg-secondary: #ffffff;
-  --text-primary: #000000;
-  --text-secondary: #4b5563;
-  --accent-blue: #2563eb;
-  --accent-yellow: #fbbf24;
-  --border-color: #000000;
-  --border-light: #d1d5db;
-  --font-main: 'Space Grotesk', -apple-system, sans-serif;
-  --font-mono: 'Space Mono', monospace;
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: var(--font-main);
-  color: var(--text-primary);
-  line-height: 1.6;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--bg-primary);
-  background-image: radial-gradient(circle, #00000015 1px, transparent 1px);
-  background-size: 20px 20px;
-}
-.migration-banner {
-  background: #F9DC03;
-  color: #000000;
-  padding: 0.75rem 1.5rem;
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
-}
-.migration-banner a { color: #000000; font-weight: 700; text-decoration: underline; }
-.header {
-  position: sticky;
-  top: 0;
-  background: var(--bg-secondary);
-  border-bottom: 2px solid var(--border-color);
-  z-index: 100;
-  padding: 1rem 1.5rem;
-}
-.header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.logo {
-  text-decoration: none;
-  font-family: var(--font-mono);
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-.logo-bracket { color: var(--accent-blue); }
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
-}
-.nav a { color: var(--text-secondary); text-decoration: none; transition: color 0.15s; }
-.nav a:hover { color: var(--text-primary); }
-.nav-separator { color: var(--border-light); }
-.main {
-  flex: 1;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 3rem 1.5rem;
-  width: 100%;
-}
-/* Search */
-.search-container { margin-bottom: 2rem; }
-.search-input {
-  width: 100%;
-  padding: 1rem;
-  font-family: var(--font-mono);
-  font-size: 1rem;
-  border: 2px solid var(--border-color);
-  background: var(--bg-secondary);
-  outline: none;
-}
-.search-input:focus { box-shadow: 4px 4px 0 var(--border-color); }
-.search-input::placeholder { color: var(--text-secondary); }
-.search-stats {
-  margin-top: 0.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-}
-.search-results {
-  margin-top: 1.5rem;
-  display: none;
-}
-.search-results.active { display: block; }
-.search-result-item {
-  background: var(--bg-secondary);
-  border: 2px solid var(--border-color);
-  padding: 1.25rem;
-  margin-bottom: 1rem;
-  text-decoration: none;
-  color: var(--text-primary);
-  display: block;
-  transition: all 0.15s;
-}
-.search-result-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 4px 4px 0 var(--border-color);
-}
-.search-result-title {
-  font-weight: 700;
-  font-size: 1.125rem;
-  margin-bottom: 0.5rem;
-  color: var(--accent-blue);
-}
-.search-result-meta {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  margin-bottom: 0.75rem;
-}
-.search-result-snippet {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-.search-result-snippet mark {
-  background: var(--accent-yellow);
-  color: var(--text-primary);
-  padding: 0.1em 0.2em;
-}
-.no-results {
-  text-align: center;
-  padding: 3rem;
-  color: var(--text-secondary);
-  display: none;
-}
-.no-results.active { display: block; }
-.page-header {
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 2px solid var(--border-color);
-}
-.page-title {
-  font-family: var(--font-mono);
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-.page-subtitle { font-size: 1rem; color: var(--text-secondary); }
-.posts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.5rem;
-}
-.posts-grid.hidden { display: none; }
-.post-card {
-  background: var(--bg-secondary);
-  border: 2px solid var(--border-color);
-  padding: 1.5rem;
-  text-decoration: none;
-  color: var(--text-primary);
-  transition: all 0.15s ease;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-.post-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 4px 4px 0 var(--border-color);
-}
-.badge-new {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background: #ef4444;
-  color: white;
-  font-size: 0.7rem;
-  font-weight: 700;
-  padding: 0.25rem 0.5rem;
-  border-radius: 2px;
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
-}
-.post-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-.post-card-action {
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  padding: 0.25rem 0.5rem;
-  background: transparent;
-  border: 1px solid var(--border-light);
-  color: var(--text-secondary);
-  text-decoration: none;
-  transition: all 0.15s;
-}
-.post-card-action:hover {
-  border-color: #25D366;
-  color: #25D366;
-}
-.post-card-image {
-  width: 100%;
-  height: 120px;
-  background: var(--bg-primary);
-  border: 1px dashed var(--border-light);
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  color: var(--text-secondary);
-}
-.post-card-category {
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--accent-blue);
-  background: rgba(37, 99, 235, 0.1);
-  padding: 0.25rem 0.5rem;
-}
-.post-card-date {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-}
-.post-card-title {
-  font-size: 1.125rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  line-height: 1.3;
-}
-.post-card-excerpt {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  flex: 1;
-}
-.post-card-footer {
-  margin-top: 0;
-  padding-top: 0;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--accent-blue);
-}
-.post-card-stats {
-  display: flex;
-  gap: 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  margin-top: 0.75rem;
-}
-.post-card-divider {
-  border: none;
-  border-top: 1px solid var(--border-light);
-  margin: 0.75rem 0;
-}
-.back-link {
-  display: inline-block;
-  margin-bottom: 1.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  text-decoration: none;
-}
-.back-link:hover { color: var(--text-primary); }
-.back-link::before { content: "< "; }
-.post-header {
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 2px solid var(--border-color);
-}
-.post-meta {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-}
-.post-category {
-  color: var(--accent-blue);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 700;
-}
-.post-date { color: var(--text-secondary); }
-.post-title { font-size: 2rem; font-weight: 700; line-height: 1.2; }
-.post-week {
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  margin-top: 0.5rem;
-}
-.content {
-  background: var(--bg-secondary);
-  border: 2px solid var(--border-color);
-  padding: 2rem;
-}
-.content h2 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-top: 3rem;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border-light);
-}
-.content h2:first-child { margin-top: 0; }
-.content h3 { font-size: 1.125rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.5rem; }
-.content p { margin-bottom: 1rem; }
-.content ul, .content ol { margin-bottom: 1rem; padding-left: 1.5rem; }
-.content li { margin-bottom: 0.5rem; }
-.content li ul { margin-top: 0.5rem; margin-bottom: 0.5rem; }
-.content a { color: var(--accent-blue); text-decoration: none; border-bottom: 1px solid transparent; }
-.content a:hover { border-bottom-color: var(--accent-blue); }
-.content strong { font-weight: 700; }
-/* Links page - Hacker News style */
-.links-list {
-  background: var(--bg-secondary);
-  border: 2px solid var(--border-color);
-  padding: 0;
-}
-.link-item {
-  display: flex;
-  align-items: baseline;
-  padding: 0.5rem 1rem;
-  border-bottom: 1px solid var(--border-light);
-  gap: 0.5rem;
-}
-.link-item:last-child { border-bottom: none; }
-.link-item.hidden { display: none; }
-.link-item:hover { background: rgba(0,0,0,0.02); }
-.link-rank {
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  min-width: 2.5rem;
-  text-align: right;
-}
-.link-content { flex: 1; min-width: 0; }
-.link-title {
-  font-size: 0.95rem;
-  color: var(--text-primary);
-  text-decoration: none;
-  word-break: break-word;
-}
-.link-title:hover { text-decoration: underline; }
-.link-title:visited { color: #828282; }
-.link-meta {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  margin-top: 0.125rem;
-}
-.link-meta a {
-  color: var(--text-secondary);
-  text-decoration: none;
-}
-.link-meta a:hover { text-decoration: underline; }
-.link-domain {
-  color: var(--text-secondary);
-}
-.link-share {
-  color: var(--text-secondary);
-  cursor: pointer;
-  margin-left: 0.5rem;
-}
-.link-share:hover { color: #25D366; }
-.links-count {
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  margin-bottom: 1.5rem;
-}
-.footer {
-  background: var(--text-primary);
-  color: var(--bg-secondary);
-  padding: 1rem 1.5rem;
-  margin-top: auto;
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-}
-@media (max-width: 768px) {
-  .header-content { flex-direction: column; gap: 1rem; }
-  .page-title, .post-title { font-size: 1.5rem; }
-  .posts-grid { grid-template-columns: 1fr; }
-  .content { padding: 1rem; }
-  .nav { flex-wrap: wrap; justify-content: center; }
-}
-  </style>
-  <script defer data-domain="maluta.github.io" src="https://plausible.io/js/plausible.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="A conversa abordou desde a rejeição à ideia de inteligência artificial possuir humanidade e seu impacto na educação, até modelos educacionais inovadores e preocupações com a proteção de dados de crianças.">
+  <meta name="theme-color" content="#006b63">
+  <title>Desafios da IA na educação e a percepção de máquinas como &#x27;humanas&#x27; · IA + Educação</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/site.css">
+  <script defer src="assets/site.js"></script>
+  
 </head>
-<body>
-  <div class="migration-banner">
-    <a href="https://sites.google.com/view/aprendizados-ia-educacao/home" target="_blank">Para o histórico anterior a Agosto de 2025, clique aqui</a>
-  </div>
-  <header class="header">
-    <div class="header-content">
-      <a href="index.html" class="logo">
-        <span class="logo-bracket">[</span>IA+EDU<span class="logo-bracket">]</span>
+<body data-page="editions" data-base="" data-cutoff="2026-09-19">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <a class="brand" href="index.html" aria-label="IA + Educação — início">
+        <svg class="brand-symbol" aria-hidden="true" viewBox="0 0 48 48" width="48" height="48"><path d="M24 4v40M4 24h40M10 10l28 28M10 38l28-28" stroke="currentColor" stroke-width="4"/></svg>
+        <span>IA <span class="brand-plus">+</span> Educação<small>O caderno da comunidade</small></span>
       </a>
-      <nav class="nav">
-        <a href="index.html">Resumos</a>
-        <span class="nav-separator">//</span>
-        <a href="links.html">Links</a>
+      <nav aria-label="Navegação principal">
+        <a href="index.html" >Radar</a>
+        <a href="explorar.html" >Explorar</a>
+        <a href="edicoes.html" aria-current="page">Edições</a>
+        <a href="sobre.html" >Sobre</a>
       </nav>
     </div>
   </header>
-  <main class="main">
-    
-    <a href="index.html" class="back-link">Voltar aos resumos</a>
-    <header class="post-header">
-      <div class="post-meta">
-        <span class="post-category">Resumo Semanal</span>
-        <span class="post-date">12/01/2026</span>
-      </div>
-      <h1 class="post-title">Resumo Semanal</h1>
-      <p class="post-week">Semana: 06/01/2026 → 12/01/2026</p>
-    </header>
-    <article class="content">
-      <h2>Sumário Executivo da Semana:</h2>
-<p>A conversa da semana apresentou um volume médio a alto de mensagens, com participação distribuída entre diversos membros, incluindo alguns mais ativos no compartilhamento de links e opiniões. A natureza predominante das interações foi o compartilhamento de informações (links para artigos, posts, eventos) e opiniões pessoais, frequentemente seguidas por debates pontuais. Houve a coexistência de múltiplos tópicos paralelos, com alguns temas recorrentes. Foram observados alinhamentos explícitos na crítica à atribuição de "humanidade" à IA e na preocupação com desinformação e proteção de dados. Uma divergência clara emergiu em torno do conceito de "mediador pedagógico" na forma de um robô.</p>
-<h2>Principais Temas e Conteúdos:</h2>
-<ul>
-<li><strong>Natureza da IA e a 'Humanidade' das Máquinas</strong></li>
+  <main id="conteudo" tabindex="-1"><div class="reading-shell"><nav class="breadcrumbs" aria-label="Caminho"><a href="index.html">Radar</a> / <a href="edicoes.html">Edições</a> / 6–12 jan 2026</nav>
+      <header class="reading-header"><div class="meta"><span class="pill">Semana completa</span><span>6–12 jan 2026</span></div>
+        <h1>Desafios da IA na educação e a percepção de máquinas como &#x27;humanas&#x27;</h1><p class="dek">A conversa abordou desde a rejeição à ideia de inteligência artificial possuir humanidade e seu impacto na educação, até modelos educacionais inovadores e preocupações com a proteção de dados de crianças.</p>
+        <p class="meta">8 min de leitura · 147 mensagens na fonte</p>
+        <div class="reading-tools"><button class="small-button" type="button" data-copy-link>Copiar link da edição</button><a class="small-button" data-share-whatsapp href="https://wa.me/" target="_blank" rel="noopener noreferrer">Compartilhar no WhatsApp ↗</a></div><div class="topic-chips"><a class="chip" href="explorar.html?tema=ensino">Práticas de ensino</a><a class="chip" href="explorar.html?tema=politicas">Políticas e ética</a><a class="chip" href="explorar.html?tema=cultura">Cultura digital</a></div>
+      </header><div class="reading-layout"><article class="article" aria-label="Resumo das conversas">
+        <section id="em-um-minuto"><h2>Em um minuto</h2><ol class="highlights"><li><a href="#tema-1">Membros do grupo expressaram forte oposição à ideia de IA possuir &quot;personhood&quot; ou &quot;humanidade&quot;, classificando-a como uma imitação e &quot;alienígena&quot;.</a></li><li><a href="#tema-2">Discutiu-se o risco de IA gerar &quot;ilusão de competência&quot; em alunos e a necessidade de letramento em IA para públicos vulneráveis na educação.</a></li><li><a href="#tema-4">Houve preocupação com o valor dos dados de crianças para perfilamento e treinamento de IA, e a ausência de leis brasileiras robustas no tema.</a></li></ol>
+        <details class="overview-original"><summary>Ler o panorama completo da semana</summary><div><p>A conversa da semana apresentou um volume médio a alto de mensagens, com participação distribuída entre diversos membros, incluindo alguns mais ativos no compartilhamento de links e opiniões. A natureza predominante das interações foi o compartilhamento de informações (links para artigos, posts, eventos) e opiniões pessoais, frequentemente seguidas por debates pontuais. Houve a coexistência de múltiplos tópicos paralelos, com alguns temas recorrentes. Foram observados alinhamentos explícitos na crítica à atribuição de &quot;humanidade&quot; à IA e na preocupação com desinformação e proteção de dados. Uma divergência clara emergiu em torno do conceito de &quot;mediador pedagógico&quot; na forma de um robô.</p></div></details></section>
+        <section id="tema-1"><h2>Natureza da IA e a &#x27;Humanidade&#x27; das Máquinas</h2><ul>
 <li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, Opiniões pessoais, Divergências</li>
-<li><strong>Descrição Factual</strong>: Membros expressaram oposição à ideia de IA possuir "personhood" ou "humanidade", com um link sobre "AI personhood" do The Guardian sendo o catalisador inicial. Foi argumentado que a IA é uma imitação, "alienígena", e que o processamento de linguagem natural (NLP) pode criar interações semelhantes às humanas, mas sem conferir humanidade às máquinas. Houve comparações com "replicantes" e críticas ao argumento do artigo como "louco" ou "intoxicado".</li>
-<li>
-<p><strong>Recorrência</strong>: Debate prolongado no primeiro dia da semana.</p>
-</li>
-<li>
-<p><strong>Impacto da IA na Educação e Aprendizagem</strong></p>
-</li>
+<li><strong>Descrição Factual</strong>: Membros expressaram oposição à ideia de IA possuir &quot;personhood&quot; ou &quot;humanidade&quot;, com um link sobre &quot;AI personhood&quot; do The Guardian sendo o catalisador inicial. Foi argumentado que a IA é uma imitação, &quot;alienígena&quot;, e que o processamento de linguagem natural (NLP) pode criar interações semelhantes às humanas, mas sem conferir humanidade às máquinas. Houve comparações com &quot;replicantes&quot; e críticas ao argumento do artigo como &quot;louco&quot; ou &quot;intoxicado&quot;.</li>
+<li><strong>Recorrência</strong>: Debate prolongado no primeiro dia da semana.</li>
+</ul><aside class="theme-resources"><p>Para seguir este fio</p><a href="https://www.theguardian.com/commentisfree/2025/sep/30/artificial-intelligence-personhood" target="_blank" rel="noopener noreferrer">Artificial intelligence personhood ↗</a></aside></section><section id="tema-2"><h2>Impacto da IA na Educação e Aprendizagem</h2><ul>
 <li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, Opiniões pessoais, Perguntas</li>
-<li><strong>Descrição Factual</strong>: Discussões abordaram o risco da IA gerar "ilusão de competência" em alunos e a necessidade de letramento em IA para públicos vulneráveis. Foi levantada a importância de investir em habilidades humanas e pensamento crítico para combater a desinformação. Membros compartilharam preocupações sobre a substituição do esforço de aprender pela tecnologia e a questão "a quem atende e a quem se destinam as IA generativas?". Também foram solicitados e compartilhados relatórios sobre o tempo e as dificuldades dos professores.</li>
-<li>
-<p><strong>Recorrência</strong>: Tema recorrente, com vários links e comentários ao longo da semana.</p>
-</li>
-<li>
-<p><strong>Modelos Educacionais Inovadores e IA (Alpha School e Similares)</strong></p>
-</li>
+<li><strong>Descrição Factual</strong>: Discussões abordaram o risco da IA gerar &quot;ilusão de competência&quot; em alunos e a necessidade de letramento em IA para públicos vulneráveis. Foi levantada a importância de investir em habilidades humanas e pensamento crítico para combater a desinformação. Membros compartilharam preocupações sobre a substituição do esforço de aprender pela tecnologia e a questão &quot;a quem atende e a quem se destinam as IA generativas?&quot;. Também foram solicitados e compartilhados relatórios sobre o tempo e as dificuldades dos professores.</li>
+<li><strong>Recorrência</strong>: Tema recorrente, com vários links e comentários ao longo da semana.</li>
+</ul></section><section id="tema-3"><h2>Modelos Educacionais Inovadores e IA (Alpha School e Similares)</h2><ul>
 <li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, Opiniões pessoais, Divergências</li>
-<li><strong>Descrição Factual</strong>: Houve compartilhamento de links e discussões sobre escolas como Alpha School, Sora Schools e Flourish, que incorporam IA em suas abordagens. Um membro com experiência direta com a Alpha School opinou que a transformação é cultural, com a IA atuando como viabilizadora, não como causa primária, e que o modelo não é para todos. Ele também indicou que resultados similares poderiam ser alcançados sem IA. Outro membro criticou o discurso "revolucionário" e "disruptivo" em torno desses modelos, comparando-os a abordagens de escolas mais antigas como Summit Public Schools e alertou que isso pode desviar o foco e gerar frustração.</li>
-<li>
-<p><strong>Recorrência</strong>: Concentrado no final da semana.</p>
-</li>
-<li>
-<p><strong>Proteção de Dados de Crianças e Adolescentes em Tempos de IA</strong></p>
-</li>
+<li><strong>Descrição Factual</strong>: Houve compartilhamento de links e discussões sobre escolas como Alpha School, Sora Schools e Flourish, que incorporam IA em suas abordagens. Um membro com experiência direta com a Alpha School opinou que a transformação é cultural, com a IA atuando como viabilizadora, não como causa primária, e que o modelo não é para todos. Ele também indicou que resultados similares poderiam ser alcançados sem IA. Outro membro criticou o discurso &quot;revolucionário&quot; e &quot;disruptivo&quot; em torno desses modelos, comparando-os a abordagens de escolas mais antigas como Summit Public Schools e alertou que isso pode desviar o foco e gerar frustração.</li>
+<li><strong>Recorrência</strong>: Concentrado no final da semana.</li>
+</ul><aside class="theme-resources"><p>Para seguir este fio</p><a href="https://x.com/johnathanbi/status/2009648918666068019?s=46" target="_blank" rel="noopener noreferrer">Tweet sobre Alpha school ↗</a><a href="https://futureiq.substack.com/p/understanding-alpha-school-can-we" target="_blank" rel="noopener noreferrer">Understanding Alpha School: Can We...? ↗</a></aside></section><section id="tema-4"><h2>Proteção de Dados de Crianças e Adolescentes em Tempos de IA</h2><ul>
 <li><strong>Tipo de Conteúdo</strong>: Fatos compartilhados, Opiniões pessoais, Divergências</li>
 <li><strong>Descrição Factual</strong>: Um post sobre o Google enviando e-mails para crianças sobre mudanças em suas contas, relacionado ao uso de IA e dados, gerou discussão. Membros expressaram preocupação com o valor dos dados de crianças para perfilamento e treinamento de IA em longo prazo, a ausência de leis brasileiras robustas, e a omissão de adultos em ler termos de uso. Foi mencionada a participação de um membro em um Grupo de Trabalho com o Instituto Alana para reforçar a proteção de dados. Um membro diferente questionou a capacidade dos pais e cidadãos de entenderem todas as ramificações de suas decisões diárias e defendeu que a Google age de forma mais responsável do que outras empresas, seguindo a legislação americana para a idade mínima.</li>
-<li>
-<p><strong>Recorrência</strong>: Debate prolongado no final da semana.</p>
-</li>
-<li>
-<p><strong>Eventos, Comunidades e Colaborações na Área de Educação e IA</strong></p>
-</li>
+<li><strong>Recorrência</strong>: Debate prolongado no final da semana.</li>
+</ul><aside class="theme-resources"><p>Para seguir este fio</p><a href="https://www.linkedin.com/posts/melissa-mckay-766511380_google-emailed-my-youngest-child-today-to-ugcPost-7415942682797101056-JLYN" target="_blank" rel="noopener noreferrer">Post LinkedIn - Google emailed my youngest child today to... ↗</a></aside></section><section id="tema-5"><h2>Eventos, Comunidades e Colaborações na Área de Educação e IA</h2><ul>
 <li><strong>Tipo de Conteúdo</strong>: Avisos, Perguntas, Fatos compartilhados</li>
-<li><strong>Descrição Factual</strong>: O grupo recebeu convites para eventos como "Tech Trends 2026". Uma iniciativa portuguesa, "Academia Professores do Futuro", foi apresentada e gerou interesse significativo em colaboração, com vários membros expressando desejo de participar de um encontro conjunto. A Bett London foi um tópico de conversa, com vários membros confirmando presença e um solicitando auxílio com relatórios para uma coluna. O formulário para novos membros do grupo foi compartilhado em resposta a uma pergunta.</li>
-<li>
-<p><strong>Recorrência</strong>: Pontual, mas com vários pontos de contato.</p>
-</li>
-<li>
-<p><strong>O Conceito de "Mediador Pedagógico" e Robôs na Educação</strong></p>
-</li>
+<li><strong>Descrição Factual</strong>: O grupo recebeu convites para eventos como &quot;Tech Trends 2026&quot;. Uma iniciativa portuguesa, &quot;Academia Professores do Futuro&quot;, foi apresentada e gerou interesse significativo em colaboração, com vários membros expressando desejo de participar de um encontro conjunto. A Bett London foi um tópico de conversa, com vários membros confirmando presença e um solicitando auxílio com relatórios para uma coluna. O formulário para novos membros do grupo foi compartilhado em resposta a uma pergunta.</li>
+<li><strong>Recorrência</strong>: Pontual, mas com vários pontos de contato.</li>
+</ul></section><section id="tema-6"><h2>O Conceito de &quot;Mediador Pedagógico&quot; e Robôs na Educação</h2><ul>
 <li><strong>Tipo de Conteúdo</strong>: Perguntas, Opiniões pessoais, Divergências</li>
-<li><strong>Descrição Factual</strong>: Um membro iniciou uma discussão perguntando como o grupo definiria um "mediador pedagógico" e compartilhou um link para um produto que se autodenomina "Primeiro Mediador Pedagógico", apresentado como um robô. Esta iniciativa gerou reações de surpresa e críticas explícitas ao conceito. Membros questionaram a funcionalidade e pertinência de tal robô em uma sala de aula real, com um deles sugerindo que "Paulo Freire em sua Santa calma ia perder a paciência". Foi também observado que a mesma empresa fabricante do "mediador pedagógico" produz um robô de vigilância.</li>
+<li><strong>Descrição Factual</strong>: Um membro iniciou uma discussão perguntando como o grupo definiria um &quot;mediador pedagógico&quot; e compartilhou um link para um produto que se autodenomina &quot;Primeiro Mediador Pedagógico&quot;, apresentado como um robô. Esta iniciativa gerou reações de surpresa e críticas explícitas ao conceito. Membros questionaram a funcionalidade e pertinência de tal robô em uma sala de aula real, com um deles sugerindo que &quot;Paulo Freire em sua Santa calma ia perder a paciência&quot;. Foi também observado que a mesma empresa fabricante do &quot;mediador pedagógico&quot; produz um robô de vigilância.</li>
 <li><strong>Recorrência</strong>: Debate concentrado em um único dia.</li>
-</ul>
-<h2>Links Compartilhados:</h2>
-<ul>
-<li><a href="https://www.theguardian.com/commentisfree/2025/sep/30/artificial-intelligence-personhood">Artificial intelligence personhood</a></li>
-<li>Quem compartilhou: +55 61 🫣-0811</li>
+</ul><aside class="theme-resources"><p>Para seguir este fio</p><a href="https://www.instagram.com/p/DTSswAujK_W" target="_blank" rel="noopener noreferrer">Instagram - &quot;Primeiro Mediador Pedagógico?&quot; ↗</a></aside></section>
+        <section id="materiais" class="all-materials"><h2>Materiais compartilhados</h2><p class="source-note">Os créditos indicam quem compartilhou na conversa, não a autoria dos materiais. Links externos abrem em outra aba.</p><ul>
+<li><a href="https://www.theguardian.com/commentisfree/2025/sep/30/artificial-intelligence-personhood" target="_blank" rel="noopener noreferrer">Artificial intelligence personhood</a><ul>
+<li>Quem compartilhou: Participante do grupo</li>
 <li>Contexto: Compartilhado no início da discussão sobre a natureza da IA e a ideia de personhood ou humanidade em máquinas.</li>
 <li>Gerou discussão: Sim.</li>
-<li><a href="https://share.google/JRsTQRRzsntiUzuKA">Artigo sobre IA transformando textos em áudios e "ilusão de competência"</a></li>
+</ul>
+</li>
+<li><a href="https://share.google/JRsTQRRzsntiUzuKA" target="_blank" rel="noopener noreferrer">Artigo sobre IA transformando textos em áudios e &quot;ilusão de competência&quot;</a><ul>
 <li>Quem compartilhou: Prof Julio César Passos</li>
-<li>Contexto: O artigo discute como a IA pode gerar "ilusão de competência" e oferece 5 estratégias para avaliar o aprendizado.</li>
+<li>Contexto: O artigo discute como a IA pode gerar &quot;ilusão de competência&quot; e oferece 5 estratégias para avaliar o aprendizado.</li>
 <li>Gerou discussão: Sim, brevemente, com o compartilhamento de um artigo complementar de outro membro.</li>
-<li><a href="https://profuturo.education/pt-br/observatorio/enfoques/docentes-y-competencias-digitales-la-brecha-que-no-cesa/">Relatório sobre Docentes e Competências Digitais</a></li>
+</ul>
+</li>
+<li><a href="https://profuturo.education/pt-br/observatorio/enfoques/docentes-y-competencias-digitales-la-brecha-que-no-cesa/" target="_blank" rel="noopener noreferrer">Relatório sobre Docentes e Competências Digitais</a><ul>
 <li>Quem compartilhou: Mila</li>
 <li>Contexto: Compartilhado em resposta a uma pergunta sobre relatórios sobre tempo e dificuldades de professores, Mila indicou este estudo focado em competências digitais.</li>
 <li>Gerou discussão: Não.</li>
-<li><a href="https://www.linkedin.com/pulse/como-se-fabrica-opini%25C3%25A3o-em-massa-tempos-de-ia-rafael-parente-phd-gv9if">Como se fabrica a opinião em massa em tempos de IA</a></li>
+</ul>
+</li>
+<li><a href="https://www.linkedin.com/pulse/como-se-fabrica-opini%25C3%25A3o-em-massa-tempos-de-ia-rafael-parente-phd-gv9if" target="_blank" rel="noopener noreferrer">Como se fabrica a opinião em massa em tempos de IA</a><ul>
 <li>Quem compartilhou: Rafael Parente</li>
-<li>Contexto: Coluna sobre o escândalo do Banco Master, IA, desinformação e a importância do pensamento crítico, focando na "pausa" antes de compartilhar informações.</li>
+<li>Contexto: Coluna sobre o escândalo do Banco Master, IA, desinformação e a importância do pensamento crítico, focando na &quot;pausa&quot; antes de compartilhar informações.</li>
 <li>Gerou discussão: Não diretamente.</li>
-<li><a href="https://www.instagram.com/p/DTLFg1UDi04/">Instagram - Sem descrição explícita</a></li>
-<li>Quem compartilhou: +55 61 🫣-3106</li>
+</ul>
+</li>
+<li><a href="https://www.instagram.com/p/DTLFg1UDi04/" target="_blank" rel="noopener noreferrer">Instagram - Sem descrição explícita</a><ul>
+<li>Quem compartilhou: Participante do grupo</li>
 <li>Contexto: O link foi compartilhado sem descrição adicional explícita no grupo.</li>
 <li>Gerou discussão: Não.</li>
-<li><a href="https://www.linkedin.com/posts/bettbrasil_conexaetobett-ianaeducacao-inteligenciaartificial-activity-7415015145183350785-gmKP?utm_source=social_share_send&amp;utm_medium=android_app&amp;rcm=ACoAAAzhyNIBOWZA2CRVwcfNshnWuwk8PtQSrOQ&amp;utm_campaign=whatsapp">Videocast Conexão Bett - Recap 2025 e Olhares para 2026</a></li>
+</ul>
+</li>
+<li><a href="https://www.linkedin.com/posts/bettbrasil_conexaetobett-ianaeducacao-inteligenciaartificial-activity-7415015145183350785-gmKP?utm_source=social_share_send&amp;utm_medium=android_app&amp;rcm=ACoAAAzhyNIBOWZA2CRVwcfNshnWuwk8PtQSrOQ&amp;utm_campaign=whatsapp" target="_blank" rel="noopener noreferrer">Videocast Conexão Bett - Recap 2025 e Olhares para 2026</a><ul>
 <li>Quem compartilhou: Giselle Santos</li>
 <li>Contexto: Giselle compartilhou seu videocast para Conexão Bett, que faz um recap de 2025 e olhares para 2026.</li>
 <li>Gerou discussão: Não diretamente, mas foi base para um artigo de outro membro.</li>
-<li><a href="https://www.linkedin.com/posts/ana-scavarda-a9432427_this-article-arrived-at-a-telling-moment-activity-7415099895348592640-PvL?utm_medium=ios_app&amp;rcm=ACoAAAWQlxABHRjnqf6L1DMNnVGDdv4x8HmC-hc&amp;utm_source=social_share_send&amp;utm_campaign=copy_link">Artigo "This article arrived at a telling moment" (Ana Scavarda)</a></li>
-<li>Quem compartilhou: +55 21 🫣-9523</li>
+</ul>
+</li>
+<li><a href="https://www.linkedin.com/posts/ana-scavarda-a9432427_this-article-arrived-at-a-telling-moment-activity-7415099895348592640-PvL?utm_medium=ios_app&amp;rcm=ACoAAAWQlxABHRjnqf6L1DMNnVGDdv4x8HmC-hc&amp;utm_source=social_share_send&amp;utm_campaign=copy_link" target="_blank" rel="noopener noreferrer">Artigo &quot;This article arrived at a telling moment&quot; (Ana Scavarda)</a><ul>
+<li>Quem compartilhou: Participante do grupo</li>
 <li>Contexto: Artigo de autoria da remetente, baseado em um post de Prof Julio César Passos.</li>
 <li>Gerou discussão: Sim, com agradecimento e elogios.</li>
-<li><a href="https://luma.com/kickoff2026">Inscrição Tech Trends 2026</a></li>
-<li>Quem compartilhou: +55 11 🫣-3351</li>
+</ul>
+</li>
+<li><a href="https://luma.com/kickoff2026" target="_blank" rel="noopener noreferrer">Inscrição Tech Trends 2026</a><ul>
+<li>Quem compartilhou: Participante do grupo</li>
 <li>Contexto: Convite para um evento online e gratuito sobre Tech Trends 2026 com Mônica Magalhães.</li>
 <li>Gerou discussão: Não.</li>
-<li><a href="https://www.linkedin.com/posts/will-van-reyk_one-of-the-most-important-pieces-of-research-activity-7414926994641047553-eIIm?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAUUiCQBcndEaO0ad0P8f4qZcBb6pymGuN4">Pesquisa sobre Metacognição (Will Van Reyk)</a></li>
+</ul>
+</li>
+<li><a href="https://www.linkedin.com/posts/will-van-reyk_one-of-the-most-important-pieces-of-research-activity-7414926994641047553-eIIm?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAUUiCQBcndEaO0ad0P8f4qZcBb6pymGuN4" target="_blank" rel="noopener noreferrer">Pesquisa sobre Metacognição (Will Van Reyk)</a><ul>
 <li>Quem compartilhou: Guilherme Cintra</li>
-<li>Contexto: Compartilhado como evidência da "relevância da metacognicao!".</li>
+<li>Contexto: Compartilhado como evidência da &quot;relevância da metacognicao!&quot;.</li>
 <li>Gerou discussão: Sim, com menção a outro membro que aborda o tema.</li>
-<li><a href="https://www.instagram.com/p/DTSswAujK_W/?igsh=N2xrbHFqMzV1bWVw">Instagram - "Primeiro Mediador Pedagógico?"</a></li>
+</ul>
+</li>
+<li><a href="https://www.instagram.com/p/DTSswAujK_W/?igsh=N2xrbHFqMzV1bWVw" target="_blank" rel="noopener noreferrer">Instagram - &quot;Primeiro Mediador Pedagógico?&quot;</a><ul>
 <li>Quem compartilhou: Giselle Santos</li>
 <li>Contexto: Compartilhado como parte de uma pergunta sobre como o grupo definiria um mediador pedagógico, iniciando um debate sobre o conceito e a funcionalidade de um robô com esse título.</li>
 <li>Gerou discussão: Sim, intensa.</li>
-<li><a href="https://vocesa.abril.com.br/coluna/clara-cecchini/metacognicao-um-superpoder-em-tempos-de-ia/">Coluna de Clara Cecchini: Metacognição - um superpoder em tempos de IA</a></li>
+</ul>
+</li>
+<li><a href="https://vocesa.abril.com.br/coluna/clara-cecchini/metacognicao-um-superpoder-em-tempos-de-ia/" target="_blank" rel="noopener noreferrer">Coluna de Clara Cecchini: Metacognição - um superpoder em tempos de IA</a><ul>
 <li>Quem compartilhou: Clara Cecchini</li>
 <li>Contexto: Compartilhado em resposta ao link sobre metacognição de Guilherme Cintra, indicando sua coluna anterior sobre o tema.</li>
 <li>Gerou discussão: Sim, com reações positivas.</li>
-<li><a href="https://www.linkedin.com/posts/mkassorla_take-away-a-professionals-guide-to-agentic-activity-7415485374468300800-_Xiw?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAATLj8ABGTNRzWWRqcEOUl6EmtyRru_3iDY">A Professional's Guide to Agentic</a></li>
+</ul>
+</li>
+<li><a href="https://www.linkedin.com/posts/mkassorla_take-away-a-professionals-guide-to-agentic-activity-7415485374468300800-_Xiw?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAATLj8ABGTNRzWWRqcEOUl6EmtyRru_3iDY" target="_blank" rel="noopener noreferrer">A Professional&#x27;s Guide to Agentic</a><ul>
 <li>Quem compartilhou: Rafael Sampaio</li>
 <li>Contexto: Compartilhado com o título do post no LinkedIn.</li>
 <li>Gerou discussão: Não.</li>
-<li><a href="https://www.linkedin.com/posts/profjuliopassos_educaaexaeto-inteligenciaartificial-inovaaexaetoeducacional-activity-7415880809322115072-wlna?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAAsa38UBReACPL7A9fNNat-izNCyDHbEsgs">Post LinkedIn - Uso Ético das IAs em Sala de Aula</a></li>
+</ul>
+</li>
+<li><a href="https://www.linkedin.com/posts/profjuliopassos_educaaexaeto-inteligenciaartificial-inovaaexaetoeducacional-activity-7415880809322115072-wlna?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAAsa38UBReACPL7A9fNNat-izNCyDHbEsgs" target="_blank" rel="noopener noreferrer">Post LinkedIn - Uso Ético das IAs em Sala de Aula</a><ul>
 <li>Quem compartilhou: Prof Julio César Passos</li>
 <li>Contexto: Artigo de autoria do remetente, reforçando a importância de manter o diálogo sobre o uso ético das IAs em sala de aula.</li>
 <li>Gerou discussão: Não.</li>
-<li><a href="https://x.com/johnathanbi/status/2009648918666068019?s=46">Tweet sobre Alpha school</a></li>
+</ul>
+</li>
+<li><a href="https://x.com/johnathanbi/status/2009648918666068019?s=46" target="_blank" rel="noopener noreferrer">Tweet sobre Alpha school</a><ul>
 <li>Quem compartilhou: Marconi</li>
 <li>Contexto: Introduziu a discussão sobre Alpha School.</li>
 <li>Gerou discussão: Sim, intensa, sobre o modelo de escola.</li>
-<li><a href="https://futureiq.substack.com/p/understanding-alpha-school-can-we">Understanding Alpha School: Can We...?</a></li>
+</ul>
+</li>
+<li><a href="https://futureiq.substack.com/p/understanding-alpha-school-can-we" target="_blank" rel="noopener noreferrer">Understanding Alpha School: Can We...?</a><ul>
 <li>Quem compartilhou: Guilherme Cintra</li>
-<li>Contexto: Compartilhado em resposta ao link de Marconi sobre Alpha School, sendo descrito como o artigo "mais ponderado e ao mesmo tempo crítico". O membro afirmou que o compartilha "a cada vez que a alpha school eh mencionada".</li>
+<li>Contexto: Compartilhado em resposta ao link de Marconi sobre Alpha School, sendo descrito como o artigo &quot;mais ponderado e ao mesmo tempo crítico&quot;. O membro afirmou que o compartilha &quot;a cada vez que a alpha school eh mencionada&quot;.</li>
 <li>Gerou discussão: Sim, como parte do debate sobre Alpha School.</li>
-<li><a href="https://www.linkedin.com/posts/benkornell_im-excited-to-share-that-sora-schools-has-activity-7415101461296263168-byfK?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAUUiCQBcndEaO0ad0P8f4qZcBb6pymGuN4">Post LinkedIn - Sora Schools has...</a></li>
+</ul>
+</li>
+<li><a href="https://www.linkedin.com/posts/benkornell_im-excited-to-share-that-sora-schools-has-activity-7415101461296263168-byfK?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAUUiCQBcndEaO0ad0P8f4qZcBb6pymGuN4" target="_blank" rel="noopener noreferrer">Post LinkedIn - Sora Schools has...</a><ul>
 <li>Quem compartilhou: Guilherme Cintra</li>
-<li>Contexto: Compartilhado como um exemplo de "mais uma rede de escolas investida nessa pegada", junto com Alpha e Flourish.</li>
+<li>Contexto: Compartilhado como um exemplo de &quot;mais uma rede de escolas investida nessa pegada&quot;, junto com Alpha e Flourish.</li>
 <li>Gerou discussão: Sim, como parte do debate sobre modelos de escolas inovadoras e IA.</li>
-<li><a href="https://www.linkedin.com/posts/fengchun-miao-5b999077_assessment-in-the-age-of-artificial-intelligence-activity-7416110724282040320-O9I0?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAATLj8ABGTNRzWWRqcEOUl6EmtyRru_3iDY">Assessment in the age of Artificial Intelligence</a></li>
+</ul>
+</li>
+<li><a href="https://www.linkedin.com/posts/fengchun-miao-5b999077_assessment-in-the-age-of-artificial-intelligence-activity-7416110724282040320-O9I0?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAATLj8ABGTNRzWWRqcEOUl6EmtyRru_3iDY" target="_blank" rel="noopener noreferrer">Assessment in the age of Artificial Intelligence</a><ul>
 <li>Quem compartilhou: Rafael Sampaio</li>
 <li>Contexto: Compartilhado com o título do post no LinkedIn.</li>
 <li>Gerou discussão: Não.</li>
-<li><a href="https://www.linkedin.com/posts/melissa-mckay-766511380_google-emailed-my-youngest-child-today-to-ugcPost-7415942682797101056-JLYN?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAXMq80BNI-H3WqtXYs5g9FNFUdtbeDvkbw">Post LinkedIn - Google emailed my youngest child today to...</a></li>
+</ul>
+</li>
+<li><a href="https://www.linkedin.com/posts/melissa-mckay-766511380_google-emailed-my-youngest-child-today-to-ugcPost-7415942682797101056-JLYN?utm_source=share&amp;utm_medium=member_android&amp;rcm=ACoAAAXMq80BNI-H3WqtXYs5g9FNFUdtbeDvkbw" target="_blank" rel="noopener noreferrer">Post LinkedIn - Google emailed my youngest child today to...</a><ul>
 <li>Quem compartilhou: Tanci Simões Gomes</li>
 <li>Contexto: Post sobre o Google enviando email para uma criança, levando à discussão sobre letramento midiático e impacto nas infâncias/proteção de dados.</li>
 <li>Gerou discussão: Sim, intensa.</li>
-<li><a href="https://noticiasensinosuperior.com.br/o-dilema-da-catedra-digital-ia-generativa-redesenha-o-futuro-do-ensino-superior/">O dilema da cátedra digital: IA generativa redesenha o futuro do ensino superior</a></li>
+</ul>
+</li>
+<li><a href="https://noticiasensinosuperior.com.br/o-dilema-da-catedra-digital-ia-generativa-redesenha-o-futuro-do-ensino-superior/" target="_blank" rel="noopener noreferrer">O dilema da cátedra digital: IA generativa redesenha o futuro do ensino superior</a><ul>
 <li>Quem compartilhou: Luciano Sathler</li>
 <li>Contexto: Artigo sobre o impacto da IA generativa no ensino superior.</li>
 <li>Gerou discussão: Não.</li>
-<li><a href="https://forms.gle/FaQ7o5jV7bemYvi57">Formulário de inscrição para novos membros do grupo</a></li>
+</ul>
+</li>
+<li><a href="https://forms.gle/FaQ7o5jV7bemYvi57" target="_blank" rel="noopener noreferrer">Formulário de inscrição para novos membros do grupo</a><ul>
 <li>Quem compartilhou: Natalia</li>
 <li>Contexto: Compartilhado em resposta a uma pergunta sobre a possibilidade de adicionar um novo membro ao grupo.</li>
 <li>Gerou discussão: Não.</li>
-<li><a href="https://oglobo.globo.com/brasil/antonio-gois/coluna/2026/01/ia-pode-ser-janela-de-oportunidade-para-aprendizagem.ghtml">IA pode ser janela de oportunidade para aprendizagem</a></li>
+</ul>
+</li>
+<li><a href="https://oglobo.globo.com/brasil/antonio-gois/coluna/2026/01/ia-pode-ser-janela-de-oportunidade-para-aprendizagem.ghtml" target="_blank" rel="noopener noreferrer">IA pode ser janela de oportunidade para aprendizagem</a><ul>
 <li>Quem compartilhou: VB</li>
 <li>Contexto: Coluna de Antonio Gois sobre IA como oportunidade para aprendizagem.</li>
 <li>Gerou discussão: Não.</li>
-<li><a href="https://juliopassos.com/frankenstein-digital-educacao/">Frankenstein Digital: A máquina pode substituir o afeto?</a></li>
+</ul>
+</li>
+<li><a href="https://juliopassos.com/frankenstein-digital-educacao/" target="_blank" rel="noopener noreferrer">Frankenstein Digital: A máquina pode substituir o afeto?</a><ul>
 <li>Quem compartilhou: Prof Julio César Passos</li>
 <li>Contexto: Artigo de autoria do remetente sobre IA e a questão do afeto na educação.</li>
 <li>Gerou discussão: Não.</li>
 </ul>
-<h2>Limitações do Resumo:</h2>
-<ul>
-<li>Várias mensagens continham o marcador <code>&lt;Mídia oculta&gt;</code>, impossibilitando a descrição do conteúdo visual compartilhado e seu contexto exato na discussão.</li>
+</li>
+</ul></section>
+        <section id="limitacoes" class="limitations"><h2>Sobre este resumo</h2><ul>
+<li>Várias mensagens continham o marcador <code>&amp;lt;Mídia oculta&amp;gt;</code>, impossibilitando a descrição do conteúdo visual compartilhado e seu contexto exato na discussão.</li>
 <li>Alguns links foram compartilhados com descrições mínimas ou sem contexto explícito, dificultando a inferência sobre a profundidade da interação que deveriam provocar.</li>
-<li>As mensagens administrativas, como "Seu código de segurança mudou" e "Mensagem apagada", foram excluídas por não contribuírem para o conteúdo temático da discussão.</li>
+<li>As mensagens administrativas, como &quot;Seu código de segurança mudou&quot; e &quot;Mensagem apagada&quot;, foram excluídas por não contribuírem para o conteúdo temático da discussão.</li>
 <li>A presença de múltiplos tópicos paralelos na conversa pode levar a uma fragmentação na percepção da continuidade de cada debate individual.</li>
-</ul>
-    </article>
-    
-  </main>
+</ul><p class="source-note">Resumo produzido com IA a partir das mensagens deste período. Consulte as fontes e o contexto antes de reutilizar uma informação. Títulos e destaques preparados em 19 set 2026. A data da edição corresponde às conversas, não à preparação da página.</p></section>
+      </article><details class="toc" open><summary>Nesta edição</summary><nav aria-label="Índice da edição"><ol><li><a href="#em-um-minuto">Em um minuto</a></li><li><a href="#tema-1">Natureza da IA e a &#x27;Humanidade&#x27; das Máquinas</a></li><li><a href="#tema-2">Impacto da IA na Educação e Aprendizagem</a></li><li><a href="#tema-3">Modelos Educacionais Inovadores e IA (Alpha School e Similares)</a></li><li><a href="#tema-4">Proteção de Dados de Crianças e Adolescentes em Tempos de IA</a></li><li><a href="#tema-5">Eventos, Comunidades e Colaborações na Área de Educação e IA</a></li><li><a href="#tema-6">O Conceito de &quot;Mediador Pedagógico&quot; e Robôs na Educação</a></li><li><a href="#materiais">Materiais compartilhados</a></li><li><a href="#limitacoes">Sobre este resumo</a></li></ol><a class="toc-home" href="edicoes.html">← Ver todas as edições</a></nav></details></div>
+      <nav class="edition-navigation" aria-label="Outras edições"><a href="2026-01-05.html"><small>← Edição anterior</small>Avaliação da aprendizagem e formação docente em contexto de IA</a><a class="next" href="2026-01-19.html"><small>Próxima edição →</small>Impacto da IA e o debate sobre estilos de aprendizagem na educação</a></nav></div></main>
   <footer class="footer">
-    Aprendizados_IA+Educação // Resumos gerados com LLM // 2026<br>
-    <span style="opacity: 0.7;">Feito por Marina e Tiago Maluta</span><br>
-    <a href="https://wa.me/5511982151851?text=Oi%2C%20encontrei%20um%20problema%20no%20site" style="opacity: 0.7; color: inherit;">Encontrou um problema? Avise-nos</a>
+    <div class="shell footer-grid">
+      <div><a class="footer-brand" href="index.html">IA + Educação <svg aria-hidden="true" viewBox="0 0 48 48" width="24" height="24"><path d="M24 4v40M4 24h40M10 10l28 28M10 38l28-28" stroke="currentColor" stroke-width="4"/></svg></a><p>As conversas passam. As ideias ficam.</p></div>
+      <div><strong>Um acervo feito de conversas</strong><p>Grupo Aprendizados sobre IA e Educação.<br>Resumos produzidos com IA, com referências à conversa.</p></div>
+      <div class="footer-links"><a href="sobre.html">Sobre este caderno</a><a href="https://sites.google.com/view/aprendizados-ia-educacao/home" rel="noopener" target="_blank">Histórico anterior a agosto de 2025 ↗</a><a href="https://wa.me/5511982151851?text=Oi%2C%20encontrei%20um%20problema%20no%20site">Sugerir uma correção ↗</a></div>
+    </div>
+    <div class="shell footer-bottom"><span>Conversas reunidas até 19 set 2026</span><span>Aprender, compartilhar, continuar.</span></div>
   </footer>
-  
-<script>
-(function() {
-  const weekEl = document.querySelector('.post-week');
-  if (!weekEl) return;
-  const text = weekEl.textContent;
-  const endMatch = text.match(/→\s*(\d{2})\/(\d{2})\/(\d{4})/);
-  if (endMatch) {
-    const endDate = new Date(`${endMatch[3]}-${endMatch[2]}-${endMatch[1]}`);
-    const diffDays = Math.floor((new Date() - endDate) / (1000*60*60*24));
-    if (diffDays >= 0) {
-      const span = document.createElement('span');
-      span.style.color = '#9ca3af';
-      span.textContent = ` (~ ${diffDays} dias atrás)`;
-      weekEl.appendChild(span);
-    }
-  }
-})();
-</script>
-
+  <div class="toast" role="status" aria-live="polite" id="toast"></div>
 </body>
 </html>

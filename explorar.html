@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Conversas, pesquisas e materiais do grupo Aprendizados sobre IA e Educação.">
+  <meta name="theme-color" content="#006b63">
+  <title>Explorar o acervo · IA + Educação</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/site.css">
+  <script defer src="assets/site.js"></script>
+  
+</head>
+<body data-page="explore" data-base="" data-cutoff="2026-09-19">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <a class="brand" href="index.html" aria-label="IA + Educação — início">
+        <svg class="brand-symbol" aria-hidden="true" viewBox="0 0 48 48" width="48" height="48"><path d="M24 4v40M4 24h40M10 10l28 28M10 38l28-28" stroke="currentColor" stroke-width="4"/></svg>
+        <span>IA <span class="brand-plus">+</span> Educação<small>O caderno da comunidade</small></span>
+      </a>
+      <nav aria-label="Navegação principal">
+        <a href="index.html" >Radar</a>
+        <a href="explorar.html" aria-current="page">Explorar</a>
+        <a href="edicoes.html" >Edições</a>
+        <a href="sobre.html" >Sobre</a>
+      </nav>
+    </div>
+  </header>
+  <main id="conteudo" tabindex="-1"><div class="shell explorer" data-explorer data-default-kind=""><header class="page-heading"><p class="eyebrow">Um acervo para continuar aprendendo</p><h1>Encontre o fio da conversa.</h1><p class="lead">Busque uma ideia, uma ferramenta ou um nome. Cruze assuntos, períodos e compartilhamentos para encontrar o que precisa.</p></header>
+      <form id="explore-form" role="search"><label class="search-label" for="query">O que você está procurando?</label><div class="search-box"><input type="search" id="query" name="q" maxlength="200" placeholder="Ex.: avaliação com IA"><button type="submit">Buscar →</button></div>
+      <div class="filter-panel"><div class="filters">
+        <div class="filter"><label for="kind">Tipo de conteúdo</label><select id="kind" name="tipo"><option value="">Tudo</option><option value="edicao">Edições</option><option value="tema">Assuntos das edições</option><option value="material">Materiais</option></select></div>
+        <div class="filter"><label for="period">Período da conversa</label><select id="period" name="periodo"><option value="">Todo o acervo</option><option value="ultima">Última edição</option><option value="4-semanas">Últimas 4 semanas</option><option value="2026">2026</option><option value="2025">2025</option><option value="anterior">Antes de ago 2025</option></select></div>
+        <div class="filter"><label for="topic">Tema</label><select id="topic" name="tema"><option value="">Todos os temas</option><option value="ensino">Práticas de ensino</option><option value="pesquisa">Pesquisa e evidências</option><option value="ferramentas">Ferramentas</option><option value="politicas">Políticas e ética</option><option value="cultura">Cultura digital</option><option value="comunidade">Comunidade e oportunidades</option></select></div>
+        <div class="filter"><label for="person">Participante</label><select id="person" name="pessoa"><option value="">Todas as pessoas</option></select></div>
+      </div><div class="filter-bottom"><p>Nos materiais: quem compartilhou. Nas edições: quem participou da conversa.</p><button class="clear-button" id="clear-filters" type="button">Limpar filtros</button></div></div></form>
+      <div class="result-bar"><p id="result-count" role="status" aria-live="polite">Carregando o acervo…</p><div><label class="sort-label" for="sort">Ordenar</label><select class="sort-select" id="sort" name="ordem"><option value="auto">Relevância e data</option><option value="recentes">Mais recentes</option><option value="antigos">Mais antigos</option></select></div></div>
+      <div id="results" class="results" aria-busy="true"></div>
+      <div id="empty-state" class="empty-state" hidden><h2>Ainda não encontramos esse fio.</h2><p>Tente menos palavras ou amplie o período. A busca também funciona sem acentos.</p><button class="small-button" type="button" data-reset-filters>Limpar busca e filtros</button></div>
+      <div id="load-error" class="empty-state" role="alert" hidden><h2>Não foi possível carregar o acervo.</h2><p>Confira sua conexão e tente novamente. Você também pode navegar pelas edições.</p><button class="small-button" id="retry-load" type="button">Tentar novamente</button> <a href="edicoes.html">Ver edições</a></div>
+      <nav class="pagination" id="pagination" aria-label="Páginas de resultados" hidden><button class="small-button" id="prev-page" type="button">← Anterior</button><span id="page-status"></span><button class="small-button" id="next-page" type="button">Próxima →</button></nav>
+      <noscript><p>A busca precisa de JavaScript. <a href="edicoes.html">Explore todas as edições e seus materiais.</a></p></noscript></div></main>
+  <footer class="footer">
+    <div class="shell footer-grid">
+      <div><a class="footer-brand" href="index.html">IA + Educação <svg aria-hidden="true" viewBox="0 0 48 48" width="24" height="24"><path d="M24 4v40M4 24h40M10 10l28 28M10 38l28-28" stroke="currentColor" stroke-width="4"/></svg></a><p>As conversas passam. As ideias ficam.</p></div>
+      <div><strong>Um acervo feito de conversas</strong><p>Grupo Aprendizados sobre IA e Educação.<br>Resumos produzidos com IA, com referências à conversa.</p></div>
+      <div class="footer-links"><a href="sobre.html">Sobre este caderno</a><a href="https://sites.google.com/view/aprendizados-ia-educacao/home" rel="noopener" target="_blank">Histórico anterior a agosto de 2025 ↗</a><a href="https://wa.me/5511982151851?text=Oi%2C%20encontrei%20um%20problema%20no%20site">Sugerir uma correção ↗</a></div>
+    </div>
+    <div class="shell footer-bottom"><span>Conversas reunidas até 19 set 2026</span><span>Aprender, compartilhar, continuar.</span></div>
+  </footer>
+  <div class="toast" role="status" aria-live="polite" id="toast"></div>
+</body>
+</html>
